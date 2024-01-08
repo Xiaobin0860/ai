@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "*.luac": "lua",
+    "cuda_runtime.h": "c",
+    "device_launch_parameters.h": "c"
+  }
+}
