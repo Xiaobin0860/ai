@@ -1,20 +1,21 @@
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    ControlNetStack, EfficientLoader, ImagePreprocessor, KSampler, LoRAStack, LoadImage, SaveImage,
-    VAEDecode,
+    CtrlnetStack, EfficientLoader, ImagePreprocessor, KSampler, LoadImage, LoraStack, SaveImage,
+    VaeDecode,
 };
 
+// TODO: 应该可以用宏来自动生成置换和访问代码
 /// Node inputs
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(untagged)]
 pub enum Inputs {
     /// Load Image
     LoadImage(LoadImage),
     /// CR LoRA Stack
-    CRLoRAStack(LoRAStack),
+    LoraStack(LoraStack),
     /// CR Multi-ControlNet Stack
-    CRControlNetStack(ControlNetStack),
+    CtrlnetStack(CtrlnetStack),
     /// AIO Aux Preprocessor
     ImagePreprocessor(ImagePreprocessor),
     /// Efficient Loader
@@ -22,7 +23,7 @@ pub enum Inputs {
     /// KSampler
     KSampler(KSampler),
     /// VAE Decode
-    VAEDecode(VAEDecode),
+    VaeDecode(VaeDecode),
     /// Save Image
     SaveImage(SaveImage),
 }

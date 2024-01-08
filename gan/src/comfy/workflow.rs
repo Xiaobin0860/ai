@@ -1,6 +1,6 @@
 use std::{collections::HashMap, fs};
 
-use crate::{AppError, AppResult, Node, NODE_LORA_STACK};
+use crate::{AppError, AppResult, Node};
 
 /// The comfy ui workflow
 #[derive(Debug)]
@@ -33,14 +33,6 @@ impl Workflow {
             .ok_or(AppError::from_string(format!("get_node: {typ} not found")))
     }
 
-    fn get_node_id(&self, typ: &str) -> AppResult<&String> {
-        self.type_id_map
-            .get(typ)
-            .ok_or(AppError::from_string(format!(
-                "get_node_id: {typ} not found"
-            )))
-    }
-
     pub fn get_node_mut(&mut self, typ: &str) -> AppResult<&mut Node> {
         let id = self.get_node_id(typ)?.clone();
         self.id_node_map
@@ -50,8 +42,11 @@ impl Workflow {
             )))
     }
 
-    pub fn disable_all_loras(&mut self) -> AppResult<()> {
-        let node = self.get_node_mut(NODE_LORA_STACK)?;
-        node.disable_all_loras()
+    fn get_node_id(&self, typ: &str) -> AppResult<&String> {
+        self.type_id_map
+            .get(typ)
+            .ok_or(AppError::from_string(format!(
+                "get_node_id: {typ} not found"
+            )))
     }
 }

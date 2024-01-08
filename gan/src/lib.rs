@@ -17,10 +17,10 @@ mod tests {
 
     #[test]
     fn json_parsing_should_work() {
-        let cn = ControlNetStack::default();
+        let cn = CtrlnetStack::default();
         let json = serde_json::to_string(&cn).unwrap();
         trace!("cn: {}", json);
-        let cn2: ControlNetStack = serde_json::from_str(&json).unwrap();
+        let cn2: CtrlnetStack = serde_json::from_str(&json).unwrap();
         assert_eq!(cn.switch_1, cn2.switch_1);
     }
 

@@ -1,7 +1,6 @@
 use serde::{Deserialize, Serialize};
-use tracing::error;
 
-use crate::{AppResult, Inputs};
+use crate::{Inputs, LoadImage};
 
 /// A node in the comfy ui workflow
 #[derive(Debug, Serialize, Deserialize)]
@@ -16,16 +15,26 @@ pub struct Node {
 }
 
 impl Node {
-    pub fn disable_all_loras(&mut self) -> AppResult<()> {
-        match &mut self.inputs {
-            Inputs::CRLoRAStack(lora_stack) => {
-                lora_stack.disable_all();
-            }
+    pub fn get_inputs_mut(&mut self) -> &mut Inputs {
+        &mut self.inputs
+    }
+
+    pub fn load_image(&self) -> &LoadImage {
+        match &self.inputs {
+            Inputs::LoadImage(v) => v,
             _ => {
-                error!("disable_all_loras: wrong node type! {self:?}");
+                panic!("{} not {}", self.class_type, "LoadImage");
             }
         }
-        todo!()
+    }
+
+    pub fn load_image_mut(&mut self) -> &mut LoadImage {
+        match &mut self.inputs {
+            Inputs::LoadImage(v) => v,
+            _ => {
+                panic!("{} not {}", self.class_type, "LoadImage");
+            }
+        }
     }
 }
 
