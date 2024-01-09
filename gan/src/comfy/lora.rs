@@ -1,7 +1,5 @@
 use serde::{Deserialize, Serialize};
 
-use crate::{Inputs, Node};
-
 pub enum IdxLoRA {
     LoRA1,
     LoRA2,
@@ -86,15 +84,6 @@ impl Default for LoraStack {
             lora_name_3: "None".into(),
             model_weight_3: 1.0,
             clip_weight_3: 1.0,
-        }
-    }
-}
-
-impl From<&Node> for LoraStack {
-    fn from(value: &Node) -> Self {
-        match &value.inputs {
-            Inputs::LoraStack(v) => v.clone(),
-            _ => panic!("LoRAStack"),
         }
     }
 }

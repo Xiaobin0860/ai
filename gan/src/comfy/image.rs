@@ -1,8 +1,6 @@
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
-use crate::{Inputs, Node};
-
 /// Image preprocessor
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct ImagePreprocessor {
@@ -14,15 +12,6 @@ pub struct ImagePreprocessor {
     pub image: Vec<Value>,
 }
 
-impl From<&Node> for ImagePreprocessor {
-    fn from(value: &Node) -> Self {
-        match &value.inputs {
-            Inputs::ImagePreprocessor(v) => v.clone(),
-            _ => panic!("ImagePreprocessor"),
-        }
-    }
-}
-
 /// Image saver
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct SaveImage {
@@ -32,15 +21,6 @@ pub struct SaveImage {
     pub images: Vec<Value>,
 }
 
-impl From<&Node> for SaveImage {
-    fn from(value: &Node) -> Self {
-        match &value.inputs {
-            Inputs::SaveImage(v) => v.clone(),
-            _ => panic!("SaveImage"),
-        }
-    }
-}
-
 /// Image loader
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct LoadImage {
@@ -48,13 +28,4 @@ pub struct LoadImage {
     pub image: String,
     /// upload button
     pub upload: String,
-}
-
-impl From<&Node> for LoadImage {
-    fn from(value: &Node) -> Self {
-        match &value.inputs {
-            Inputs::LoadImage(v) => v.clone(),
-            _ => panic!("LoadImage"),
-        }
-    }
 }

@@ -1,6 +1,9 @@
 use serde::{Deserialize, Serialize};
 
-use crate::{Inputs, LoadImage};
+use crate::{
+    CtrlnetStack, EfficientLoader, ImagePreprocessor, Inputs, KSampler, LoadImage, LoraStack,
+    SaveImage, VaeDecode,
+};
 
 /// A node in the comfy ui workflow
 #[derive(Debug, Serialize, Deserialize)]
@@ -14,28 +17,40 @@ pub struct Node {
     pub meta: Meta,
 }
 
+use paste::paste;
+macro_rules! impl_input_methods {
+    ($input_type:ident) => {
+        paste! {
+            pub fn [<$input_type:snake>](&self) -> &$input_type {
+                match &self.inputs {
+                    Inputs::$input_type(v) => v,
+                    _ => panic!("{} not {}", self.class_type, stringify!($input_type)),
+                }
+            }
+
+            pub fn [<$input_type:snake _mut>](&mut self) -> &mut $input_type {
+                match &mut self.inputs {
+                    Inputs::$input_type(v) => v,
+                    _ => panic!("{} not {}", self.class_type, stringify!($input_type)),
+                }
+            }
+        }
+    };
+}
+
 impl Node {
-    pub fn get_inputs_mut(&mut self) -> &mut Inputs {
+    pub fn inputs_mut(&mut self) -> &mut Inputs {
         &mut self.inputs
     }
 
-    pub fn load_image(&self) -> &LoadImage {
-        match &self.inputs {
-            Inputs::LoadImage(v) => v,
-            _ => {
-                panic!("{} not {}", self.class_type, "LoadImage");
-            }
-        }
-    }
-
-    pub fn load_image_mut(&mut self) -> &mut LoadImage {
-        match &mut self.inputs {
-            Inputs::LoadImage(v) => v,
-            _ => {
-                panic!("{} not {}", self.class_type, "LoadImage");
-            }
-        }
-    }
+    impl_input_methods!(CtrlnetStack);
+    impl_input_methods!(EfficientLoader);
+    impl_input_methods!(ImagePreprocessor);
+    impl_input_methods!(SaveImage);
+    impl_input_methods!(LoadImage);
+    impl_input_methods!(LoraStack);
+    impl_input_methods!(KSampler);
+    impl_input_methods!(VaeDecode);
 }
 
 /// Node meta

@@ -1,3 +1,4 @@
+use macros::FromNode;
 use serde::{Deserialize, Serialize};
 
 use crate::{
@@ -5,10 +6,10 @@ use crate::{
     VaeDecode,
 };
 
-// TODO: 应该可以用宏来自动生成置换和访问代码
 /// Node inputs
 #[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(untagged)]
+#[derive(FromNode)]
 pub enum Inputs {
     /// Load Image
     LoadImage(LoadImage),

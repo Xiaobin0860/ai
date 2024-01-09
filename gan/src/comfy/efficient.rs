@@ -1,8 +1,6 @@
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
-use crate::{Inputs, Node};
-
 /// Efficient loader
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct EfficientLoader {
@@ -36,13 +34,4 @@ pub struct EfficientLoader {
     pub clip_skip: i16,
     /// The batch size for loading data
     pub batch_size: u16,
-}
-
-impl From<&Node> for EfficientLoader {
-    fn from(value: &Node) -> Self {
-        match &value.inputs {
-            Inputs::EfficientLoader(v) => v.clone(),
-            _ => panic!("EfficientLoader"),
-        }
-    }
 }

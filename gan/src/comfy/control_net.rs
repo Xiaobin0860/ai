@@ -1,8 +1,6 @@
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
-use crate::{Inputs, Node};
-
 pub enum IdxControlNet {
     ControlNet1,
     ControlNet2,
@@ -108,15 +106,6 @@ impl Default for CtrlnetStack {
             image_1: vec![],
             image_2: vec![],
             image_3: vec![],
-        }
-    }
-}
-
-impl From<&Node> for CtrlnetStack {
-    fn from(value: &Node) -> Self {
-        match &value.inputs {
-            Inputs::CtrlnetStack(v) => v.clone(),
-            _ => panic!("CtrlnetStack"),
         }
     }
 }
