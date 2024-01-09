@@ -16,6 +16,12 @@ thiserror = "1"
 tokio = { version = "1", features = ["full"] }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["time", "env-filter"] }
+reqwest = { version = "0.11", features = ["json"] }
+tokio-tungstenite = "0.21"
+uuid = { version = "1.6", features = ["v4"] }
+anyhow = "1"
+futures-util = "0.3.30"
+rand = "0.8.5"
 
 [dev-dependencies]
 ctor = "0.2"

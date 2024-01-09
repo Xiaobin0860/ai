@@ -1,5 +1,7 @@
 use std::{collections::HashMap, fs};
 
+use serde_json::Value;
+
 use crate::{AppError, AppResult, Node};
 
 /// The comfy ui workflow
@@ -24,6 +26,10 @@ impl Workflow {
 
     pub fn from_file(json_file: &str) -> AppResult<Self> {
         Self::from_json(fs::read_to_string(json_file)?.as_str())
+    }
+
+    pub fn to_json(&self) -> AppResult<Value> {
+        serde_json::to_value(&self.id_node_map).map_err(|e| e.into())
     }
 
     pub fn get_node(&self, typ: &str) -> AppResult<&Node> {

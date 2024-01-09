@@ -4,6 +4,9 @@ pub use error::*;
 mod comfy;
 pub use comfy::*;
 
+mod app_args;
+pub use app_args::*;
+
 #[cfg(test)]
 mod tests {
     use tracing::info;
