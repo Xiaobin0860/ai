@@ -1,0 +1,112 @@
+# CN Stack
+[ctrlnet_stack]
+class_type = "CR Multi-ControlNet Stack"
+switch_1 = true
+ctrl_type_1 = ["lineart", "canny"]
+start_min_1 = 0
+start_max_1 = 1
+end_min_1 = 0
+end_max_1 = 1
+strength_min_1 = 0
+strength_max_1 = 1
+images_1 = ["1.jpg", "2.jpg"]
+
+switch_2 = false
+ctrl_type_2 = ["openpose"]
+start_min_2 = 0
+start_max_2 = 1
+end_min_2 = 0
+end_max_2 = 1
+strength_min_2 = 0
+strength_max_2 = 1
+images_2 = []
+
+switch_3 = false
+ctrl_type_3 = []
+start_min_3 = 0
+start_max_3 = 1
+end_min_3 = 0
+end_max_3 = 1
+strength_min_3 = 0
+strength_max_3 = 1
+images_3 = []
+
+
+# LoRA Stack
+[lora_stack]
+class_type = "CR LoRA Stack"
+switch_1 = 1
+lora_name_1 = ["SCSFZH-000010", "SCSFZH-000015"]
+model_weight_min_1 = 1
+model_weight_max_1 = 1
+
+switch_2 = 0
+lora_name_2 = []
+model_weight_min_2 = 1
+model_weight_max_2 = 1
+
+switch_3 = 0
+lora_name_3 = []
+model_weight_min_3 = 1
+model_weight_max_3 = 1
+
+
+# Efficient
+[efficient]
+class_type = "Efficient Loader"
+positive = ["SCSFZH,1girl,standing on a ship deck, sailing the seas"]
+negative = ["verybadimagenegative_v1.3"]
+batch_size = 1
+
+
+# Sampler
+[sampler]
+class_type = "KSampler"
+steps_min = 20
+steps_max = 20
+cfg_min = 7
+cfg_max = 7
+sampler_name = [
+    "euler",
+    "euler_ancestral",
+    "heun",
+    "heunpp2",
+    "dpm_2",
+    "dpm_2_ancestral",
+    "lms",
+    "dpm_fast",
+    "dpm_adaptive",
+    "dpmpp_2s_ancestral",
+    "dpmpp_sde",
+    "dpmpp_sde_gpu",
+    "dpmpp_2m",
+    "dpmpp_2m_sde",
+    "dpmpp_2m_sde_gpu",
+    "dpmpp_3m_sde",
+    "dpmpp_3m_sde_gpu",
+    "ddpm",
+    "lcm",
+    "ddim",
+    "uni_pc",
+    "uni_pc_bh2",
+]
+scheduler = [
+    "normal",
+    "karras",
+    "exponential",
+    "sgm_uniform",
+    "simple",
+    "ddim_uniform",
+]
+
+
+# SaveImage
+[save_image]
+class_type = "SaveImage"
+filename_prefix = "a"
+
+
+# LoadImage
+[load_image]
+class_type = "LoadImage"
+images = []

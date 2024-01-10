@@ -1,0 +1,13 @@
+Canny control_v11p_sd15_canny canny
+Depth control_v11f1p_sd15_depth midas|leres|zoe
+NormalMap control_v11p_sd15_normalbae bae|midas
+OpenPose control_v11p_sd15_openpose full|face|faceonly|hand
+MLSD control_v11p_sd15_mlsd mlsd
+Lineart control_v11p_sd15_lineart realistic|coarse|anime|anime_denoise|standard
+SoftEdge control_v11p_sd15_softedge pidinet|hed|pidisafe|hedsafe
+Scribble control_v11p_sd15_scribble pidinet|hed
+Segmentation control_v11p_sd15_seg ofade20k|ofcoco
+Shuffle control_v11e_sd15_shuffle shuffle
+Tile control_v11f1e_sd15_tile resample|colorfix|gaussian
+IP-Adapter ip-adapter_clip_sd15
+

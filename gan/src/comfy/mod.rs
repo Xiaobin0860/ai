@@ -37,7 +37,8 @@ mod vae;
 pub use vae::*;
 
 #[cfg(test)]
-mod tests {
+mod comfy_tests {
+    use fixtures::test_workflow_api;
     use tracing::trace;
 
     use super::*;
@@ -80,7 +81,8 @@ mod tests {
 
     #[test]
     fn workflow_parsing_should_work() {
-        let wf = Workflow::from_file("test_workflow.json");
+        let wf = test_workflow_api();
+        let wf = Workflow::from_json(wf);
         trace!("wf: {:?}", wf);
         assert!(wf.is_ok());
         let wf = wf.unwrap();

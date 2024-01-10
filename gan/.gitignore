@@ -1,4 +1,4 @@
 /target
 /Cargo.lock
 /test_workflow.json
-/test_auto_cfg.json
+/test_auto_cfg.toml

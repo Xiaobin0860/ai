@@ -1,0 +1,197 @@
+{
+  "22": {
+    "inputs": {
+      "image": "9.jpg",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "25": {
+    "inputs": {
+      "switch_1": "On",
+      "lora_name_1": "sd\\SCSFZH-000010.safetensors",
+      "model_weight_1": 1.3,
+      "clip_weight_1": 1.2,
+      "switch_2": "Off",
+      "lora_name_2": "None",
+      "model_weight_2": 1,
+      "clip_weight_2": 1,
+      "switch_3": "Off",
+      "lora_name_3": "None",
+      "model_weight_3": 1,
+      "clip_weight_3": 1
+    },
+    "class_type": "CR LoRA Stack",
+    "_meta": {
+      "title": "💊 CR LoRA Stack"
+    }
+  },
+  "29": {
+    "inputs": {
+      "switch_1": "Off",
+      "controlnet_1": "sd\\control_v11p_sd15_lineart.pth",
+      "controlnet_strength_1": 1,
+      "start_percent_1": 0,
+      "end_percent_1": 1,
+      "switch_2": "On",
+      "controlnet_2": "sd\\control_v11p_sd15_openpose.pth",
+      "controlnet_strength_2": 1,
+      "start_percent_2": 0,
+      "end_percent_2": 1,
+      "switch_3": "Off",
+      "controlnet_3": "sd\\control_v11p_sd15_canny.pth",
+      "controlnet_strength_3": 1,
+      "start_percent_3": 0,
+      "end_percent_3": 1,
+      "image_1": [
+        "85",
+        0
+      ],
+      "image_2": [
+        "86",
+        0
+      ],
+      "image_3": [
+        "87",
+        0
+      ]
+    },
+    "class_type": "CR Multi-ControlNet Stack",
+    "_meta": {
+      "title": "🕹️ CR Multi-ControlNet Stack"
+    }
+  },
+  "85": {
+    "inputs": {
+      "preprocessor": "CannyEdgePreprocessor",
+      "resolution": 512,
+      "image": [
+        "22",
+        0
+      ]
+    },
+    "class_type": "AIO_Preprocessor",
+    "_meta": {
+      "title": "AIO Aux Preprocessor"
+    }
+  },
+  "86": {
+    "inputs": {
+      "preprocessor": "OpenposePreprocessor",
+      "resolution": 320,
+      "image": [
+        "22",
+        0
+      ]
+    },
+    "class_type": "AIO_Preprocessor",
+    "_meta": {
+      "title": "AIO Aux Preprocessor"
+    }
+  },
+  "87": {
+    "inputs": {
+      "preprocessor": "CannyEdgePreprocessor",
+      "resolution": 512,
+      "image": [
+        "22",
+        0
+      ]
+    },
+    "class_type": "AIO_Preprocessor",
+    "_meta": {
+      "title": "AIO Aux Preprocessor"
+    }
+  },
+  "97": {
+    "inputs": {
+      "ckpt_name": "sd\\brav5Realisianv50_v10.safetensors",
+      "vae_name": "Baked VAE",
+      "clip_skip": -1,
+      "lora_name": "None",
+      "lora_model_strength": 1,
+      "lora_clip_strength": 1,
+      "positive": "SCSFZH,1girl,standing on a ship deck, sailing the seas",
+      "negative": "verybadimagenegative_v1.3",
+      "token_normalization": "none",
+      "weight_interpretation": "A1111",
+      "empty_latent_width": 576,
+      "empty_latent_height": 768,
+      "batch_size": 1,
+      "lora_stack": [
+        "25",
+        0
+      ],
+      "cnet_stack": [
+        "29",
+        0
+      ]
+    },
+    "class_type": "Efficient Loader",
+    "_meta": {
+      "title": "Efficient Loader"
+    }
+  },
+  "98": {
+    "inputs": {
+      "seed": 384491815852591,
+      "steps": 20,
+      "cfg": 7,
+      "sampler_name": "euler_ancestral",
+      "scheduler": "normal",
+      "denoise": 1,
+      "model": [
+        "97",
+        0
+      ],
+      "positive": [
+        "97",
+        1
+      ],
+      "negative": [
+        "97",
+        2
+      ],
+      "latent_image": [
+        "97",
+        3
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "99": {
+    "inputs": {
+      "samples": [
+        "98",
+        0
+      ],
+      "vae": [
+        "97",
+        4
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "101": {
+    "inputs": {
+      "filename_prefix": "ComfyUI",
+      "images": [
+        "99",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  }
+}

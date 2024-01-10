@@ -3,7 +3,7 @@ use gan::{AppArgs, AppResult, Comfy, Workflow, NODE_KSAMPLER};
 
 use rand::random;
 use tokio_tungstenite::{connect_async, tungstenite::Message};
-use tracing::{debug, info, trace};
+use tracing::{debug, info, trace, warn};
 use uuid::Uuid;
 
 #[tokio::main]
@@ -22,7 +22,6 @@ async fn main() -> AppResult<()> {
     let api = Comfy::new(args.comfy_host.as_str(), client_id.as_str());
     while let Some(msg) = read.next().await {
         let msg = msg?;
-        trace!("msg: {msg}");
         match msg {
             Message::Text(text) => {
                 debug!("text: {text}");
@@ -34,7 +33,13 @@ async fn main() -> AppResult<()> {
                     api.queue_prompt(&prompt).await;
                 }
             }
-            _ => {}
+            Message::Close(_) => {
+                info!("comfy ws closed");
+                break;
+            }
+            _ => {
+                warn!("unhandled: {msg}");
+            }
         }
     }
 
