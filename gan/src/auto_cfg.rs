@@ -6,15 +6,17 @@ use crate::AppResult;
 
 #[derive(Debug, Deserialize)]
 pub struct AutoCfg {
-    pub ctrlnet_stack: ACtrlnetStack,
+    pub ctrlnet_stack: Option<ACtrlnetStack>,
 
-    pub efficient: AEfficient,
+    pub efficient: Option<AEfficient>,
 
-    pub load_image: ALoadImage,
+    pub load_image: Option<ALoadImage>,
 
-    pub save_image: ASaveImage,
+    pub save_image: Option<ASaveImage>,
 
-    pub sampler: ASampler,
+    pub lora_stack: Option<ALoraStack>,
+
+    pub sampler: Option<ASampler>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -30,11 +32,37 @@ pub struct ASaveImage {
 }
 
 #[derive(Debug, Deserialize)]
+pub struct ALoraStack {
+    pub class_type: String,
+
+    pub switch_1: bool,
+    pub model_name_1: Vec<String>,
+    pub strength_min_1: f32,
+    pub strength_max_1: f32,
+
+    pub switch_2: bool,
+    pub model_name_2: Vec<String>,
+    pub strength_min_2: f32,
+    pub strength_max_2: f32,
+
+    pub switch_3: bool,
+    pub model_name_3: Vec<String>,
+    pub strength_min_3: f32,
+    pub strength_max_3: f32,
+}
+
+impl ALoraStack {
+    pub fn switch(&self) -> bool {
+        self.switch_1 || self.switch_2 || self.switch_3
+    }
+}
+
+#[derive(Debug, Deserialize)]
 pub struct ASampler {
     pub class_type: String,
 
-    pub steps_min: u16,
-    pub steps_max: u16,
+    pub steps_min: u8,
+    pub steps_max: u8,
     pub cfg_min: f32,
     pub cfg_max: f32,
     pub sampler_name: Vec<String>,
@@ -76,6 +104,12 @@ pub struct ACtrlnetStack {
     pub images_3: Vec<String>,
 }
 
+impl ACtrlnetStack {
+    pub fn switch(&self) -> bool {
+        self.switch_1 || self.switch_2 || self.switch_3
+    }
+}
+
 #[derive(Debug, Deserialize)]
 pub struct AEfficient {
     pub class_type: String,
@@ -99,7 +133,10 @@ mod ac_tests {
     use fixtures::test_auto_cfg;
     use tracing::trace;
 
-    use crate::{NODE_CONTROL_NET_STACK_, NODE_EFFICIENT_LOADER, NODE_KSAMPLER, NODE_SAVE_IMAGE};
+    use crate::{
+        NODE_CONTROL_NET_STACK_, NODE_EFFICIENT_LOADER, NODE_KSAMPLER, NODE_LOAD_IMAGE,
+        NODE_LORA_STACK, NODE_SAVE_IMAGE,
+    };
 
     use super::*;
 
@@ -110,11 +147,17 @@ mod ac_tests {
         trace!("{cfg:?}");
         assert!(cfg.is_ok());
         let cfg = cfg.unwrap();
-        assert!(cfg.ctrlnet_stack.switch_1);
-        assert!(!cfg.ctrlnet_stack.ctrl_type_1.is_empty());
-        assert_eq!(&cfg.ctrlnet_stack.class_type, NODE_CONTROL_NET_STACK_);
-        assert_eq!(&cfg.efficient.class_type, NODE_EFFICIENT_LOADER);
-        assert_eq!(&cfg.save_image.class_type, NODE_SAVE_IMAGE);
-        assert_eq!(&cfg.sampler.class_type, NODE_KSAMPLER);
+        let ctrlnet_stack = &cfg.ctrlnet_stack.unwrap();
+        assert!(ctrlnet_stack.switch_1);
+        assert!(!ctrlnet_stack.ctrl_type_1.is_empty());
+        assert_eq!(&ctrlnet_stack.class_type, NODE_CONTROL_NET_STACK_);
+        assert_eq!(&cfg.efficient.unwrap().class_type, NODE_EFFICIENT_LOADER);
+        assert_eq!(&cfg.save_image.unwrap().class_type, NODE_SAVE_IMAGE);
+        assert_eq!(&cfg.sampler.unwrap().class_type, NODE_KSAMPLER);
+        assert_eq!(cfg.load_image.unwrap().class_type, NODE_LOAD_IMAGE);
+        let lora_stack = &cfg.lora_stack.unwrap();
+        assert!(lora_stack.switch_1);
+        assert!(!lora_stack.model_name_1.is_empty());
+        assert_eq!(&lora_stack.class_type, NODE_LORA_STACK);
     }
 }

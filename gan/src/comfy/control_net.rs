@@ -1,6 +1,16 @@
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
+pub const CNT_CANNY: &str = "Canny";
+pub const CNT_DEPTH: &str = "Depth";
+pub const CNT_NORMAL_MAP: &str = "NormalMap";
+pub const CNT_OPENPOSE: &str = "OpenPose";
+pub const CNT_LINEART: &str = "Lineart";
+pub const CNT_ANIME_LINEART: &str = "AnimeLineart";
+pub const CNT_SOFT_EDGE: &str = "SoftEdge";
+pub const CNT_SEGMENTATION: &str = "Segmentation";
+pub const CNT_TILE: &str = "Tile";
+
 pub enum IdxControlNet {
     ControlNet1,
     ControlNet2,
@@ -48,6 +58,23 @@ pub struct CtrlnetStack {
     pub image_3: Vec<Value>,
 }
 
+pub struct CnCfg {
+    pub model: String,
+    pub weight: f32,
+    pub start: f32,
+    pub end: f32,
+}
+impl Default for CnCfg {
+    fn default() -> Self {
+        Self {
+            model: "None".into(),
+            weight: 1.0,
+            start: 0.0,
+            end: 1.0,
+        }
+    }
+}
+
 impl CtrlnetStack {
     pub fn disable_all(&mut self) {
         self.switch_1 = "Off".into();
@@ -58,28 +85,28 @@ impl CtrlnetStack {
         self.controlnet_3 = "None".into();
     }
 
-    pub fn enable(&mut self, idx: IdxControlNet, name: &str, strength: f32, start: f32, end: f32) {
+    pub fn enable(&mut self, idx: IdxControlNet, cfg: &CnCfg) {
         match idx {
             IdxControlNet::ControlNet1 => {
                 self.switch_1 = "On".into();
-                self.controlnet_1 = name.into();
-                self.controlnet_strength_1 = strength;
-                self.start_percent_1 = start;
-                self.end_percent_1 = end;
+                self.controlnet_1 = cfg.model.clone();
+                self.controlnet_strength_1 = cfg.weight;
+                self.start_percent_1 = cfg.start;
+                self.end_percent_1 = cfg.end;
             }
             IdxControlNet::ControlNet2 => {
                 self.switch_2 = "On".into();
-                self.controlnet_2 = name.into();
-                self.controlnet_strength_2 = strength;
-                self.start_percent_2 = start;
-                self.end_percent_2 = end;
+                self.controlnet_2 = cfg.model.clone();
+                self.controlnet_strength_2 = cfg.weight;
+                self.start_percent_2 = cfg.start;
+                self.end_percent_2 = cfg.end;
             }
             IdxControlNet::ControlNet3 => {
                 self.switch_3 = "On".into();
-                self.controlnet_3 = name.into();
-                self.controlnet_strength_3 = strength;
-                self.start_percent_3 = start;
-                self.end_percent_3 = end;
+                self.controlnet_3 = cfg.model.clone();
+                self.controlnet_strength_3 = cfg.weight;
+                self.start_percent_3 = cfg.start;
+                self.end_percent_3 = cfg.end;
             }
         }
     }
@@ -107,5 +134,34 @@ impl Default for CtrlnetStack {
             image_2: vec![],
             image_3: vec![],
         }
+    }
+}
+
+#[derive(Debug, Deserialize)]
+pub struct Ctrlnet {
+    pub model: Vec<String>,
+    pub preprocessor: Vec<String>,
+}
+
+#[cfg(test)]
+mod comfy_tests {
+    use std::collections::HashMap;
+
+    use fixtures::control_nets;
+
+    use super::*;
+
+    #[test]
+    fn cns_should_work() {
+        let cns: HashMap<String, Ctrlnet> = serde_json::from_str(control_nets()).unwrap();
+        assert!(cns.contains_key(CNT_CANNY));
+        assert!(cns.contains_key(CNT_DEPTH));
+        assert!(cns.contains_key(CNT_NORMAL_MAP));
+        assert!(cns.contains_key(CNT_OPENPOSE));
+        assert!(cns.contains_key(CNT_LINEART));
+        assert!(cns.contains_key(CNT_ANIME_LINEART));
+        assert!(cns.contains_key(CNT_SOFT_EDGE));
+        assert!(cns.contains_key(CNT_SEGMENTATION));
+        assert!(cns.contains_key(CNT_TILE));
     }
 }

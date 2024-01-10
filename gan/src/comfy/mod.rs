@@ -58,9 +58,10 @@ mod comfy_tests {
         assert_eq!(cn.switch_1, cn2.switch_1);
         let mut cn3 = CtrlnetStack::from(&node);
         assert_eq!(cn.switch_1, cn3.switch_1);
-        cn3.enable(IdxControlNet::ControlNet1, "cn1", 1.0, 0.0, 1.0);
+        let cfg = CnCfg::default();
+        cn3.enable(IdxControlNet::ControlNet1, &cfg);
         let cn4 = node.ctrlnet_stack_mut();
-        cn4.enable(IdxControlNet::ControlNet1, "cn1", 1.0, 0.0, 1.0);
+        cn4.enable(IdxControlNet::ControlNet1, &cfg);
         assert_eq!(cn3.switch_1, "On");
         assert_eq!(cn4.switch_1, "On");
         cn3.disable_all();

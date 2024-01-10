@@ -1,0 +1,78 @@
+{
+  "Canny": {
+    "model": [
+      "sd/control_v11p_sd15_canny.pth"
+    ],
+    "preprocessor": [
+      "CannyEdgePreprocessor"
+    ]
+  },
+  "Depth": {
+    "model": [
+      "sd/control_v11f1p_sd15_depth.pth"
+    ],
+    "preprocessor": [
+      "MiDaS-DepthMapPreprocessor",
+      "Zoe-DepthMapPreprocessor"
+    ]
+  },
+  "NormalMap": {
+    "model": [
+      "sd/control_v11p_sd15_normalbae.pth"
+    ],
+    "preprocessor": [
+      "BAE-NormalMapPreprocessor"
+    ]
+  },
+  "OpenPose": {
+    "model": [
+      "sd/control_v11p_sd15_openpose.pth",
+      "sd/control_v11p_sd15_openpose_fp16.safetensors"
+    ],
+    "preprocessor": [
+      "OpenposePreprocessor"
+    ]
+  },
+  "Lineart": {
+    "model": [
+      "sd/control_v11p_sd15_lineart.pth",
+      "sd/control_v11p_sd15_lineart_fp16.safetensors"
+    ],
+    "preprocessor": [
+      "LineArtPreprocessor"
+    ]
+  },
+  "AnimeLineart": {
+    "model": [
+      "sd/control_v11p_sd15s2_lineart_anime.pth"
+    ],
+    "preprocessor": [
+      "AnimeLineArtPreprocessor"
+    ]
+  },
+  "SoftEdge": {
+    "model": [
+      "sd/control_v11p_sd15_softedge.pth"
+    ],
+    "preprocessor": [
+      "HEDPreprocessor",
+      "PiDiNetPreprocessor"
+    ]
+  },
+  "Segmentation": {
+    "model": [
+      "sd/control_v11p_sd15_seg.pth"
+    ],
+    "preprocessor": [
+      "OneFormer-COCO-SemSegPreprocessor"
+    ]
+  },
+  "Tile": {
+    "model": [
+      "sd/control_v11f1e_sd15_tile.pth"
+    ],
+    "preprocessor": [
+      "TilePreprocessor"
+    ]
+  }
+}

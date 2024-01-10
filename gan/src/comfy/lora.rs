@@ -35,6 +35,21 @@ pub struct LoraStack {
     pub clip_weight_3: f32,
 }
 
+pub struct LoraCfg {
+    pub lora_name: String,
+    pub model_weight: f32,
+    pub clip_weight: f32,
+}
+impl Default for LoraCfg {
+    fn default() -> Self {
+        Self {
+            lora_name: "None".into(),
+            model_weight: 1.0,
+            clip_weight: 1.0,
+        }
+    }
+}
+
 impl LoraStack {
     pub fn disable_all(&mut self) {
         self.switch_1 = "Off".into();
@@ -45,25 +60,25 @@ impl LoraStack {
         self.lora_name_3 = "None".into();
     }
 
-    pub fn enable(&mut self, idx: IdxLoRA, name: &str, model_weight: f32, clip_weight: f32) {
+    pub fn enable(&mut self, idx: IdxLoRA, cfg: &LoraCfg) {
         match idx {
             IdxLoRA::LoRA1 => {
                 self.switch_1 = "On".into();
-                self.lora_name_1 = name.into();
-                self.model_weight_1 = model_weight;
-                self.clip_weight_1 = clip_weight;
+                self.lora_name_1 = cfg.lora_name.clone();
+                self.model_weight_1 = cfg.model_weight;
+                self.clip_weight_1 = cfg.clip_weight;
             }
             IdxLoRA::LoRA2 => {
                 self.switch_2 = "On".into();
-                self.lora_name_2 = name.into();
-                self.model_weight_2 = model_weight;
-                self.clip_weight_2 = clip_weight;
+                self.lora_name_2 = cfg.lora_name.clone();
+                self.model_weight_2 = cfg.model_weight;
+                self.clip_weight_2 = cfg.clip_weight;
             }
             IdxLoRA::LoRA3 => {
                 self.switch_3 = "On".into();
-                self.lora_name_3 = name.into();
-                self.model_weight_3 = model_weight;
-                self.clip_weight_3 = clip_weight;
+                self.lora_name_3 = cfg.lora_name.clone();
+                self.model_weight_3 = cfg.model_weight;
+                self.clip_weight_3 = cfg.clip_weight;
             }
         }
     }

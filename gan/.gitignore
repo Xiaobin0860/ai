@@ -1,4 +1,6 @@
+.svn
 /target
 /Cargo.lock
-/test_workflow.json
+/test_workflow_api.json
+/control_nets.json
 /test_auto_cfg.toml

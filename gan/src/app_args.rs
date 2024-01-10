@@ -8,11 +8,11 @@ pub struct AppArgs {
     pub comfy_host: String,
 
     /// comfy ui workflow json file
-    #[arg(long, default_value = "test_workflow.json")]
+    #[arg(long, default_value = "test_workflow_api.json")]
     pub workflow: String,
 
     /// auto generate config file
-    #[arg(long, default_value = "auto_cfg.json")]
+    #[arg(long, default_value = "test_auto_cfg.toml")]
     pub auto_cfg: String,
 }
 

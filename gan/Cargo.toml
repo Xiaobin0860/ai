@@ -7,6 +7,7 @@ edition = "2021"
 
 [dependencies]
 macros = { path = "./macros" }
+fixtures = { path = "./fixtures" }
 axum = { version = "0.7", features = ["ws"] }
 clap = { version = "4", features = ["derive"] }
 paste = "1"
@@ -25,7 +26,6 @@ rand = "0.8"
 toml = "0.8"
 
 [dev-dependencies]
-fixtures = { path = "./fixtures" }
 ctor = "0.2"
 
 [workspace]
