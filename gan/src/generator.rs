@@ -1,12 +1,14 @@
 use std::collections::HashMap;
 
+use anyhow::anyhow;
 use fixtures::control_nets;
 use rand::random;
 use serde_json::Value;
 
 use crate::{
-    rand_element, ACtrlnetStack, ALoraStack, AppResult, AutoCfg, CnCfg, Ctrlnet, CtrlnetStack,
-    IdxControlNet, IdxLoRA, LoraCfg, LoraStack, Workflow, NODE_KSAMPLER,
+    rand_element, ACtrlnet, ACtrlnetStack, ALoraStack, AppResult, AutoCfg, CnCfg, Ctrlnet,
+    CtrlnetStack, IdxControlNet, IdxLoRA, LoraCfg, LoraStack, Workflow, NODE_KSAMPLER,
+    NODE_LOAD_IMAGE,
 };
 
 pub struct Generator {
@@ -26,6 +28,8 @@ impl Generator {
         self.rand_sampler(wf, ac)?;
         self.rand_lora(wf, ac)?;
         self.rand_cn(wf, ac)?;
+        let imgs = ["4.jpg", "9.jpg", "16.jpg"];
+        wf.get_node_mut(NODE_LOAD_IMAGE)?.load_image_mut().image = rand_element(&imgs).to_string();
         wf.to_json()
     }
 
@@ -36,7 +40,9 @@ impl Generator {
                     .get_node_mut(acn.class_type.as_str())?
                     .ctrlnet_stack_mut();
                 cn_stack.disable_all();
-                self.rand_cn1(cn_stack, acn)?;
+                if let Some(cfg) = self.rand_cn1(cn_stack, acn)? {
+                    //preprocessor
+                }
                 // self.rand_cn2(cn_stack, acn);
                 // self.rand_cn3(cn_stack, acn);
             }
@@ -44,21 +50,31 @@ impl Generator {
         Ok(())
     }
 
-    fn rand_cn1(&self, cn_stack: &mut CtrlnetStack, acn: &ACtrlnetStack) -> AppResult<()> {
-        if !acn.switch_1 {
-            return Ok(());
+    fn rand_cn1(
+        &self,
+        cn_stack: &mut CtrlnetStack,
+        acn: &ACtrlnetStack,
+    ) -> AppResult<Option<CnCfg>> {
+        let idx = IdxControlNet::ControlNet1;
+        if let Some(acfg) = acn.cfg(&idx) {
+            let cfg = self.rand_cn_cfg(&acfg)?;
+            cn_stack.enable(idx, &cfg);
+            Ok(Some(cfg))
+        } else {
+            Ok(None)
         }
-        let cfg = self.rand_cn_cfg(&acn.ctrl_type_1, acn.strength_min_1, acn.strength_max_1)?;
-        cn_stack.enable(IdxControlNet::ControlNet1, &cfg);
-        Ok(())
     }
 
-    fn rand_cn_cfg(&self, names: &[String], wmodel_min: f32, wmodel_max: f32) -> AppResult<CnCfg> {
-        let ctrl_type = rand_element(names);
-        let cn = self.cns.get(ctrl_type).unwrap();
+    fn rand_cn_cfg(&self, acfg: &ACtrlnet) -> AppResult<CnCfg> {
+        let ctrl_type = rand_element(&acfg.ctrl_type);
+        let cn = self
+            .cns
+            .get(ctrl_type)
+            .ok_or(anyhow!("no cn type {ctrl_type}"))?;
         Ok(CnCfg {
             model: rand_element(&cn.model).clone(),
-            weight: random::<f32>() * (wmodel_max - wmodel_min) + wmodel_min,
+            preprocessor: rand_element(&cn.preprocessor).clone(),
+            weight: random::<f32>() * (acfg.strength_max - acfg.strength_min) + acfg.strength_min,
             ..Default::default()
         })
     }

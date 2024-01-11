@@ -51,15 +51,16 @@ pub struct CtrlnetStack {
     /// The end percent of control net 3
     pub end_percent_3: f32,
     /// control net 1 image input
-    pub image_1: Vec<Value>,
+    pub image_1: Option<Vec<Value>>,
     /// control net 2 image input
     pub image_2: Vec<Value>,
     /// control net 3 image input
-    pub image_3: Vec<Value>,
+    pub image_3: Option<Vec<Value>>,
 }
 
 pub struct CnCfg {
     pub model: String,
+    pub preprocessor: String,
     pub weight: f32,
     pub start: f32,
     pub end: f32,
@@ -68,6 +69,7 @@ impl Default for CnCfg {
     fn default() -> Self {
         Self {
             model: "None".into(),
+            preprocessor: "None".into(),
             weight: 1.0,
             start: 0.0,
             end: 1.0,
@@ -130,9 +132,9 @@ impl Default for CtrlnetStack {
             controlnet_strength_3: 1.0,
             start_percent_3: 0.0,
             end_percent_3: 1.0,
-            image_1: vec![],
+            image_1: None,
             image_2: vec![],
-            image_3: vec![],
+            image_3: None,
         }
     }
 }

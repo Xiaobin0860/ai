@@ -2,7 +2,7 @@ use std::fs;
 
 use serde::Deserialize;
 
-use crate::AppResult;
+use crate::{AppResult, IdxControlNet};
 
 #[derive(Debug, Deserialize)]
 pub struct AutoCfg {
@@ -81,8 +81,9 @@ pub struct ACtrlnetStack {
     pub end_max_1: f32,
     pub strength_min_1: f32,
     pub strength_max_1: f32,
-    pub images_1: Vec<String>,
 
+    //先只支持共用图片
+    // pub images_1: Vec<String>,
     pub switch_2: bool,
     pub ctrl_type_2: Vec<String>,
     pub start_min_2: f32,
@@ -91,8 +92,9 @@ pub struct ACtrlnetStack {
     pub end_max_2: f32,
     pub strength_min_2: f32,
     pub strength_max_2: f32,
-    pub images_2: Vec<String>,
 
+    //先只支持共用图片
+    // pub images_2: Vec<String>,
     pub switch_3: bool,
     pub ctrl_type_3: Vec<String>,
     pub start_min_3: f32,
@@ -101,13 +103,73 @@ pub struct ACtrlnetStack {
     pub end_max_3: f32,
     pub strength_min_3: f32,
     pub strength_max_3: f32,
-    pub images_3: Vec<String>,
+    // pub images_3: Vec<String>,
 }
 
 impl ACtrlnetStack {
     pub fn switch(&self) -> bool {
         self.switch_1 || self.switch_2 || self.switch_3
     }
+
+    pub fn cfg(&self, idx: &IdxControlNet) -> Option<ACtrlnet> {
+        match idx {
+            IdxControlNet::ControlNet1 => {
+                if self.switch_1 {
+                    Some(ACtrlnet {
+                        ctrl_type: self.ctrl_type_1.clone(),
+                        start_min: self.start_min_1,
+                        start_max: self.start_max_1,
+                        end_min: self.end_min_1,
+                        end_max: self.end_max_1,
+                        strength_min: self.strength_min_1,
+                        strength_max: self.strength_max_1,
+                    })
+                } else {
+                    None
+                }
+            }
+            IdxControlNet::ControlNet2 => {
+                if self.switch_2 {
+                    Some(ACtrlnet {
+                        ctrl_type: self.ctrl_type_2.clone(),
+                        start_min: self.start_min_2,
+                        start_max: self.start_max_2,
+                        end_min: self.end_min_2,
+                        end_max: self.end_max_2,
+                        strength_min: self.strength_min_2,
+                        strength_max: self.strength_max_2,
+                    })
+                } else {
+                    None
+                }
+            }
+            IdxControlNet::ControlNet3 => {
+                if self.switch_3 {
+                    Some(ACtrlnet {
+                        ctrl_type: self.ctrl_type_3.clone(),
+                        start_min: self.start_min_3,
+                        start_max: self.start_max_3,
+                        end_min: self.end_min_3,
+                        end_max: self.end_max_3,
+                        strength_min: self.strength_min_3,
+                        strength_max: self.strength_max_3,
+                    })
+                } else {
+                    None
+                }
+            }
+        }
+    }
+}
+
+pub struct ACtrlnet {
+    pub ctrl_type: Vec<String>,
+    pub start_min: f32,
+    pub start_max: f32,
+    pub end_min: f32,
+    pub end_max: f32,
+    pub strength_min: f32,
+    pub strength_max: f32,
 }
 
 #[derive(Debug, Deserialize)]
