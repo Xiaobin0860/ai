@@ -51,11 +51,11 @@ pub struct CtrlnetStack {
     /// The end percent of control net 3
     pub end_percent_3: f32,
     /// control net 1 image input
-    pub image_1: Option<Vec<Value>>,
+    pub image_1: Option<Value>,
     /// control net 2 image input
-    pub image_2: Vec<Value>,
+    pub image_2: Option<Value>,
     /// control net 3 image input
-    pub image_3: Option<Vec<Value>>,
+    pub image_3: Option<Value>,
 }
 
 pub struct CnCfg {
@@ -133,7 +133,7 @@ impl Default for CtrlnetStack {
             start_percent_3: 0.0,
             end_percent_3: 1.0,
             image_1: None,
-            image_2: vec![],
+            image_2: None,
             image_3: None,
         }
     }

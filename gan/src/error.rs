@@ -20,8 +20,8 @@ pub enum AppError {
     Any(#[from] AnyError),
 }
 
-impl AppError {
-    pub fn from_string(s: String) -> Self {
+impl From<String> for AppError {
+    fn from(s: String) -> Self {
         AppError::String(s)
     }
 }

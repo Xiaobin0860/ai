@@ -19,9 +19,9 @@ pub struct EfficientLoader {
     /// The prompts weight A1111|comfy|compel|comfy++|down_weight
     pub weight_interpretation: String,
     /// The stack of LORA input [LoRAStack_id, 0]
-    pub lora_stack: Vec<Value>,
+    pub lora_stack: Option<Value>,
     /// The stack of CN input [ControlNetStack_id, 0]
-    pub cnet_stack: Vec<Value>,
+    pub cnet_stack: Option<Value>,
     /// The strength of the LORA model
     pub lora_model_strength: f32,
     /// The strength of the LORA clip

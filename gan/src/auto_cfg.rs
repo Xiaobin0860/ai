@@ -22,6 +22,7 @@ pub struct AutoCfg {
 #[derive(Debug, Deserialize)]
 pub struct ALoadImage {
     pub class_type: String,
+    pub images: Vec<String>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -65,6 +66,8 @@ pub struct ASampler {
     pub steps_max: u8,
     pub cfg_min: f32,
     pub cfg_max: f32,
+    pub denoise_min: f32,
+    pub denoise_max: f32,
     pub sampler_name: Vec<String>,
     pub scheduler: Vec<String>,
 }

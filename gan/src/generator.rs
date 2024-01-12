@@ -28,9 +28,16 @@ impl Generator {
         self.rand_sampler(wf, ac)?;
         self.rand_lora(wf, ac)?;
         self.rand_cn(wf, ac)?;
-        let imgs = ["4.jpg", "9.jpg", "16.jpg"];
-        wf.get_node_mut(NODE_LOAD_IMAGE)?.load_image_mut().image = rand_element(&imgs).to_string();
+        self.rand_images(wf, ac)?;
         wf.to_json()
+    }
+
+    fn rand_images(&mut self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<()> {
+        if let Some(cfg) = &ac.load_image {
+            let imgs = &cfg.images;
+            wf.get_node_mut(NODE_LOAD_IMAGE)?.load_image_mut().image = rand_element(imgs).clone();
+        }
+        Ok(())
     }
 
     fn rand_cn(&self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<()> {
@@ -40,7 +47,7 @@ impl Generator {
                     .get_node_mut(acn.class_type.as_str())?
                     .ctrlnet_stack_mut();
                 cn_stack.disable_all();
-                if let Some(cfg) = self.rand_cn1(cn_stack, acn)? {
+                if let Some(_cfg) = self.rand_cn1(cn_stack, acn)? {
                     //preprocessor
                 }
                 // self.rand_cn2(cn_stack, acn);

@@ -5,7 +5,7 @@ use serde_json::Value;
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct VaeDecode {
     /// samples input
-    pub samples: Vec<Value>,
+    pub samples: Value,
     /// vae input
-    pub vae: Vec<Value>,
+    pub vae: Value,
 }

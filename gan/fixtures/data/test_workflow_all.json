@@ -14,13 +14,13 @@
       "switch_1": "On",
       "lora_name_1": "sd\\SCSFZH-000010.safetensors",
       "model_weight_1": 1.3,
-      "clip_weight_1": 1.2,
+      "clip_weight_1": 1,
       "switch_2": "Off",
       "lora_name_2": "None",
       "model_weight_2": 1,
       "clip_weight_2": 1,
-      "switch_3": "Off",
-      "lora_name_3": "None",
+      "switch_3": "On",
+      "lora_name_3": "sd\\lcm_lora_sdv15.safetensors",
       "model_weight_3": 1,
       "clip_weight_3": 1
     },
@@ -31,13 +31,13 @@
   },
   "29": {
     "inputs": {
-      "switch_1": "Off",
-      "controlnet_1": "sd\\control_v11p_sd15_lineart.pth",
+      "switch_1": "On",
+      "controlnet_1": "sd\\control_v11p_sd15_openpose.pth",
       "controlnet_strength_1": 1,
       "start_percent_1": 0,
       "end_percent_1": 1,
-      "switch_2": "Off",
-      "controlnet_2": "None",
+      "switch_2": "On",
+      "controlnet_2": "sd\\control_v11f1p_sd15_depth.pth",
       "controlnet_strength_2": 1,
       "start_percent_2": 0,
       "end_percent_2": 1,
@@ -47,6 +47,10 @@
       "start_percent_3": 0,
       "end_percent_3": 1,
       "image_1": [
+        "107",
+        0
+      ],
+      "image_2": [
         "85",
         0
       ]
@@ -58,7 +62,7 @@
   },
   "85": {
     "inputs": {
-      "preprocessor": "CannyEdgePreprocessor",
+      "preprocessor": "Zoe-DepthMapPreprocessor",
       "resolution": 512,
       "image": [
         "22",
@@ -73,12 +77,12 @@
   "97": {
     "inputs": {
       "ckpt_name": "sd\\brav5Realisianv50_v10.safetensors",
-      "vae_name": "Baked VAE",
+      "vae_name": "sd\\v1-5-pruned.vae.pt",
       "clip_skip": -1,
       "lora_name": "None",
       "lora_model_strength": 1,
       "lora_clip_strength": 1,
-      "positive": "SCSFZH,1girl,standing on a ship deck, sailing the seas",
+      "positive": "SCSFZH,1girl in room,",
       "negative": "verybadimagenegative_v1.3",
       "token_normalization": "none",
       "weight_interpretation": "A1111",
@@ -101,11 +105,11 @@
   },
   "98": {
     "inputs": {
-      "seed": 384491815852591,
-      "steps": 20,
-      "cfg": 7,
-      "sampler_name": "euler_ancestral",
-      "scheduler": "normal",
+      "seed": 547344593721868,
+      "steps": 6,
+      "cfg": 1.6,
+      "sampler_name": "lcm",
+      "scheduler": "sgm_uniform",
       "denoise": 1,
       "model": [
         "97",
@@ -156,6 +160,98 @@
     "class_type": "SaveImage",
     "_meta": {
       "title": "Save Image"
+    }
+  },
+  "105": {
+    "inputs": {
+      "low_threshold": 100,
+      "high_threshold": 200,
+      "resolution": 512
+    },
+    "class_type": "CannyEdgePreprocessor",
+    "_meta": {
+      "title": "Canny Edge"
+    }
+  },
+  "107": {
+    "inputs": {
+      "detect_hand": "enable",
+      "detect_body": "enable",
+      "detect_face": "enable",
+      "resolution": 512,
+      "image": [
+        "22",
+        0
+      ]
+    },
+    "class_type": "OpenposePreprocessor",
+    "_meta": {
+      "title": "OpenPose Pose"
+    }
+  },
+  "108": {
+    "inputs": {
+      "coarse": "disable",
+      "resolution": 512
+    },
+    "class_type": "LineArtPreprocessor",
+    "_meta": {
+      "title": "Realistic Lineart"
+    }
+  },
+  "109": {
+    "inputs": {
+      "pyrUp_iters": 3,
+      "resolution": 512
+    },
+    "class_type": "TilePreprocessor",
+    "_meta": {
+      "title": "Tile"
+    }
+  },
+  "111": {
+    "inputs": {
+      "rm_nearest": 0,
+      "rm_background": 0,
+      "boost": "disable",
+      "resolution": 512
+    },
+    "class_type": "LeReS-DepthMapPreprocessor",
+    "_meta": {
+      "title": "LeReS Depth Map (enable boost for leres++)"
+    }
+  },
+  "112": {
+    "inputs": {
+      "a": 6.283185307179586,
+      "bg_threshold": 0.1,
+      "resolution": 512
+    },
+    "class_type": "MiDaS-DepthMapPreprocessor",
+    "_meta": {
+      "title": "MiDaS Depth Map"
+    }
+  },
+  "116": {
+    "inputs": {
+      "guassian_sigma": 6,
+      "intensity_threshold": 8,
+      "resolution": 512
+    },
+    "class_type": "LineartStandardPreprocessor",
+    "_meta": {
+      "title": "Standard Lineart"
+    }
+  },
+  "130": {
+    "inputs": {
+      "score_threshold": 0.1,
+      "dist_threshold": 0.1,
+      "resolution": 512
+    },
+    "class_type": "M-LSDPreprocessor",
+    "_meta": {
+      "title": "M-LSD Lines"
     }
   }
 }

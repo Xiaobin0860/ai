@@ -9,7 +9,7 @@ pub struct ImagePreprocessor {
     /// The processing resolution
     pub resolution: u32,
     /// The image input [LoadImage_id, 0]
-    pub image: Vec<Value>,
+    pub image: Option<Value>,
 }
 
 /// Image saver
@@ -18,7 +18,7 @@ pub struct SaveImage {
     /// The filename prefix
     pub filename_prefix: String,
     /// The image input
-    pub images: Vec<Value>,
+    pub images: Option<Value>,
 }
 
 /// Image loader

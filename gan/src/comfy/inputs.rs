@@ -2,10 +2,13 @@ use macros::FromNode;
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    CtrlnetStack, EfficientLoader, ImagePreprocessor, KSampler, LoadImage, LoraStack, SaveImage,
-    VaeDecode,
+    CannyEdgePreprocessor, CtrlnetStack, EfficientLoader, HEDPreprocessor, ImagePreprocessor,
+    KSampler, LeReSDepthMapPreprocessor, LineArtPreprocessor, LineartStandardPreprocessor,
+    LoadImage, LoraStack, MLSDPreprocessor, MiDaSDepthMapPreprocessor, OpenposePreprocessor,
+    SaveImage, TilePreprocessor, VaeDecode,
 };
 
+// TODO: 准确类型可能需要自已实现根据class_type来判断, 直接ComfyUI api json解析丢失类型信息
 /// Node inputs
 #[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(untagged)]
@@ -27,4 +30,13 @@ pub enum Inputs {
     VaeDecode(VaeDecode),
     /// Save Image
     SaveImage(SaveImage),
+    CannyEdgePreprocessor(CannyEdgePreprocessor),
+    OpenposePreprocessor(OpenposePreprocessor),
+    LineArtPreprocessor(LineArtPreprocessor),
+    TilePreprocessor(TilePreprocessor),
+    HEDPreprocessor(HEDPreprocessor),
+    LeReSDepthMapPreprocessor(LeReSDepthMapPreprocessor),
+    MiDaSDepthMapPreprocessor(MiDaSDepthMapPreprocessor),
+    LineartStandardPreprocessor(LineartStandardPreprocessor),
+    MLSDPreprocessor(MLSDPreprocessor),
 }

@@ -66,6 +66,8 @@ steps_min = 20
 steps_max = 20
 cfg_min = 7
 cfg_max = 7
+denoise_min = 0.3
+denoise_max = 0.8
 sampler_name = [
     "euler",
     "euler_ancestral",

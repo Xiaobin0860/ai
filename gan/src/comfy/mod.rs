@@ -36,9 +36,12 @@ pub use sampler::*;
 mod vae;
 pub use vae::*;
 
+mod preprocessor;
+pub use preprocessor::*;
+
 #[cfg(test)]
 mod comfy_tests {
-    use fixtures::test_workflow_api;
+    use fixtures::{test_workflow_all, test_workflow_api};
     use tracing::trace;
 
     use super::*;
@@ -83,6 +86,17 @@ mod comfy_tests {
     #[test]
     fn workflow_parsing_should_work() {
         let wf = test_workflow_api();
+        let wf = Workflow::from_json(wf);
+        trace!("wf: {:?}", wf);
+        assert!(wf.is_ok());
+        let wf = wf.unwrap();
+        let node = wf.get_node(NODE_EFFICIENT_LOADER).unwrap();
+        trace!("node: {:?}", node);
+    }
+
+    #[test]
+    fn all_workflow_parsing_should_work() {
+        let wf = test_workflow_all();
         let wf = Workflow::from_json(wf);
         trace!("wf: {:?}", wf);
         assert!(wf.is_ok());

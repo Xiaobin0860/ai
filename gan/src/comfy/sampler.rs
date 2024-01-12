@@ -7,10 +7,10 @@ pub struct KSampler {
     pub seed: i64,
     pub sampler_name: String,
     pub scheduler: String,
-    pub model: Vec<Value>,
-    pub positive: Vec<Value>,
-    pub negative: Vec<Value>,
-    pub latent_image: Vec<Value>,
+    pub model: Option<Value>,
+    pub positive: Option<Value>,
+    pub negative: Option<Value>,
+    pub latent_image: Option<Value>,
     /// prompt strength [1, 30]
     pub cfg: f32,
     /// denoise [0, 1]
