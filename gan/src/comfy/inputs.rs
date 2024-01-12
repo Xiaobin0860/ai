@@ -5,7 +5,7 @@ use crate::{
     CannyEdgePreprocessor, CtrlnetStack, EfficientLoader, HEDPreprocessor, ImagePreprocessor,
     KSampler, LeReSDepthMapPreprocessor, LineArtPreprocessor, LineartStandardPreprocessor,
     LoadImage, LoraStack, MLSDPreprocessor, MiDaSDepthMapPreprocessor, OpenposePreprocessor,
-    SaveImage, TilePreprocessor, VaeDecode,
+    SaveImage, TilePreprocessor, VAEEncode, VaeDecode,
 };
 
 // TODO: 准确类型可能需要自已实现根据class_type来判断, 直接ComfyUI api json解析丢失类型信息
@@ -28,6 +28,7 @@ pub enum Inputs {
     KSampler(KSampler),
     /// VAE Decode
     VaeDecode(VaeDecode),
+    VAEEncode(VAEEncode),
     /// Save Image
     SaveImage(SaveImage),
     CannyEdgePreprocessor(CannyEdgePreprocessor),

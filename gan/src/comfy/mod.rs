@@ -5,6 +5,7 @@ pub const NODE_SAVE_IMAGE: &str = "SaveImage";
 pub const NODE_IMAGE_PREPROCESSOR: &str = "AIO_Preprocessor";
 pub const NODE_EFFICIENT_LOADER: &str = "Efficient Loader";
 pub const NODE_KSAMPLER: &str = "KSampler";
+pub const NODE_LINEARTPREPROCESSOR: &str = "LineArtPreprocessor";
 
 mod api;
 pub use api::*;
@@ -41,7 +42,7 @@ pub use preprocessor::*;
 
 #[cfg(test)]
 mod comfy_tests {
-    use fixtures::{test_workflow_all, test_workflow_api};
+    use fixtures::{test_ai1, test_workflow_all, test_workflow_api};
     use tracing::trace;
 
     use super::*;
@@ -97,6 +98,17 @@ mod comfy_tests {
     #[test]
     fn all_workflow_parsing_should_work() {
         let wf = test_workflow_all();
+        let wf = Workflow::from_json(wf);
+        trace!("wf: {:?}", wf);
+        assert!(wf.is_ok());
+        let wf = wf.unwrap();
+        let node = wf.get_node(NODE_EFFICIENT_LOADER).unwrap();
+        trace!("node: {:?}", node);
+    }
+
+    #[test]
+    fn ai1_workflow_parsing_should_work() {
+        let wf = test_ai1();
         let wf = Workflow::from_json(wf);
         trace!("wf: {:?}", wf);
         assert!(wf.is_ok());

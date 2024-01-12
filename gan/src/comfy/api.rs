@@ -32,10 +32,11 @@ impl Comfy {
         data.insert("prompt", prompt);
         let client_id = self.uuid.clone().into();
         data.insert("client_id", &client_id);
-        info!("{api} {data:?}");
+        let json = serde_json::to_string(&data).unwrap();
+        info!("{json}");
         self.client
             .post(api)
-            .json(&data)
+            .body(json)
             .send()
             .await
             .expect("Failed to send prompt");

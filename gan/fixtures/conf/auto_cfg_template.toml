@@ -1,3 +1,5 @@
+wkflow = []
+
 # CN Stack
 [ctrlnet_stack]
 class_type = "CR Multi-ControlNet Stack"

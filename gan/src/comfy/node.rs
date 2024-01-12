@@ -1,8 +1,8 @@
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    CtrlnetStack, EfficientLoader, ImagePreprocessor, Inputs, KSampler, LoadImage, LoraStack,
-    SaveImage, VaeDecode,
+    CtrlnetStack, EfficientLoader, ImagePreprocessor, Inputs, KSampler, LineArtPreprocessor,
+    LoadImage, LoraStack, SaveImage, VaeDecode,
 };
 
 /// A node in the comfy ui workflow
@@ -51,6 +51,7 @@ impl Node {
     impl_input_methods!(LoraStack);
     impl_input_methods!(KSampler);
     impl_input_methods!(VaeDecode);
+    impl_input_methods!(LineArtPreprocessor);
 }
 
 /// Node meta

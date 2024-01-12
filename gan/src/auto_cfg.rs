@@ -165,6 +165,7 @@ impl ACtrlnetStack {
     }
 }
 
+#[derive(Debug)]
 pub struct ACtrlnet {
     pub ctrl_type: Vec<String>,
     pub start_min: f32,

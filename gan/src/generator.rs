@@ -4,11 +4,12 @@ use anyhow::anyhow;
 use fixtures::control_nets;
 use rand::random;
 use serde_json::Value;
+use tracing::debug;
 
 use crate::{
     rand_element, ACtrlnet, ACtrlnetStack, ALoraStack, AppResult, AutoCfg, CnCfg, Ctrlnet,
     CtrlnetStack, IdxControlNet, IdxLoRA, LoraCfg, LoraStack, Workflow, NODE_KSAMPLER,
-    NODE_LOAD_IMAGE,
+    NODE_LINEARTPREPROCESSOR, NODE_LOAD_IMAGE,
 };
 
 pub struct Generator {
@@ -35,7 +36,13 @@ impl Generator {
     fn rand_images(&mut self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<()> {
         if let Some(cfg) = &ac.load_image {
             let imgs = &cfg.images;
-            wf.get_node_mut(NODE_LOAD_IMAGE)?.load_image_mut().image = rand_element(imgs).clone();
+            let img_name = rand_element(imgs);
+            wf.get_node_mut(NODE_LOAD_IMAGE)?.load_image_mut().image = img_name.clone();
+            if let Some(save) = &ac.save_image {
+                wf.get_node_mut(&save.class_type)?
+                    .save_image_mut()
+                    .filename_prefix = img_name.split('.').next().unwrap().to_owned();
+            }
         }
         Ok(())
     }
@@ -47,8 +54,18 @@ impl Generator {
                     .get_node_mut(acn.class_type.as_str())?
                     .ctrlnet_stack_mut();
                 cn_stack.disable_all();
-                if let Some(_cfg) = self.rand_cn1(cn_stack, acn)? {
+                if let Some(cfg) = self.rand_cn1(cn_stack, acn)? {
                     //preprocessor
+                    //TODO: rand preprocessor
+                    if cfg.preprocessor == NODE_LINEARTPREPROCESSOR {
+                        wf.get_node_mut(&cfg.preprocessor)?
+                            .line_art_preprocessor_mut()
+                            .coarse = if random::<bool>() {
+                            "enable".into()
+                        } else {
+                            "disable".into()
+                        };
+                    }
                 }
                 // self.rand_cn2(cn_stack, acn);
                 // self.rand_cn3(cn_stack, acn);
@@ -65,6 +82,7 @@ impl Generator {
         let idx = IdxControlNet::ControlNet1;
         if let Some(acfg) = acn.cfg(&idx) {
             let cfg = self.rand_cn_cfg(&acfg)?;
+            debug!("rand_cn1 acfg={acfg:?}, cn_cfg={cfg:?}");
             cn_stack.enable(idx, &cfg);
             Ok(Some(cfg))
         } else {
@@ -82,6 +100,8 @@ impl Generator {
             model: rand_element(&cn.model).clone(),
             preprocessor: rand_element(&cn.preprocessor).clone(),
             weight: random::<f32>() * (acfg.strength_max - acfg.strength_min) + acfg.strength_min,
+            start: random::<f32>() * (acfg.start_max - acfg.start_min) + acfg.start_min,
+            end: random::<f32>() * (acfg.end_max - acfg.end_min) + acfg.end_min,
             ..Default::default()
         })
     }
@@ -99,6 +119,9 @@ impl Generator {
             //rand [cfg_min, cfg_max]
             sampler.cfg =
                 random::<f32>() * (asampler.cfg_max - asampler.cfg_min) + asampler.cfg_min;
+            //rand [denoise_min, denoise_max]
+            sampler.denoise = random::<f32>() * (asampler.denoise_max - asampler.denoise_min)
+                + asampler.denoise_min;
         }
         Ok(())
     }

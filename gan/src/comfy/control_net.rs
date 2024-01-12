@@ -58,6 +58,7 @@ pub struct CtrlnetStack {
     pub image_3: Option<Value>,
 }
 
+#[derive(Debug)]
 pub struct CnCfg {
     pub model: String,
     pub preprocessor: String,
