@@ -1,5 +1,7 @@
 use serde::{Deserialize, Serialize};
+use tracing::trace;
 
+#[derive(Debug)]
 pub enum IdxLoRA {
     LoRA1,
     LoRA2,
@@ -35,6 +37,7 @@ pub struct LoraStack {
     pub clip_weight_3: f32,
 }
 
+#[derive(Debug)]
 pub struct LoraCfg {
     pub lora_name: String,
     pub model_weight: f32,
@@ -61,6 +64,7 @@ impl LoraStack {
     }
 
     pub fn enable(&mut self, idx: IdxLoRA, cfg: &LoraCfg) {
+        trace!("enable lora: {idx:?} {cfg:?}");
         match idx {
             IdxLoRA::LoRA1 => {
                 self.switch_1 = "On".into();

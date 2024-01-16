@@ -3,13 +3,15 @@ use std::collections::HashMap;
 use anyhow::anyhow;
 use fixtures::control_nets;
 use rand::random;
-use tracing::debug;
+use tracing::{debug, trace};
 
 use crate::{
     rand_element, ACtrlnet, ACtrlnetStack, ALoraStack, AppResult, AutoCfg, CnCfg, Ctrlnet,
     CtrlnetStack, IdxControlNet, IdxLoRA, LoraCfg, LoraStack, Workflow, NODE_KSAMPLER,
     NODE_LINEARTPREPROCESSOR, NODE_LOAD_IMAGE,
 };
+
+const STEP_F32: f32 = 0.05;
 
 pub struct Generator {
     pub seed: i64,
@@ -95,12 +97,63 @@ impl Generator {
             .cns
             .get(ctrl_type)
             .ok_or(anyhow!("no cn type {ctrl_type}"))?;
+        let weight = if acfg.strength_max - acfg.strength_min > STEP_F32 {
+            let mut vs = Vec::new();
+            let mut max = acfg.strength_max;
+            vs.push(max);
+            while max > acfg.strength_min {
+                max -= STEP_F32;
+                if max < acfg.strength_min {
+                    vs.push(acfg.strength_min);
+                    break;
+                }
+                vs.push(max);
+            }
+            trace!("weight: {vs:?}");
+            *rand_element(&vs)
+        } else {
+            acfg.strength_max
+        };
+        let start = if acfg.start_max - acfg.start_min > STEP_F32 {
+            let mut vs = Vec::new();
+            let mut max = acfg.start_max;
+            vs.push(max);
+            while max > acfg.start_min {
+                max -= STEP_F32;
+                if max < acfg.start_min {
+                    vs.push(acfg.start_min);
+                    break;
+                }
+                vs.push(max);
+            }
+            trace!("start: {vs:?}");
+            *rand_element(&vs)
+        } else {
+            acfg.start_max
+        };
+        let end = if acfg.end_max - acfg.end_min > STEP_F32 {
+            let mut vs = Vec::new();
+            let mut max = acfg.end_max;
+            vs.push(max);
+            while max > acfg.end_min {
+                max -= STEP_F32;
+                if max < acfg.end_min {
+                    vs.push(acfg.end_min);
+                    break;
+                }
+                vs.push(max);
+            }
+            trace!("end: {vs:?}");
+            *rand_element(&vs)
+        } else {
+            acfg.end_max
+        };
         Ok(CnCfg {
             model: rand_element(&cn.model).clone(),
             preprocessor: rand_element(&cn.preprocessor).clone(),
-            weight: random::<f32>() * (acfg.strength_max - acfg.strength_min) + acfg.strength_min,
-            start: random::<f32>() * (acfg.start_max - acfg.start_min) + acfg.start_min,
-            end: random::<f32>() * (acfg.end_max - acfg.end_min) + acfg.end_min,
+            weight,
+            start,
+            end,
             ..Default::default()
         })
     }
@@ -113,14 +166,35 @@ impl Generator {
         sampler.seed = self.seed;
         if let Some(asampler) = &ac.sampler {
             //rand [steps_min, steps_max]
-            sampler.steps =
-                random::<u8>() % (asampler.steps_max - asampler.steps_min + 1) + asampler.steps_min;
+            if asampler.steps_max > asampler.steps_min {
+                let steps = random::<u8>() % (asampler.steps_max - asampler.steps_min + 1)
+                    + asampler.steps_min;
+                trace!("steps: {steps}");
+                sampler.steps = steps;
+            }
             //rand [cfg_min, cfg_max]
-            sampler.cfg =
-                random::<f32>() * (asampler.cfg_max - asampler.cfg_min) + asampler.cfg_min;
+            if asampler.cfg_max - asampler.cfg_min > STEP_F32 {
+                let cfg =
+                    random::<f32>() * (asampler.cfg_max - asampler.cfg_min) + asampler.cfg_min;
+                trace!("cfg: {cfg}");
+                sampler.cfg = cfg;
+            }
             //rand [denoise_min, denoise_max]
-            sampler.denoise = random::<f32>() * (asampler.denoise_max - asampler.denoise_min)
-                + asampler.denoise_min;
+            if asampler.denoise_max - asampler.denoise_min > STEP_F32 {
+                let mut vs = Vec::new();
+                let mut max = asampler.denoise_max;
+                vs.push(max);
+                while max > asampler.denoise_min {
+                    max -= STEP_F32;
+                    if max < asampler.denoise_min {
+                        vs.push(asampler.denoise_min);
+                        break;
+                    }
+                    vs.push(max);
+                }
+                trace!("denoise: {vs:?}");
+                sampler.denoise = *rand_element(&vs);
+            }
         }
         Ok(())
     }
@@ -182,9 +256,26 @@ impl Default for Generator {
 }
 
 fn rand_lora_cfg(names: &[String], wmodel_min: f32, wmodel_max: f32) -> LoraCfg {
+    let model_weight = if wmodel_max - wmodel_min > STEP_F32 {
+        let mut vs = Vec::new();
+        let mut max = wmodel_max;
+        vs.push(max);
+        while max > wmodel_min {
+            max -= STEP_F32;
+            if max < wmodel_min {
+                vs.push(wmodel_min);
+                break;
+            }
+            vs.push(max);
+        }
+        trace!("model_weight: {vs:?}");
+        *rand_element(&vs)
+    } else {
+        wmodel_max
+    };
     LoraCfg {
         lora_name: rand_element(names).clone(),
-        model_weight: random::<f32>() * (wmodel_max - wmodel_min) + wmodel_min,
+        model_weight,
         ..Default::default()
     }
 }

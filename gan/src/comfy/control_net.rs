@@ -1,5 +1,6 @@
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
+use tracing::trace;
 
 pub const CNT_CANNY: &str = "Canny";
 pub const CNT_DEPTH: &str = "Depth";
@@ -11,6 +12,7 @@ pub const CNT_SOFT_EDGE: &str = "SoftEdge";
 pub const CNT_SEGMENTATION: &str = "Segmentation";
 pub const CNT_TILE: &str = "Tile";
 
+#[derive(Debug)]
 pub enum IdxControlNet {
     ControlNet1,
     ControlNet2,
@@ -62,7 +64,7 @@ pub struct CtrlnetStack {
 pub struct CnCfg {
     pub model: String,
     pub preprocessor: String,
-    pub weight: f32,
+    pub weight: f32, //0.1
     pub start: f32,
     pub end: f32,
 }
@@ -89,6 +91,7 @@ impl CtrlnetStack {
     }
 
     pub fn enable(&mut self, idx: IdxControlNet, cfg: &CnCfg) {
+        trace!("enable control net: {idx:?} {cfg:?}");
         match idx {
             IdxControlNet::ControlNet1 => {
                 self.switch_1 = "On".into();

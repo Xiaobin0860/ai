@@ -91,10 +91,12 @@ pub struct ACtrlnetStack {
 
     pub switch_1: bool,
     pub ctrl_type_1: Vec<String>,
+    //0.05
     pub start_min_1: f32,
     pub start_max_1: f32,
     pub end_min_1: f32,
     pub end_max_1: f32,
+    //0.5
     pub strength_min_1: f32,
     pub strength_max_1: f32,
 
