@@ -8,7 +8,7 @@ pub struct AppArgs {
     pub comfy_host: String,
 
     /// comfy ui workflow json file
-    #[arg(long, default_value = "ai改画-素描-石膏像api.json")]
+    #[arg(long, default_value = "ai改画-素描-几何体.json")]
     pub workflow: String,
 
     /// auto generate config file

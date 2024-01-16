@@ -42,6 +42,15 @@
       "LineArtPreprocessor"
     ]
   },
+  "Coarse": {
+    "model": [
+      "sd/control_v11p_sd15_lineart.pth",
+      "sd/control_v11p_sd15_lineart_fp16.safetensors"
+    ],
+    "preprocessor": [
+      "LineArtPreprocessor"
+    ]
+  },
   "AnimeLineart": {
     "model": [
       "sd/control_v11p_sd15s2_lineart_anime.pth"

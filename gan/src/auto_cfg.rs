@@ -4,18 +4,31 @@ use serde::Deserialize;
 
 use crate::{AppResult, IdxControlNet};
 
+/// 自动出图配置
 #[derive(Debug, Deserialize)]
 pub struct AutoCfg {
+    /// 工作流
+    pub workflows: Vec<String>,
+
+    /// 每套参数出图次数
+    pub ct_per_params: usize,
+
+    /// CN配置
     pub ctrlnet_stack: Option<ACtrlnetStack>,
 
+    /// efficient配置 chkpt_name, vae_name, clip_skip, positive, negative, batch_size, w,h
     pub efficient: Option<AEfficient>,
 
+    /// 图片加载
     pub load_image: Option<ALoadImage>,
 
+    /// 图片保存
     pub save_image: Option<ASaveImage>,
 
+    /// lora配置
     pub lora_stack: Option<ALoraStack>,
 
+    /// 采样器配置 seed, steps, cfg, denoise, sampler_name, scheduler
     pub sampler: Option<ASampler>,
 }
 
@@ -96,8 +109,6 @@ pub struct ACtrlnetStack {
     pub strength_min_2: f32,
     pub strength_max_2: f32,
 
-    //先只支持共用图片
-    // pub images_2: Vec<String>,
     pub switch_3: bool,
     pub ctrl_type_3: Vec<String>,
     pub start_min_3: f32,
@@ -106,7 +117,6 @@ pub struct ACtrlnetStack {
     pub end_max_3: f32,
     pub strength_min_3: f32,
     pub strength_max_3: f32,
-    // pub images_3: Vec<String>,
 }
 
 impl ACtrlnetStack {

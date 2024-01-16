@@ -29,3 +29,12 @@ pub struct LoadImage {
     /// upload button
     pub upload: String,
 }
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct ImageScaleToSide {
+    pub side_length: usize,
+    pub side: String,
+    pub upscale_method: String,
+    pub crop: String,
+    pub image: Option<Value>,
+}

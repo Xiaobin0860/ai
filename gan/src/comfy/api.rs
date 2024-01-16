@@ -7,8 +7,24 @@ use tracing::info;
 
 #[derive(Debug, Deserialize)]
 pub struct WsMsg {
+    #[serde(rename = "type")]
     pub typ: String,
     pub data: Value,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct StatusMsg {
+    pub status: Status,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct Status {
+    pub exec_info: ExecInfo,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct ExecInfo {
+    pub queue_remaining: usize,
 }
 
 pub struct Comfy {

@@ -1,7 +1,7 @@
 {
   "22": {
     "inputs": {
-      "image": "smsg1.png",
+      "image": "geometric1.jpg",
       "upload": "image"
     },
     "class_type": "LoadImage",
@@ -65,7 +65,7 @@
       "lora_model_strength": 1,
       "lora_clip_strength": 1,
       "positive": "SMSG,geometric plaster casts,no human,(black and white:1.3),(monochrome:1.2),simple background,(white background:1.1),",
-      "negative": "verybadimagenegative_v1.3,EasyNegative",
+      "negative": "verybadimagenegative_v1.3,EasyNegative,",
       "token_normalization": "none",
       "weight_interpretation": "A1111",
       "empty_latent_width": 576,
@@ -87,7 +87,7 @@
   },
   "98": {
     "inputs": {
-      "seed": 101555674506970,
+      "seed": 789837240249890,
       "steps": 20,
       "cfg": 7,
       "sampler_name": "dpmpp_2m",
@@ -131,25 +131,12 @@
       "title": "VAE Decode"
     }
   },
-  "101": {
-    "inputs": {
-      "filename_prefix": "ComfyUI",
-      "images": [
-        "99",
-        0
-      ]
-    },
-    "class_type": "SaveImage",
-    "_meta": {
-      "title": "Save Image"
-    }
-  },
   "102": {
     "inputs": {
       "coarse": "disable",
       "resolution": 640,
       "image": [
-        "22",
+        "104",
         0
       ]
     },
@@ -161,7 +148,7 @@
   "103": {
     "inputs": {
       "pixels": [
-        "22",
+        "104",
         0
       ],
       "vae": [
@@ -172,6 +159,35 @@
     "class_type": "VAEEncode",
     "_meta": {
       "title": "VAE Encode"
+    }
+  },
+  "104": {
+    "inputs": {
+      "side_length": 1024,
+      "side": "Longest",
+      "upscale_method": "bilinear",
+      "crop": "disabled",
+      "image": [
+        "22",
+        0
+      ]
+    },
+    "class_type": "Image scale to side",
+    "_meta": {
+      "title": "Image scale to side"
+    }
+  },
+  "107": {
+    "inputs": {
+      "filename_prefix": "ComfyUI",
+      "images": [
+        "99",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
     }
   }
 }

@@ -1,27 +1,25 @@
-wkflow = []
+workflows = []
 
 # CN Stack
 [ctrlnet_stack]
 class_type = "CR Multi-ControlNet Stack"
 switch_1 = true
-ctrl_type_1 = ["lineart", "canny"]
+ctrl_type_1 = ["Canny", "Lineart", "AnimeLineart"]
 start_min_1 = 0
 start_max_1 = 1
 end_min_1 = 0
 end_max_1 = 1
 strength_min_1 = 0
 strength_max_1 = 1
-images_1 = ["1.jpg", "2.jpg"]
 
 switch_2 = false
-ctrl_type_2 = ["openpose"]
+ctrl_type_2 = ["OpenPose"]
 start_min_2 = 0
 start_max_2 = 1
 end_min_2 = 0
 end_max_2 = 1
 strength_min_2 = 0
 strength_max_2 = 1
-images_2 = []
 
 switch_3 = false
 ctrl_type_3 = []
@@ -31,7 +29,6 @@ end_min_3 = 0
 end_max_3 = 1
 strength_min_3 = 0
 strength_max_3 = 1
-images_3 = []
 
 
 # LoRA Stack

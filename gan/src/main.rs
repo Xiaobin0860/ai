@@ -1,5 +1,7 @@
 use futures_util::StreamExt;
-use gan::{AppArgs, AppResult, AutoCfg, Comfy, Generator, Workflow};
+use gan::{
+    AppArgs, AppResult, AutoCfg, Comfy, Generator, StatusMsg, Workflow, WsMsg, NODE_KSAMPLER,
+};
 
 use tokio_tungstenite::{connect_async, tungstenite::Message};
 use tracing::{debug, info, trace, warn};
@@ -26,10 +28,21 @@ async fn main() -> AppResult<()> {
         match msg {
             Message::Text(text) => {
                 debug!("text: {text}");
-                if text.contains(r#"queue_remaining": 0"#) {
-                    let mut wf = Workflow::from_file(args.workflow.as_str())?;
-                    let prompt = gen.rand(&mut wf, &ac)?;
-                    api.queue_prompt(&prompt).await;
+                let msg: WsMsg = serde_json::from_str(text.as_str())?;
+                if msg.typ == "status" {
+                    let status: StatusMsg = serde_json::from_value(msg.data)?;
+                    let remaining = status.status.exec_info.queue_remaining;
+                    info!("remaining: {remaining}");
+                    if remaining == 0 {
+                        let mut wf = Workflow::from_file(args.workflow.as_str())?;
+                        let _ = gen.rand(&mut wf, &ac)?;
+                        for _ in 0..ac.ct_per_params {
+                            wf.get_node_mut(NODE_KSAMPLER)?.k_sampler_mut().seed =
+                                rand::random::<u32>() as i64;
+                            let prompt = wf.to_json()?;
+                            api.queue_prompt(&prompt).await;
+                        }
+                    }
                 }
             }
             Message::Close(_) => {

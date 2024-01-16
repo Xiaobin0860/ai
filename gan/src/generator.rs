@@ -3,7 +3,6 @@ use std::collections::HashMap;
 use anyhow::anyhow;
 use fixtures::control_nets;
 use rand::random;
-use serde_json::Value;
 use tracing::debug;
 
 use crate::{
@@ -25,12 +24,12 @@ impl Generator {
         }
     }
 
-    pub fn rand(&mut self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<Value> {
+    pub fn rand(&mut self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<()> {
         self.rand_sampler(wf, ac)?;
         self.rand_lora(wf, ac)?;
         self.rand_cn(wf, ac)?;
         self.rand_images(wf, ac)?;
-        wf.to_json()
+        Ok(())
     }
 
     fn rand_images(&mut self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<()> {

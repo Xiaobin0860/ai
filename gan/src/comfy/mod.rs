@@ -42,7 +42,7 @@ pub use preprocessor::*;
 
 #[cfg(test)]
 mod comfy_tests {
-    use fixtures::{test_ai1, test_workflow_all, test_workflow_api};
+    use fixtures::{test_ai1, test_ai2, test_workflow_all, test_workflow_api};
     use tracing::trace;
 
     use super::*;
@@ -107,13 +107,17 @@ mod comfy_tests {
     }
 
     #[test]
-    fn ai1_workflow_parsing_should_work() {
+    fn ai_workflow_parsing_should_work() {
         let wf = test_ai1();
         let wf = Workflow::from_json(wf);
-        trace!("wf: {:?}", wf);
+        println!("test_ai1: {:?}", wf);
         assert!(wf.is_ok());
         let wf = wf.unwrap();
         let node = wf.get_node(NODE_EFFICIENT_LOADER).unwrap();
         trace!("node: {:?}", node);
+
+        let wf = test_ai2();
+        let wf = Workflow::from_json(wf);
+        println!("test_ai2: {:?}", wf);
     }
 }

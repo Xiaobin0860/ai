@@ -1,4 +1,7 @@
-wkflow = []
+workflows = []
+
+# 每套参数随机种子生图次数
+ct_per_params = 5
 
 # CN Stack
 [ctrlnet_stack]
@@ -11,7 +14,6 @@ end_min_1 = 0
 end_max_1 = 1
 strength_min_1 = 0
 strength_max_1 = 1
-images_1 = ["1.jpg", "2.jpg"]
 
 switch_2 = false
 ctrl_type_2 = ["OpenPose"]
@@ -21,7 +23,6 @@ end_min_2 = 0
 end_max_2 = 1
 strength_min_2 = 0
 strength_max_2 = 1
-images_2 = []
 
 switch_3 = false
 ctrl_type_3 = []
@@ -31,7 +32,6 @@ end_min_3 = 0
 end_max_3 = 1
 strength_min_3 = 0
 strength_max_3 = 1
-images_3 = []
 
 
 # LoRA Stack

@@ -3,9 +3,9 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     CannyEdgePreprocessor, CtrlnetStack, EfficientLoader, HEDPreprocessor, ImagePreprocessor,
-    KSampler, LeReSDepthMapPreprocessor, LineArtPreprocessor, LineartStandardPreprocessor,
-    LoadImage, LoraStack, MLSDPreprocessor, MiDaSDepthMapPreprocessor, OpenposePreprocessor,
-    SaveImage, TilePreprocessor, VAEEncode, VaeDecode,
+    ImageScaleToSide, KSampler, LeReSDepthMapPreprocessor, LineArtPreprocessor,
+    LineartStandardPreprocessor, LoadImage, LoraStack, MLSDPreprocessor, MiDaSDepthMapPreprocessor,
+    OpenposePreprocessor, SaveImage, TilePreprocessor, VAEEncode, VaeDecode,
 };
 
 // TODO: 准确类型可能需要自已实现根据class_type来判断, 直接ComfyUI api json解析丢失类型信息
@@ -31,6 +31,7 @@ pub enum Inputs {
     VAEEncode(VAEEncode),
     /// Save Image
     SaveImage(SaveImage),
+    ImageScaleToSide(ImageScaleToSide),
     CannyEdgePreprocessor(CannyEdgePreprocessor),
     OpenposePreprocessor(OpenposePreprocessor),
     LineArtPreprocessor(LineArtPreprocessor),
