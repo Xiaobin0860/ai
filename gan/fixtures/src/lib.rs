@@ -14,3 +14,4 @@ include_str_as_fn!(test_ai1, "../data/ai改画-素描-石膏像api.json");
 include_str_as_fn!(test_ai2, "../data/ai改画-素描-几何体.json");
 
 include_str_as_fn!(control_nets, "../data/control_nets.json");
+include_str_as_fn!(meikao, "../data/美考api.json");

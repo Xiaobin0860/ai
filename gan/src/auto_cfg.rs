@@ -16,7 +16,7 @@ pub struct AutoCfg {
     /// CN配置
     pub ctrlnet_stack: Option<ACtrlnetStack>,
 
-    /// efficient配置 chkpt_name, vae_name, clip_skip, positive, negative, batch_size, w,h
+    /// efficient配置 chkpt_name, vae_name, clip_skip, positive, negative, w,h
     pub efficient: Option<AEfficient>,
 
     /// 图片加载
@@ -34,20 +34,20 @@ pub struct AutoCfg {
 
 #[derive(Debug, Deserialize)]
 pub struct ALoadImage {
-    pub class_type: String,
+    pub title: String,
     pub images: Vec<String>,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct ASaveImage {
-    pub class_type: String,
+    pub title: String,
 
     pub filename_prefix: String,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct ALoraStack {
-    pub class_type: String,
+    pub title: String,
 
     pub switch_1: bool,
     pub model_name_1: Vec<String>,
@@ -73,7 +73,7 @@ impl ALoraStack {
 
 #[derive(Debug, Deserialize)]
 pub struct ASampler {
-    pub class_type: String,
+    pub title: String,
 
     pub steps_min: u8,
     pub steps_max: u8,
@@ -87,7 +87,7 @@ pub struct ASampler {
 
 #[derive(Debug, Deserialize)]
 pub struct ACtrlnetStack {
-    pub class_type: String,
+    pub title: String,
 
     pub switch_1: bool,
     pub ctrl_type_1: Vec<String>,
@@ -190,10 +190,9 @@ pub struct ACtrlnet {
 
 #[derive(Debug, Deserialize)]
 pub struct AEfficient {
-    pub class_type: String,
+    pub title: String,
     pub positive: Vec<String>,
     pub negative: Vec<String>,
-    pub batch_size: u16,
 }
 
 impl AutoCfg {
@@ -212,8 +211,8 @@ mod ac_tests {
     use tracing::trace;
 
     use crate::{
-        NODE_CONTROL_NET_STACK_, NODE_EFFICIENT_LOADER, NODE_KSAMPLER, NODE_LOAD_IMAGE,
-        NODE_LORA_STACK, NODE_SAVE_IMAGE,
+        NODE_CTRLNET_STACK, NODE_EFFICIENT_LOADER, NODE_KSAMPLER, NODE_LOAD_IMAGE, NODE_LORA_STACK,
+        NODE_SAVE_IMAGE,
     };
 
     use super::*;
@@ -228,14 +227,14 @@ mod ac_tests {
         let ctrlnet_stack = &cfg.ctrlnet_stack.unwrap();
         assert!(ctrlnet_stack.switch_1);
         assert!(!ctrlnet_stack.ctrl_type_1.is_empty());
-        assert_eq!(&ctrlnet_stack.class_type, NODE_CONTROL_NET_STACK_);
-        assert_eq!(&cfg.efficient.unwrap().class_type, NODE_EFFICIENT_LOADER);
-        assert_eq!(&cfg.save_image.unwrap().class_type, NODE_SAVE_IMAGE);
-        assert_eq!(&cfg.sampler.unwrap().class_type, NODE_KSAMPLER);
-        assert_eq!(cfg.load_image.unwrap().class_type, NODE_LOAD_IMAGE);
+        assert_eq!(&ctrlnet_stack.title, NODE_CTRLNET_STACK);
+        assert_eq!(&cfg.efficient.unwrap().title, NODE_EFFICIENT_LOADER);
+        assert_eq!(&cfg.save_image.unwrap().title, NODE_SAVE_IMAGE);
+        assert_eq!(&cfg.sampler.unwrap().title, NODE_KSAMPLER);
+        assert_eq!(cfg.load_image.unwrap().title, NODE_LOAD_IMAGE);
         let lora_stack = &cfg.lora_stack.unwrap();
         assert!(lora_stack.switch_1);
         assert!(!lora_stack.model_name_1.is_empty());
-        assert_eq!(&lora_stack.class_type, NODE_LORA_STACK);
+        assert_eq!(&lora_stack.title, NODE_LORA_STACK);
     }
 }

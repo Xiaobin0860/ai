@@ -41,3 +41,19 @@ pub fn derive_from_node(item: TokenStream) -> TokenStream {
 
     TokenStream::from(expanded)
 }
+
+#[proc_macro_derive(FromValue)]
+pub fn derive_from_value(item: TokenStream) -> TokenStream {
+    let input = parse_macro_input!(item as DeriveInput);
+    let name = &input.ident;
+    let expanded = quote! {
+        impl From<serde_json::Value> for #name {
+            fn from(v: serde_json::Value) -> Self {
+                serde_json::from_value(v)
+                    .context(stringify!(#name))
+                    .unwrap()
+            }
+        }
+    };
+    TokenStream::from(expanded)
+}

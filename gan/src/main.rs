@@ -35,7 +35,7 @@ async fn main() -> AppResult<()> {
                     info!("remaining: {remaining}");
                     if remaining == 0 {
                         let mut wf = Workflow::from_file(args.workflow.as_str())?;
-                        let _ = gen.rand(&mut wf, &ac)?;
+                        gen.rand(&mut wf, &ac)?;
                         for _ in 0..ac.ct_per_params {
                             wf.get_node_mut(NODE_KSAMPLER)?.k_sampler_mut().seed =
                                 rand::random::<u32>() as i64;

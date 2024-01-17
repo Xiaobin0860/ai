@@ -5,7 +5,7 @@ ct_per_params = 5
 
 # CN Stack
 [ctrlnet_stack]
-class_type = "CR Multi-ControlNet Stack"
+title = "CtrlnetStack"
 switch_1 = true
 ctrl_type_1 = ["Canny", "Lineart", "AnimeLineart"]
 start_min_1 = 0
@@ -36,7 +36,7 @@ strength_max_3 = 1
 
 # LoRA Stack
 [lora_stack]
-class_type = "CR LoRA Stack"
+title = "LoraStack"
 switch_1 = true
 model_name_1 = ["SCSFZH-000010", "SCSFZH-000015"]
 strength_min_1 = 1
@@ -55,7 +55,7 @@ strength_max_3 = 1
 
 # Efficient
 [efficient]
-class_type = "Efficient Loader"
+title = "EfficientLoader"
 positive = ["SCSFZH,1girl,standing on a ship deck, sailing the seas"]
 negative = ["verybadimagenegative_v1.3"]
 batch_size = 1
@@ -63,7 +63,7 @@ batch_size = 1
 
 # Sampler
 [sampler]
-class_type = "KSampler"
+title = "KSampler"
 steps_min = 20
 steps_max = 20
 cfg_min = 7
@@ -106,11 +106,11 @@ scheduler = [
 
 # SaveImage
 [save_image]
-class_type = "SaveImage"
+title = "SaveImage"
 filename_prefix = "a"
 
 
 # LoadImage
 [load_image]
-class_type = "LoadImage"
+title = "LoadImage"
 images = []

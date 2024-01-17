@@ -6,13 +6,13 @@
     },
     "class_type": "LoadImage",
     "_meta": {
-      "title": "Load Image"
+      "title": "LoadImage"
     }
   },
   "25": {
     "inputs": {
       "switch_1": "On",
-      "lora_name_1": "sd\\SCSFZH-000010.safetensors",
+      "lora_name_1": "SCSFZH-000010.safetensors",
       "model_weight_1": 1.3,
       "clip_weight_1": 1.2,
       "switch_2": "Off",
@@ -26,23 +26,23 @@
     },
     "class_type": "CR LoRA Stack",
     "_meta": {
-      "title": "💊 CR LoRA Stack"
+      "title": "LoraStack"
     }
   },
   "29": {
     "inputs": {
       "switch_1": "Off",
-      "controlnet_1": "sd\\control_v11p_sd15_lineart.pth",
+      "controlnet_1": "control_v11p_sd15_lineart.pth",
       "controlnet_strength_1": 1,
       "start_percent_1": 0,
       "end_percent_1": 1,
       "switch_2": "On",
-      "controlnet_2": "sd\\control_v11p_sd15_openpose.pth",
+      "controlnet_2": "control_v11p_sd15_openpose.pth",
       "controlnet_strength_2": 1,
       "start_percent_2": 0,
       "end_percent_2": 1,
       "switch_3": "Off",
-      "controlnet_3": "sd\\control_v11p_sd15_canny.pth",
+      "controlnet_3": "control_v11p_sd15_canny.pth",
       "controlnet_strength_3": 1,
       "start_percent_3": 0,
       "end_percent_3": 1,
@@ -61,7 +61,7 @@
     },
     "class_type": "CR Multi-ControlNet Stack",
     "_meta": {
-      "title": "🕹️ CR Multi-ControlNet Stack"
+      "title": "CtrlnetStack"
     }
   },
   "85": {
@@ -75,7 +75,7 @@
     },
     "class_type": "AIO_Preprocessor",
     "_meta": {
-      "title": "AIO Aux Preprocessor"
+      "title": "ImagePreprocessor"
     }
   },
   "86": {
@@ -89,7 +89,7 @@
     },
     "class_type": "AIO_Preprocessor",
     "_meta": {
-      "title": "AIO Aux Preprocessor"
+      "title": "ImagePreprocessor"
     }
   },
   "87": {
@@ -103,12 +103,12 @@
     },
     "class_type": "AIO_Preprocessor",
     "_meta": {
-      "title": "AIO Aux Preprocessor"
+      "title": "ImagePreprocessor"
     }
   },
   "97": {
     "inputs": {
-      "ckpt_name": "sd\\brav5Realisianv50_v10.safetensors",
+      "ckpt_name": "brav5Realisianv50_v10.safetensors",
       "vae_name": "Baked VAE",
       "clip_skip": -1,
       "lora_name": "None",
@@ -132,7 +132,7 @@
     },
     "class_type": "Efficient Loader",
     "_meta": {
-      "title": "Efficient Loader"
+      "title": "EfficientLoader"
     }
   },
   "98": {
@@ -178,7 +178,7 @@
     },
     "class_type": "VAEDecode",
     "_meta": {
-      "title": "VAE Decode"
+      "title": "VaeDecode"
     }
   },
   "101": {
@@ -191,7 +191,7 @@
     },
     "class_type": "SaveImage",
     "_meta": {
-      "title": "Save Image"
+      "title": "SaveImage"
     }
   }
 }

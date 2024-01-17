@@ -1,11 +1,15 @@
+use anyhow::Context;
 use macros::FromNode;
 use serde::{Deserialize, Serialize};
+use serde_json::Value;
 
 use crate::{
-    CannyEdgePreprocessor, CtrlnetStack, EfficientLoader, HEDPreprocessor, ImagePreprocessor,
-    ImageScaleToSide, KSampler, LeReSDepthMapPreprocessor, LineArtPreprocessor,
-    LineartStandardPreprocessor, LoadImage, LoraStack, MLSDPreprocessor, MiDaSDepthMapPreprocessor,
-    OpenposePreprocessor, SaveImage, TilePreprocessor, VAEEncode, VaeDecode,
+    CannyEdgePreprocessor, CropImage, CropSwitchAfter, CropSwitchPre, CtrlnetStack,
+    EfficientLoader, EmptyLatent, HEDPreprocessor, ImagePreprocessor, ImageScaleToSide, KSampler,
+    LeReSDepthMapPreprocessor, LineArtPreprocessor, LineartStandardPreprocessor, LoadImage,
+    LoraStack, MLSDPreprocessor, MiDaSDepthMapPreprocessor, OpenposePreprocessor,
+    PreprocessorSwitchAfter, PreprocessorSwitchPre, SaveImage, TilePreprocessor, TxtimgSwitch,
+    UpscaleImage, UpscaleSaveImage, UpscaleSwitchAfter, UpscaleSwitchPre, VaeDecode, VaeEncode,
 };
 
 // TODO: 准确类型可能需要自已实现根据class_type来判断, 直接ComfyUI api json解析丢失类型信息
@@ -20,7 +24,7 @@ pub enum Inputs {
     LoraStack(LoraStack),
     /// CR Multi-ControlNet Stack
     CtrlnetStack(CtrlnetStack),
-    /// AIO Aux Preprocessor
+    /// ImagePreprocessor
     ImagePreprocessor(ImagePreprocessor),
     /// Efficient Loader
     EfficientLoader(EfficientLoader),
@@ -28,10 +32,17 @@ pub enum Inputs {
     KSampler(KSampler),
     /// VAE Decode
     VaeDecode(VaeDecode),
-    VAEEncode(VAEEncode),
+    VaeEncode(VaeEncode),
     /// Save Image
     SaveImage(SaveImage),
     ImageScaleToSide(ImageScaleToSide),
+    UpscaleImage(UpscaleImage),
+    UpscaleSaveImage(UpscaleSaveImage),
+    CropImage(CropImage),
+
+    EmptyLatent(EmptyLatent),
+
+    /// Preprocessor
     CannyEdgePreprocessor(CannyEdgePreprocessor),
     OpenposePreprocessor(OpenposePreprocessor),
     LineArtPreprocessor(LineArtPreprocessor),
@@ -41,4 +52,21 @@ pub enum Inputs {
     MiDaSDepthMapPreprocessor(MiDaSDepthMapPreprocessor),
     LineartStandardPreprocessor(LineartStandardPreprocessor),
     MLSDPreprocessor(MLSDPreprocessor),
+
+    /// Switch
+    TxtimgSwitch(TxtimgSwitch),
+    UpscaleSwitchPre(UpscaleSwitchPre),
+    UpscaleSwitchAfter(UpscaleSwitchAfter),
+    PreprocessorSwitchPre(PreprocessorSwitchPre),
+    PreprocessorSwitchAfter(PreprocessorSwitchAfter),
+    CropSwitchPre(CropSwitchPre),
+    CropSwitchAfter(CropSwitchAfter),
+}
+
+impl TryFrom<Value> for Inputs {
+    type Error = anyhow::Error;
+
+    fn try_from(value: Value) -> Result<Self, Self::Error> {
+        serde_json::from_value(value).context("Inputs")
+    }
 }

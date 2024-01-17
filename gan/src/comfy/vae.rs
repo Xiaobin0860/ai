@@ -12,7 +12,7 @@ pub struct VaeDecode {
 
 /// VAE encoder
 #[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct VAEEncode {
+pub struct VaeEncode {
     /// samples input
     pub pixels: Value,
     /// vae input

@@ -8,7 +8,7 @@ use tracing::{debug, trace};
 use crate::{
     rand_element, ACtrlnet, ACtrlnetStack, ALoraStack, AppResult, AutoCfg, CnCfg, Ctrlnet,
     CtrlnetStack, IdxControlNet, IdxLoRA, LoraCfg, LoraStack, Workflow, NODE_KSAMPLER,
-    NODE_LINEARTPREPROCESSOR, NODE_LOAD_IMAGE,
+    NODE_LINEART_PREPROCESSOR, NODE_LOAD_IMAGE,
 };
 
 const STEP_F32: f32 = 0.05;
@@ -40,7 +40,7 @@ impl Generator {
             let img_name = rand_element(imgs);
             wf.get_node_mut(NODE_LOAD_IMAGE)?.load_image_mut().image = img_name.clone();
             if let Some(save) = &ac.save_image {
-                wf.get_node_mut(&save.class_type)?
+                wf.get_node_mut(&save.title)?
                     .save_image_mut()
                     .filename_prefix = img_name.split('.').next().unwrap().to_owned();
             }
@@ -51,14 +51,12 @@ impl Generator {
     fn rand_cn(&self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<()> {
         if let Some(acn) = &ac.ctrlnet_stack {
             if acn.switch() {
-                let cn_stack = wf
-                    .get_node_mut(acn.class_type.as_str())?
-                    .ctrlnet_stack_mut();
+                let cn_stack = wf.get_node_mut(acn.title.as_str())?.ctrlnet_stack_mut();
                 cn_stack.disable_all();
                 if let Some(cfg) = self.rand_cn1(cn_stack, acn)? {
                     //preprocessor
                     //TODO: rand preprocessor
-                    if cfg.preprocessor == NODE_LINEARTPREPROCESSOR {
+                    if cfg.preprocessor == NODE_LINEART_PREPROCESSOR {
                         wf.get_node_mut(&cfg.preprocessor)?
                             .line_art_preprocessor_mut()
                             .coarse = if random::<bool>() {
@@ -154,7 +152,6 @@ impl Generator {
             weight,
             start,
             end,
-            ..Default::default()
         })
     }
 
@@ -202,7 +199,7 @@ impl Generator {
     fn rand_lora(&mut self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<()> {
         if let Some(alora) = &ac.lora_stack {
             if alora.switch() {
-                let lora_stack = wf.get_node_mut(alora.class_type.as_str())?.lora_stack_mut();
+                let lora_stack = wf.get_node_mut(alora.title.as_str())?.lora_stack_mut();
                 lora_stack.disable_all();
                 self.rand_lora1(lora_stack, alora);
                 self.rand_lora2(lora_stack, alora);
