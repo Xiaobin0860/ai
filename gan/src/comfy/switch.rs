@@ -14,26 +14,6 @@ pub struct TxtimgSwitch {
     pub img2img: Value,
 }
 
-/// 高分开关 ImpactInversedSwitch
-#[derive(Debug, Serialize, Deserialize, Clone, FromValue)]
-pub struct UpscaleSwitchPre {
-    /// [1,2] 1高分 2直出
-    pub select: u8,
-    pub input: Value,
-}
-
-/// UpscaleSwitchAfter 高分开关 ImpactSwitch
-#[derive(Debug, Serialize, Deserialize, Clone, FromValue)]
-pub struct UpscaleSwitchAfter {
-    /// [1,2] 1高分 2直出
-    pub select: u8,
-    /// true
-    pub sel_mode: bool,
-    //
-    pub input1: Value,
-    pub input2: Value,
-}
-
 /// PreprocessorSwitchPre 预处理开关 ImpactInversedSwitch
 #[derive(Debug, Serialize, Deserialize, Clone, FromValue)]
 pub struct PreprocessorSwitchPre {
@@ -59,22 +39,4 @@ pub struct PreprocessorSwitchAfter {
     pub input8: Value,
     pub input9: Value,
     pub input10: Value,
-}
-
-/// CropSwitchPre ImpactInversedSwitch
-#[derive(Debug, Serialize, Deserialize, Clone, FromValue)]
-pub struct CropSwitchPre {
-    /// select [1,2] 1图生图 2文生图
-    pub select: u8,
-    pub input: Value,
-}
-/// CropSwitchAfter ImpactSwitch
-#[derive(Debug, Serialize, Deserialize, Clone, FromValue)]
-pub struct CropSwitchAfter {
-    /// select [1,2] 1图生图 2文生图
-    pub select: u8,
-    /// true
-    pub sel_mode: bool,
-    //
-    pub input1: Value,
 }

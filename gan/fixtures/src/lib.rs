@@ -15,3 +15,6 @@ include_str_as_fn!(test_ai2, "../data/ai改画-素描-几何体.json");
 
 include_str_as_fn!(control_nets, "../data/control_nets.json");
 include_str_as_fn!(meikao, "../data/美考api.json");
+include_str_as_fn!(txt2img, "../data/文生图api.json");
+include_str_as_fn!(img2img, "../data/图生图api.json");
+include_str_as_fn!(class_names, "../data/class_names.json");

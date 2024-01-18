@@ -1,0 +1,391 @@
+{
+  "3": {
+    "inputs": {
+      "seed": 62521205193819,
+      "steps": 20,
+      "cfg": 7,
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "karras",
+      "denoise": 0.75,
+      "model": [
+        "134",
+        0
+      ],
+      "positive": [
+        "134",
+        1
+      ],
+      "negative": [
+        "134",
+        2
+      ],
+      "latent_image": [
+        "78",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "15": {
+    "inputs": {
+      "image": "3.jpg",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "LoadImage"
+    }
+  },
+  "35": {
+    "inputs": {
+      "samples": [
+        "3",
+        0
+      ],
+      "vae": [
+        "134",
+        4
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VaeDecode"
+    }
+  },
+  "47": {
+    "inputs": {
+      "coarse": "enable",
+      "resolution": 832,
+      "image": [
+        "166",
+        0
+      ]
+    },
+    "class_type": "LineArtPreprocessor",
+    "_meta": {
+      "title": "LineArtPreprocessor"
+    }
+  },
+  "61": {
+    "inputs": {
+      "low_threshold": 101,
+      "high_threshold": 202,
+      "resolution": 576,
+      "image": [
+        "166",
+        1
+      ]
+    },
+    "class_type": "CannyEdgePreprocessor",
+    "_meta": {
+      "title": "CannyEdgePreprocessor"
+    }
+  },
+  "78": {
+    "inputs": {
+      "pixels": [
+        "182",
+        0
+      ],
+      "vae": [
+        "134",
+        4
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VaeEncode"
+    }
+  },
+  "118": {
+    "inputs": {
+      "guassian_sigma": 6,
+      "intensity_threshold": 9,
+      "resolution": 960,
+      "image": [
+        "166",
+        2
+      ]
+    },
+    "class_type": "LineartStandardPreprocessor",
+    "_meta": {
+      "title": "LineartStandardPreprocessor"
+    }
+  },
+  "119": {
+    "inputs": {
+      "select": 1,
+      "sel_mode": true,
+      "input1": [
+        "47",
+        0
+      ],
+      "input2": [
+        "61",
+        0
+      ],
+      "input3": [
+        "118",
+        0
+      ],
+      "input4": [
+        "156",
+        0
+      ],
+      "input5": [
+        "120",
+        0
+      ],
+      "input6": [
+        "163",
+        0
+      ],
+      "input7": [
+        "169",
+        0
+      ],
+      "input8": [
+        "170",
+        0
+      ],
+      "input9": [
+        "171",
+        0
+      ],
+      "input10": [
+        "172",
+        0
+      ]
+    },
+    "class_type": "ImpactSwitch",
+    "_meta": {
+      "title": "PreprocessorSwitchAfter"
+    }
+  },
+  "120": {
+    "inputs": {
+      "detect_hand": "enable",
+      "detect_body": "enable",
+      "detect_face": "enable",
+      "resolution": 576,
+      "image": [
+        "166",
+        4
+      ]
+    },
+    "class_type": "OpenposePreprocessor",
+    "_meta": {
+      "title": "OpenposePreprocessor"
+    }
+  },
+  "125": {
+    "inputs": {
+      "filename_prefix": "out",
+      "images": [
+        "35",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "SaveImage"
+    }
+  },
+  "130": {
+    "inputs": {
+      "switch_1": "On",
+      "lora_name_1": "SCSFZH-000020.safetensors",
+      "model_weight_1": 1,
+      "clip_weight_1": 1,
+      "switch_2": "Off",
+      "lora_name_2": "None",
+      "model_weight_2": 1,
+      "clip_weight_2": 1,
+      "switch_3": "Off",
+      "lora_name_3": "None",
+      "model_weight_3": 1,
+      "clip_weight_3": 1
+    },
+    "class_type": "CR LoRA Stack",
+    "_meta": {
+      "title": "LoraStack"
+    }
+  },
+  "132": {
+    "inputs": {
+      "switch_1": "On",
+      "controlnet_1": "control_v11p_sd15_softedge_fp16.safetensors",
+      "controlnet_strength_1": 1,
+      "start_percent_1": 0,
+      "end_percent_1": 1,
+      "switch_2": "Off",
+      "controlnet_2": "None",
+      "controlnet_strength_2": 1,
+      "start_percent_2": 0,
+      "end_percent_2": 1,
+      "switch_3": "Off",
+      "controlnet_3": "None",
+      "controlnet_strength_3": 1,
+      "start_percent_3": 0,
+      "end_percent_3": 0.22,
+      "image_1": [
+        "119",
+        0
+      ]
+    },
+    "class_type": "CR Multi-ControlNet Stack",
+    "_meta": {
+      "title": "CtrlnetStack"
+    }
+  },
+  "134": {
+    "inputs": {
+      "ckpt_name": "brav5Realisianv50_v10.safetensors",
+      "vae_name": "Baked VAE",
+      "clip_skip": -1,
+      "lora_name": "None",
+      "lora_model_strength": 1,
+      "lora_clip_strength": 1,
+      "positive": "photograph of vitorian woman with wings,sky clouds,meadow g",
+      "negative": "embedding:verybadimagenegative_v1.3",
+      "token_normalization": "none",
+      "weight_interpretation": "A1111",
+      "empty_latent_width": 512,
+      "empty_latent_height": 768,
+      "batch_size": 1,
+      "lora_stack": [
+        "130",
+        0
+      ],
+      "cnet_stack": [
+        "132",
+        0
+      ]
+    },
+    "class_type": "Efficient Loader",
+    "_meta": {
+      "title": "EfficientLoader"
+    }
+  },
+  "156": {
+    "inputs": {
+      "safe": "enable",
+      "resolution": 512,
+      "image": [
+        "166",
+        3
+      ]
+    },
+    "class_type": "HEDPreprocessor",
+    "_meta": {
+      "title": "HEDPreprocessor"
+    }
+  },
+  "163": {
+    "inputs": {
+      "preprocessor": "CannyEdgePreprocessor",
+      "resolution": 512,
+      "image": [
+        "166",
+        5
+      ]
+    },
+    "class_type": "AIO_Preprocessor",
+    "_meta": {
+      "title": "ImagePreprocessor"
+    }
+  },
+  "166": {
+    "inputs": {
+      "select": 1,
+      "input": [
+        "15",
+        0
+      ]
+    },
+    "class_type": "ImpactInversedSwitch",
+    "_meta": {
+      "title": "PreprocessorSwitchPre"
+    }
+  },
+  "169": {
+    "inputs": {
+      "pyrUp_iters": 3,
+      "resolution": 512,
+      "image": [
+        "166",
+        6
+      ]
+    },
+    "class_type": "TilePreprocessor",
+    "_meta": {
+      "title": "TilePreprocessor"
+    }
+  },
+  "170": {
+    "inputs": {
+      "rm_nearest": 0,
+      "rm_background": 0,
+      "boost": "disable",
+      "resolution": 512,
+      "image": [
+        "166",
+        7
+      ]
+    },
+    "class_type": "LeReS-DepthMapPreprocessor",
+    "_meta": {
+      "title": "LeReSDepthMapPreprocessor"
+    }
+  },
+  "171": {
+    "inputs": {
+      "a": 6.283185307179586,
+      "bg_threshold": 0.1,
+      "resolution": 512,
+      "image": [
+        "166",
+        8
+      ]
+    },
+    "class_type": "MiDaS-DepthMapPreprocessor",
+    "_meta": {
+      "title": "MiDaSDepthMapPreprocessor"
+    }
+  },
+  "172": {
+    "inputs": {
+      "score_threshold": 0.1,
+      "dist_threshold": 0.1,
+      "resolution": 512,
+      "image": [
+        "166",
+        9
+      ]
+    },
+    "class_type": "M-LSDPreprocessor",
+    "_meta": {
+      "title": "MLSDPreprocessor"
+    }
+  },
+  "182": {
+    "inputs": {
+      "target_w": 576,
+      "target_h": 768,
+      "crop_position": "center",
+      "offset": 0,
+      "interpolation": "bilinear",
+      "image": [
+        "15",
+        0
+      ]
+    },
+    "class_type": "Crop Image TargetSize (JPS)",
+    "_meta": {
+      "title": "CropImage"
+    }
+  }
+}

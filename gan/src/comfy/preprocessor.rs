@@ -7,7 +7,7 @@ pub struct CannyEdgePreprocessor {
     pub low_threshold: u8,
     pub high_threshold: u8,
     pub resolution: u16,
-    pub image: Option<Value>,
+    pub image: Value,
 }
 
 /// Openpose preprocessor
@@ -17,7 +17,7 @@ pub struct OpenposePreprocessor {
     pub detect_body: String,
     pub detect_face: String,
     pub resolution: u16,
-    pub image: Option<Value>,
+    pub image: Value,
 }
 
 /// Line art preprocessor
@@ -25,7 +25,7 @@ pub struct OpenposePreprocessor {
 pub struct LineArtPreprocessor {
     pub coarse: String,
     pub resolution: u16,
-    pub image: Option<Value>,
+    pub image: Value,
 }
 
 /// Tile preprocessor

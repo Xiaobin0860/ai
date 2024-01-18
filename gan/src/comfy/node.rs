@@ -4,9 +4,7 @@ use serde_json::Value;
 
 use crate::{
     CtrlnetStack, EfficientLoader, ImagePreprocessor, Inputs, KSampler, LineArtPreprocessor,
-    LoadImage, LoraStack, SaveImage, VaeDecode, NODE_CROP_SWITCH_AFTER, NODE_CROP_SWITCH_PRE,
-    NODE_PREPROCESSOR_SWITCH_AFTER, NODE_PREPROCESSOR_SWITCH_PRE, NODE_SAVE_IMAGE,
-    NODE_UPSAVE_IMAGE, NODE_UPSCALE_SWITCH_AFTER, NODE_UPSCALE_SWITCH_PRE,
+    LoadImage, LoraStack, SaveImage, VaeDecode, NODE_SAVE_IMAGE,
 };
 
 /// A node in the comfy ui workflow
@@ -83,16 +81,7 @@ impl<'de> Deserialize<'de> for Node {
             .to_owned();
         let meta = Meta { title };
         let inputs = json["inputs"].clone();
-        let inputs = match meta.title.as_str() {
-            t if t == NODE_PREPROCESSOR_SWITCH_PRE => Inputs::PreprocessorSwitchPre(inputs.into()),
-            t if t == NODE_PREPROCESSOR_SWITCH_AFTER => {
-                Inputs::PreprocessorSwitchAfter(inputs.into())
-            }
-            t if t == NODE_UPSCALE_SWITCH_PRE => Inputs::UpscaleSwitchPre(inputs.into()),
-            t if t == NODE_UPSCALE_SWITCH_AFTER => Inputs::UpscaleSwitchAfter(inputs.into()),
-            t if t == NODE_CROP_SWITCH_PRE => Inputs::CropSwitchPre(inputs.into()),
-            t if t == NODE_CROP_SWITCH_AFTER => Inputs::CropSwitchAfter(inputs.into()),
-            t if t == NODE_UPSAVE_IMAGE => Inputs::UpscaleSaveImage(inputs.into()),
+        let inputs = match class_type.as_str() {
             t if t == NODE_SAVE_IMAGE => Inputs::SaveImage(inputs.into()),
             t => inputs.try_into().context(t.to_owned()).unwrap(),
         };

@@ -4,12 +4,11 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
 use crate::{
-    CannyEdgePreprocessor, CropImage, CropSwitchAfter, CropSwitchPre, CtrlnetStack,
-    EfficientLoader, EmptyLatent, HEDPreprocessor, ImagePreprocessor, ImageScaleToSide, KSampler,
-    LeReSDepthMapPreprocessor, LineArtPreprocessor, LineartStandardPreprocessor, LoadImage,
-    LoraStack, MLSDPreprocessor, MiDaSDepthMapPreprocessor, OpenposePreprocessor,
-    PreprocessorSwitchAfter, PreprocessorSwitchPre, SaveImage, TilePreprocessor, TxtimgSwitch,
-    UpscaleImage, UpscaleSaveImage, UpscaleSwitchAfter, UpscaleSwitchPre, VaeDecode, VaeEncode,
+    CannyEdgePreprocessor, CropImage, CtrlnetStack, EfficientLoader, EmptyLatent, HEDPreprocessor,
+    ImagePreprocessor, ImageScaleToSide, KSampler, LeReSDepthMapPreprocessor, LineArtPreprocessor,
+    LineartStandardPreprocessor, LoadImage, LoraStack, MLSDPreprocessor, MiDaSDepthMapPreprocessor,
+    OpenposePreprocessor, PreprocessorSwitchAfter, PreprocessorSwitchPre, SaveImage,
+    TilePreprocessor, TxtimgSwitch, UpscaleImage, VaeDecode, VaeEncode,
 };
 
 // TODO: 准确类型可能需要自已实现根据class_type来判断, 直接ComfyUI api json解析丢失类型信息
@@ -37,7 +36,6 @@ pub enum Inputs {
     SaveImage(SaveImage),
     ImageScaleToSide(ImageScaleToSide),
     UpscaleImage(UpscaleImage),
-    UpscaleSaveImage(UpscaleSaveImage),
     CropImage(CropImage),
 
     EmptyLatent(EmptyLatent),
@@ -55,12 +53,8 @@ pub enum Inputs {
 
     /// Switch
     TxtimgSwitch(TxtimgSwitch),
-    UpscaleSwitchPre(UpscaleSwitchPre),
-    UpscaleSwitchAfter(UpscaleSwitchAfter),
     PreprocessorSwitchPre(PreprocessorSwitchPre),
     PreprocessorSwitchAfter(PreprocessorSwitchAfter),
-    CropSwitchPre(CropSwitchPre),
-    CropSwitchAfter(CropSwitchAfter),
 }
 
 impl TryFrom<Value> for Inputs {
