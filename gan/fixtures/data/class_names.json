@@ -22,5 +22,6 @@
   "MLSDPreprocessor": "M-LSDPreprocessor",
   "EmptyLatent": "EmptyLatentImage",
   "CropImage": "Crop Image TargetSize (JPS)",
-  "UpscaleImage": "CR Upscale Image"
+  "UpscaleImage": "CR Upscale Image",
+  "RepeatLatent": "RepeatLatentBatch"
 }

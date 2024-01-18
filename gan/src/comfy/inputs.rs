@@ -7,7 +7,7 @@ use crate::{
     CannyEdgePreprocessor, CropImage, CtrlnetStack, EfficientLoader, EmptyLatent, HEDPreprocessor,
     ImagePreprocessor, ImageScaleToSide, KSampler, LeReSDepthMapPreprocessor, LineArtPreprocessor,
     LineartStandardPreprocessor, LoadImage, LoraStack, MLSDPreprocessor, MiDaSDepthMapPreprocessor,
-    OpenposePreprocessor, PreprocessorSwitchAfter, PreprocessorSwitchPre, SaveImage,
+    OpenposePreprocessor, PreprocessorSwitchAfter, PreprocessorSwitchPre, RepeatLatent, SaveImage,
     TilePreprocessor, TxtimgSwitch, UpscaleImage, VaeDecode, VaeEncode,
 };
 
@@ -39,6 +39,7 @@ pub enum Inputs {
     CropImage(CropImage),
 
     EmptyLatent(EmptyLatent),
+    RepeatLatent(RepeatLatent),
 
     /// Preprocessor
     CannyEdgePreprocessor(CannyEdgePreprocessor),

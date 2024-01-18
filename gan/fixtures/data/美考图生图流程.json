@@ -1,347 +1,20 @@
 {
-  "last_node_id": 205,
-  "last_link_id": 301,
+  "last_node_id": 206,
+  "last_link_id": 314,
   "nodes": [
-    {
-      "id": 47,
-      "type": "LineArtPreprocessor",
-      "pos": [
-        206,
-        387
-      ],
-      "size": {
-        "0": 315,
-        "1": 82
-      },
-      "flags": {},
-      "order": 5,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 226,
-          "label": "image"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            227
-          ],
-          "shape": 3,
-          "label": "IMAGE",
-          "slot_index": 0
-        }
-      ],
-      "title": "LineArtPreprocessor",
-      "properties": {
-        "Node name for S&R": "LineArtPreprocessor"
-      },
-      "widgets_values": [
-        "enable",
-        832
-      ],
-      "color": "#223",
-      "bgcolor": "#335",
-      "shape": 1
-    },
-    {
-      "id": 119,
-      "type": "ImpactSwitch",
-      "pos": [
-        614,
-        732
-      ],
-      "size": {
-        "0": 229,
-        "1": 296
-      },
-      "flags": {},
-      "order": 15,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "input1",
-          "type": "IMAGE",
-          "link": 227
-        },
-        {
-          "name": "input2",
-          "type": "IMAGE",
-          "link": 229
-        },
-        {
-          "name": "input3",
-          "type": "IMAGE",
-          "link": 231
-        },
-        {
-          "name": "input4",
-          "type": "IMAGE",
-          "link": 233
-        },
-        {
-          "name": "input5",
-          "type": "IMAGE",
-          "link": 235
-        },
-        {
-          "name": "input6",
-          "type": "IMAGE",
-          "link": 237
-        },
-        {
-          "name": "input7",
-          "type": "IMAGE",
-          "link": 239
-        },
-        {
-          "name": "input8",
-          "type": "IMAGE",
-          "link": 241
-        },
-        {
-          "name": "input9",
-          "type": "IMAGE",
-          "link": 243
-        },
-        {
-          "name": "input10",
-          "type": "IMAGE",
-          "link": 245
-        },
-        {
-          "name": "input11",
-          "type": "IMAGE",
-          "link": null
-        },
-        {
-          "name": "select",
-          "type": "INT",
-          "link": 294,
-          "widget": {
-            "name": "select"
-          }
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            185
-          ],
-          "shape": 3,
-          "label": "IMAGE",
-          "slot_index": 0
-        },
-        {
-          "name": "selected_label",
-          "type": "STRING",
-          "links": null,
-          "shape": 3,
-          "label": "selected_label"
-        },
-        {
-          "name": "selected_index",
-          "type": "INT",
-          "links": null,
-          "shape": 3,
-          "label": "selected_index",
-          "slot_index": 2
-        }
-      ],
-      "title": "PreprocessorSwitchAfter",
-      "properties": {
-        "Node name for S&R": "ImpactSwitch"
-      },
-      "widgets_values": [
-        1,
-        true
-      ],
-      "shape": 1
-    },
-    {
-      "id": 166,
-      "type": "ImpactInversedSwitch",
-      "pos": [
-        -157,
-        644
-      ],
-      "size": {
-        "0": 210,
-        "1": 258
-      },
-      "flags": {},
-      "order": 3,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "input",
-          "type": "IMAGE",
-          "link": 271
-        },
-        {
-          "name": "select",
-          "type": "INT",
-          "link": 293,
-          "widget": {
-            "name": "select"
-          },
-          "slot_index": 1
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output1",
-          "type": "IMAGE",
-          "links": [
-            226
-          ],
-          "shape": 3,
-          "slot_index": 0
-        },
-        {
-          "name": "output2",
-          "type": "IMAGE",
-          "links": [
-            228
-          ],
-          "slot_index": 1
-        },
-        {
-          "name": "output3",
-          "type": "IMAGE",
-          "links": [
-            230
-          ],
-          "slot_index": 2
-        },
-        {
-          "name": "output4",
-          "type": "IMAGE",
-          "links": [
-            232
-          ],
-          "slot_index": 3
-        },
-        {
-          "name": "output5",
-          "type": "IMAGE",
-          "links": [
-            234
-          ],
-          "slot_index": 4
-        },
-        {
-          "name": "output6",
-          "type": "IMAGE",
-          "links": [
-            236
-          ],
-          "slot_index": 5
-        },
-        {
-          "name": "output7",
-          "type": "IMAGE",
-          "links": [
-            238
-          ],
-          "slot_index": 6
-        },
-        {
-          "name": "output8",
-          "type": "IMAGE",
-          "links": [
-            240
-          ],
-          "slot_index": 7
-        },
-        {
-          "name": "output9",
-          "type": "IMAGE",
-          "links": [
-            242
-          ],
-          "slot_index": 8
-        },
-        {
-          "name": "output10",
-          "type": "IMAGE",
-          "links": [
-            244
-          ],
-          "slot_index": 9
-        },
-        {
-          "name": "output11",
-          "type": "IMAGE",
-          "links": null
-        }
-      ],
-      "title": "PreprocessorSwitchPre",
-      "properties": {
-        "Node name for S&R": "ImpactInversedSwitch"
-      },
-      "widgets_values": [
-        1
-      ],
-      "shape": 1
-    },
-    {
-      "id": 204,
-      "type": "PrimitiveNode",
-      "pos": [
-        -155,
-        522
-      ],
-      "size": {
-        "0": 210,
-        "1": 82
-      },
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "outputs": [
-        {
-          "name": "INT",
-          "type": "INT",
-          "links": [
-            293,
-            294
-          ],
-          "widget": {
-            "name": "select"
-          },
-          "slot_index": 0
-        }
-      ],
-      "title": "PreprocessorSelect",
-      "properties": {
-        "Run widget replace on values": false
-      },
-      "widgets_values": [
-        1,
-        "fixed"
-      ],
-      "shape": 1
-    },
     {
       "id": 130,
       "type": "CR LoRA Stack",
       "pos": [
-        1014,
-        433
+        680,
+        400
       ],
       "size": {
         "0": 389,
         "1": 349
       },
       "flags": {},
-      "order": 1,
+      "order": 0,
       "mode": 0,
       "inputs": [
         {
@@ -391,108 +64,480 @@
       "shape": 1
     },
     {
-      "id": 132,
-      "type": "CR Multi-ControlNet Stack",
+      "id": 171,
+      "type": "MiDaS-DepthMapPreprocessor",
       "pos": [
-        985,
-        818
+        270,
+        1470
       ],
       "size": {
-        "0": 419,
-        "1": 454
+        "0": 315,
+        "1": 106
       },
       "flags": {},
-      "order": 16,
+      "order": 11,
       "mode": 0,
       "inputs": [
         {
-          "name": "image_1",
+          "name": "image",
           "type": "IMAGE",
-          "link": 185,
-          "label": "image_1"
-        },
-        {
-          "name": "image_2",
-          "type": "IMAGE",
-          "link": null,
-          "label": "image_2"
-        },
-        {
-          "name": "image_3",
-          "type": "IMAGE",
-          "link": null,
-          "label": "image_3"
-        },
-        {
-          "name": "controlnet_stack",
-          "type": "CONTROL_NET_STACK",
-          "link": null,
-          "label": "controlnet_stack"
+          "link": 310
         }
       ],
       "outputs": [
         {
-          "name": "CONTROLNET_STACK",
-          "type": "CONTROL_NET_STACK",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "MiDaSDepthMapPreprocessor",
+      "properties": {
+        "Node name for S&R": "MiDaS-DepthMapPreprocessor"
+      },
+      "widgets_values": [
+        6.283185307179586,
+        0.1,
+        512
+      ],
+      "shape": 1
+    },
+    {
+      "id": 170,
+      "type": "LeReS-DepthMapPreprocessor",
+      "pos": [
+        260,
+        1300
+      ],
+      "size": {
+        "0": 315,
+        "1": 130
+      },
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 309
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
           "links": [
-            179
+            241
           ],
           "shape": 3,
-          "label": "CONTROLNET_STACK",
+          "slot_index": 0
+        }
+      ],
+      "title": "LeReSDepthMapPreprocessor",
+      "properties": {
+        "Node name for S&R": "LeReS-DepthMapPreprocessor"
+      },
+      "widgets_values": [
+        0,
+        0,
+        "disable",
+        512
+      ],
+      "shape": 1
+    },
+    {
+      "id": 169,
+      "type": "TilePreprocessor",
+      "pos": [
+        260,
+        1160
+      ],
+      "size": {
+        "0": 315,
+        "1": 82
+      },
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 308
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "TilePreprocessor",
+      "properties": {
+        "Node name for S&R": "TilePreprocessor"
+      },
+      "widgets_values": [
+        3,
+        512
+      ],
+      "shape": 1
+    },
+    {
+      "id": 163,
+      "type": "AIO_Preprocessor",
+      "pos": [
+        260,
+        1030
+      ],
+      "size": {
+        "0": 315,
+        "1": 82
+      },
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 307
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            237
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "ImagePreprocessor",
+      "properties": {
+        "Node name for S&R": "AIO_Preprocessor"
+      },
+      "widgets_values": [
+        "CannyEdgePreprocessor",
+        512
+      ],
+      "shape": 1
+    },
+    {
+      "id": 120,
+      "type": "OpenposePreprocessor",
+      "pos": [
+        260,
+        830
+      ],
+      "size": {
+        "0": 315,
+        "1": 150
+      },
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 306,
+          "label": "image"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [],
+          "shape": 3,
+          "label": "IMAGE",
           "slot_index": 0
         },
         {
-          "name": "show_help",
-          "type": "STRING",
+          "name": "POSE_KEYPOINT",
+          "type": "POSE_KEYPOINT",
           "links": null,
           "shape": 3,
-          "label": "show_help"
+          "label": "POSE_KEYPOINT"
         }
       ],
-      "title": "CtrlnetStack",
+      "title": "OpenposePreprocessor",
       "properties": {
-        "Node name for S&R": "CR Multi-ControlNet Stack"
+        "Node name for S&R": "OpenposePreprocessor"
       },
       "widgets_values": [
-        "On",
-        "control_v11p_sd15_softedge_fp16.safetensors",
-        1,
-        0,
-        1,
-        "Off",
-        "None",
-        1,
-        0,
-        1,
-        "Off",
-        "None",
-        1,
-        0,
-        0.22
+        "enable",
+        "enable",
+        "enable",
+        576
       ],
+      "color": "#223",
+      "bgcolor": "#335",
+      "shape": 1
+    },
+    {
+      "id": 156,
+      "type": "HEDPreprocessor",
+      "pos": [
+        260,
+        700
+      ],
+      "size": {
+        "0": 315,
+        "1": 82
+      },
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 305
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            233
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "HEDPreprocessor",
+      "properties": {
+        "Node name for S&R": "HEDPreprocessor"
+      },
+      "widgets_values": [
+        "enable",
+        512
+      ],
+      "color": "#223",
+      "bgcolor": "#335",
+      "shape": 1
+    },
+    {
+      "id": 118,
+      "type": "LineartStandardPreprocessor",
+      "pos": [
+        260,
+        550
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 304,
+          "label": "image"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [],
+          "shape": 3,
+          "label": "IMAGE",
+          "slot_index": 0
+        }
+      ],
+      "title": "LineartStandardPreprocessor",
+      "properties": {
+        "Node name for S&R": "LineartStandardPreprocessor"
+      },
+      "widgets_values": [
+        6,
+        9,
+        960
+      ],
+      "color": "#223",
+      "bgcolor": "#335",
+      "shape": 1
+    },
+    {
+      "id": 61,
+      "type": "CannyEdgePreprocessor",
+      "pos": [
+        260,
+        390
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 303,
+          "label": "image"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            229
+          ],
+          "shape": 3,
+          "label": "IMAGE",
+          "slot_index": 0
+        }
+      ],
+      "title": "CannyEdgePreprocessor",
+      "properties": {
+        "Node name for S&R": "CannyEdgePreprocessor"
+      },
+      "widgets_values": [
+        101,
+        202,
+        576
+      ],
+      "color": "#223",
+      "bgcolor": "#335",
+      "shape": 1
+    },
+    {
+      "id": 172,
+      "type": "M-LSDPreprocessor",
+      "pos": [
+        270,
+        1610
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 311
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            245
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "MLSDPreprocessor",
+      "properties": {
+        "Node name for S&R": "M-LSDPreprocessor"
+      },
+      "widgets_values": [
+        0.1,
+        0.1,
+        512
+      ],
+      "shape": 1
+    },
+    {
+      "id": 47,
+      "type": "LineArtPreprocessor",
+      "pos": [
+        260,
+        260
+      ],
+      "size": {
+        "0": 315,
+        "1": 82
+      },
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 302,
+          "label": "image"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            312
+          ],
+          "shape": 3,
+          "label": "IMAGE",
+          "slot_index": 0
+        }
+      ],
+      "title": "LineArtPreprocessor",
+      "properties": {
+        "Node name for S&R": "LineArtPreprocessor"
+      },
+      "widgets_values": [
+        "enable",
+        832
+      ],
+      "color": "#223",
+      "bgcolor": "#335",
       "shape": 1
     },
     {
       "id": 15,
       "type": "LoadImage",
       "pos": [
-        -603,
-        671
+        -195,
+        686
       ],
       "size": {
         "0": 315,
         "1": 314
       },
       "flags": {},
-      "order": 2,
+      "order": 1,
       "mode": 0,
       "outputs": [
         {
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            271,
-            298
+            298,
+            302,
+            303,
+            304,
+            305,
+            306,
+            307,
+            308,
+            309,
+            310,
+            311
           ],
           "shape": 3,
           "label": "IMAGE",
@@ -518,18 +563,64 @@
       "shape": 1
     },
     {
+      "id": 182,
+      "type": "Crop Image TargetSize (JPS)",
+      "pos": [
+        1152,
+        1131
+      ],
+      "size": {
+        "0": 315,
+        "1": 154
+      },
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 298,
+          "slot_index": 0
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            283
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "CropImage",
+      "properties": {
+        "Node name for S&R": "Crop Image TargetSize (JPS)"
+      },
+      "widgets_values": [
+        576,
+        768,
+        "center",
+        0,
+        "bilinear"
+      ],
+      "shape": 1
+    },
+    {
       "id": 3,
       "type": "KSampler",
       "pos": [
-        2179,
-        696
+        1866,
+        629
       ],
       "size": {
         "0": 315,
         "1": 262
       },
       "flags": {},
-      "order": 19,
+      "order": 17,
       "mode": 0,
       "inputs": [
         {
@@ -553,7 +644,7 @@
         {
           "name": "latent_image",
           "type": "LATENT",
-          "link": 297,
+          "link": 314,
           "label": "latent_image"
         }
       ],
@@ -588,15 +679,15 @@
       "id": 35,
       "type": "VAEDecode",
       "pos": [
-        2532,
-        696
+        2205,
+        644
       ],
       "size": {
         "0": 210,
         "1": 46
       },
       "flags": {},
-      "order": 20,
+      "order": 18,
       "mode": 0,
       "inputs": [
         {
@@ -632,47 +723,18 @@
       "shape": 1
     },
     {
-      "id": 125,
-      "type": "SaveImage",
-      "pos": [
-        2788,
-        694
-      ],
-      "size": {
-        "0": 416,
-        "1": 601
-      },
-      "flags": {},
-      "order": 21,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 301,
-          "label": "images"
-        }
-      ],
-      "title": "SaveImage",
-      "properties": {},
-      "widgets_values": [
-        "out"
-      ],
-      "shape": 1
-    },
-    {
       "id": 134,
       "type": "Efficient Loader",
       "pos": [
-        1441,
-        691
+        1095,
+        624
       ],
       "size": {
         "0": 400,
         "1": 462
       },
       "flags": {},
-      "order": 17,
+      "order": 14,
       "mode": 0,
       "inputs": [
         {
@@ -770,478 +832,25 @@
         "A1111",
         512,
         768,
-        1
+        2
       ],
       "color": "#223333",
       "bgcolor": "#335555",
       "shape": 1
     },
     {
-      "id": 171,
-      "type": "MiDaS-DepthMapPreprocessor",
-      "pos": [
-        213,
-        1599
-      ],
-      "size": {
-        "0": 315,
-        "1": 106
-      },
-      "flags": {},
-      "order": 13,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 242
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            243
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "title": "MiDaSDepthMapPreprocessor",
-      "properties": {
-        "Node name for S&R": "MiDaS-DepthMapPreprocessor"
-      },
-      "widgets_values": [
-        6.283185307179586,
-        0.1,
-        512
-      ],
-      "shape": 1
-    },
-    {
-      "id": 170,
-      "type": "LeReS-DepthMapPreprocessor",
-      "pos": [
-        208,
-        1423
-      ],
-      "size": {
-        "0": 315,
-        "1": 130
-      },
-      "flags": {},
-      "order": 12,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 240
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            241
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "title": "LeReSDepthMapPreprocessor",
-      "properties": {
-        "Node name for S&R": "LeReS-DepthMapPreprocessor"
-      },
-      "widgets_values": [
-        0,
-        0,
-        "disable",
-        512
-      ],
-      "shape": 1
-    },
-    {
-      "id": 169,
-      "type": "TilePreprocessor",
-      "pos": [
-        203,
-        1286
-      ],
-      "size": {
-        "0": 315,
-        "1": 82
-      },
-      "flags": {},
-      "order": 11,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 238
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            239
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "title": "TilePreprocessor",
-      "properties": {
-        "Node name for S&R": "TilePreprocessor"
-      },
-      "widgets_values": [
-        3,
-        512
-      ],
-      "shape": 1
-    },
-    {
-      "id": 163,
-      "type": "AIO_Preprocessor",
-      "pos": [
-        207,
-        1156
-      ],
-      "size": {
-        "0": 315,
-        "1": 82
-      },
-      "flags": {},
-      "order": 10,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 236
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            237
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "title": "ImagePreprocessor",
-      "properties": {
-        "Node name for S&R": "AIO_Preprocessor"
-      },
-      "widgets_values": [
-        "CannyEdgePreprocessor",
-        512
-      ],
-      "shape": 1
-    },
-    {
-      "id": 120,
-      "type": "OpenposePreprocessor",
-      "pos": [
-        204,
-        954
-      ],
-      "size": {
-        "0": 315,
-        "1": 150
-      },
-      "flags": {},
-      "order": 9,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 234,
-          "label": "image"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            235
-          ],
-          "shape": 3,
-          "label": "IMAGE",
-          "slot_index": 0
-        },
-        {
-          "name": "POSE_KEYPOINT",
-          "type": "POSE_KEYPOINT",
-          "links": null,
-          "shape": 3,
-          "label": "POSE_KEYPOINT"
-        }
-      ],
-      "title": "OpenposePreprocessor",
-      "properties": {
-        "Node name for S&R": "OpenposePreprocessor"
-      },
-      "widgets_values": [
-        "enable",
-        "enable",
-        "enable",
-        576
-      ],
-      "color": "#223",
-      "bgcolor": "#335",
-      "shape": 1
-    },
-    {
-      "id": 156,
-      "type": "HEDPreprocessor",
-      "pos": [
-        206,
-        827
-      ],
-      "size": {
-        "0": 315,
-        "1": 82
-      },
-      "flags": {},
-      "order": 8,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 232
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            233
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "title": "HEDPreprocessor",
-      "properties": {
-        "Node name for S&R": "HEDPreprocessor"
-      },
-      "widgets_values": [
-        "enable",
-        512
-      ],
-      "color": "#223",
-      "bgcolor": "#335",
-      "shape": 1
-    },
-    {
-      "id": 118,
-      "type": "LineartStandardPreprocessor",
-      "pos": [
-        210,
-        671
-      ],
-      "size": {
-        "0": 315,
-        "1": 106
-      },
-      "flags": {},
-      "order": 7,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 230,
-          "label": "image"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            231
-          ],
-          "shape": 3,
-          "label": "IMAGE",
-          "slot_index": 0
-        }
-      ],
-      "title": "LineartStandardPreprocessor",
-      "properties": {
-        "Node name for S&R": "LineartStandardPreprocessor"
-      },
-      "widgets_values": [
-        6,
-        9,
-        960
-      ],
-      "color": "#223",
-      "bgcolor": "#335",
-      "shape": 1
-    },
-    {
-      "id": 61,
-      "type": "CannyEdgePreprocessor",
-      "pos": [
-        206,
-        515
-      ],
-      "size": {
-        "0": 315,
-        "1": 106
-      },
-      "flags": {},
-      "order": 6,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 228,
-          "label": "image"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            229
-          ],
-          "shape": 3,
-          "label": "IMAGE",
-          "slot_index": 0
-        }
-      ],
-      "title": "CannyEdgePreprocessor",
-      "properties": {
-        "Node name for S&R": "CannyEdgePreprocessor"
-      },
-      "widgets_values": [
-        101,
-        202,
-        576
-      ],
-      "color": "#223",
-      "bgcolor": "#335",
-      "shape": 1
-    },
-    {
-      "id": 172,
-      "type": "M-LSDPreprocessor",
-      "pos": [
-        214,
-        1739
-      ],
-      "size": {
-        "0": 315,
-        "1": 106
-      },
-      "flags": {},
-      "order": 14,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 244
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            245
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "title": "MLSDPreprocessor",
-      "properties": {
-        "Node name for S&R": "M-LSDPreprocessor"
-      },
-      "widgets_values": [
-        0.1,
-        0.1,
-        512
-      ],
-      "shape": 1
-    },
-    {
-      "id": 182,
-      "type": "Crop Image TargetSize (JPS)",
-      "pos": [
-        1446,
-        1204
-      ],
-      "size": {
-        "0": 315,
-        "1": 154
-      },
-      "flags": {},
-      "order": 4,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 298,
-          "slot_index": 0
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            283
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "title": "CropImage",
-      "properties": {
-        "Node name for S&R": "Crop Image TargetSize (JPS)"
-      },
-      "widgets_values": [
-        576,
-        768,
-        "center",
-        0,
-        "bilinear"
-      ],
-      "shape": 1
-    },
-    {
       "id": 78,
       "type": "VAEEncode",
       "pos": [
-        1911,
-        1132
+        1529,
+        1099
       ],
       "size": {
         "0": 210,
         "1": 46
       },
       "flags": {},
-      "order": 18,
+      "order": 15,
       "mode": 0,
       "inputs": [
         {
@@ -1262,7 +871,7 @@
           "name": "LATENT",
           "type": "LATENT",
           "links": [
-            297
+            313
           ],
           "shape": 3,
           "label": "LATENT",
@@ -1273,6 +882,157 @@
       "properties": {
         "Node name for S&R": "VAEEncode"
       },
+      "shape": 1
+    },
+    {
+      "id": 125,
+      "type": "SaveImage",
+      "pos": [
+        2435,
+        643
+      ],
+      "size": {
+        "0": 416,
+        "1": 601
+      },
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 301,
+          "label": "images"
+        }
+      ],
+      "title": "SaveImage",
+      "properties": {},
+      "widgets_values": [
+        "out"
+      ],
+      "shape": 1
+    },
+    {
+      "id": 206,
+      "type": "RepeatLatentBatch",
+      "pos": [
+        1705,
+        973
+      ],
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 313
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            314
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "RepeatLatent",
+      "properties": {
+        "Node name for S&R": "RepeatLatentBatch"
+      },
+      "widgets_values": [
+        4
+      ]
+    },
+    {
+      "id": 132,
+      "type": "CR Multi-ControlNet Stack",
+      "pos": [
+        662,
+        794
+      ],
+      "size": {
+        "0": 419,
+        "1": 454
+      },
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image_1",
+          "type": "IMAGE",
+          "link": 312,
+          "label": "image_1"
+        },
+        {
+          "name": "image_2",
+          "type": "IMAGE",
+          "link": null,
+          "label": "image_2"
+        },
+        {
+          "name": "image_3",
+          "type": "IMAGE",
+          "link": null,
+          "label": "image_3"
+        },
+        {
+          "name": "controlnet_stack",
+          "type": "CONTROL_NET_STACK",
+          "link": null,
+          "label": "controlnet_stack"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONTROLNET_STACK",
+          "type": "CONTROL_NET_STACK",
+          "links": [
+            179
+          ],
+          "shape": 3,
+          "label": "CONTROLNET_STACK",
+          "slot_index": 0
+        },
+        {
+          "name": "show_help",
+          "type": "STRING",
+          "links": null,
+          "shape": 3,
+          "label": "show_help"
+        }
+      ],
+      "title": "CtrlnetStack",
+      "properties": {
+        "Node name for S&R": "CR Multi-ControlNet Stack"
+      },
+      "widgets_values": [
+        "On",
+        "control_v11p_sd15_softedge_fp16.safetensors",
+        1,
+        0,
+        1,
+        "Off",
+        "None",
+        1,
+        0,
+        1,
+        "Off",
+        "None",
+        1,
+        0,
+        0.22
+      ],
       "shape": 1
     }
   ],
@@ -1318,14 +1078,6 @@
       "MODEL"
     ],
     [
-      185,
-      119,
-      0,
-      132,
-      0,
-      "IMAGE"
-    ],
-    [
       187,
       134,
       1,
@@ -1358,58 +1110,10 @@
       "VAE"
     ],
     [
-      226,
-      166,
-      0,
-      47,
-      0,
-      "IMAGE"
-    ],
-    [
-      227,
-      47,
-      0,
-      119,
-      0,
-      "IMAGE"
-    ],
-    [
-      228,
-      166,
-      1,
-      61,
-      0,
-      "IMAGE"
-    ],
-    [
       229,
       61,
       0,
       119,
-      1,
-      "IMAGE"
-    ],
-    [
-      230,
-      166,
-      2,
-      118,
-      0,
-      "IMAGE"
-    ],
-    [
-      231,
-      118,
-      0,
-      119,
-      2,
-      "IMAGE"
-    ],
-    [
-      232,
-      166,
-      3,
-      156,
       0,
       "IMAGE"
     ],
@@ -1418,31 +1122,7 @@
       156,
       0,
       119,
-      3,
-      "IMAGE"
-    ],
-    [
-      234,
-      166,
-      4,
-      120,
-      0,
-      "IMAGE"
-    ],
-    [
-      235,
-      120,
-      0,
-      119,
-      4,
-      "IMAGE"
-    ],
-    [
-      236,
-      166,
-      5,
-      163,
-      0,
+      1,
       "IMAGE"
     ],
     [
@@ -1450,31 +1130,7 @@
       163,
       0,
       119,
-      5,
-      "IMAGE"
-    ],
-    [
-      238,
-      166,
-      6,
-      169,
-      0,
-      "IMAGE"
-    ],
-    [
-      239,
-      169,
-      0,
-      119,
-      6,
-      "IMAGE"
-    ],
-    [
-      240,
-      166,
-      7,
-      170,
-      0,
+      2,
       "IMAGE"
     ],
     [
@@ -1482,31 +1138,7 @@
       170,
       0,
       119,
-      7,
-      "IMAGE"
-    ],
-    [
-      242,
-      166,
-      8,
-      171,
-      0,
-      "IMAGE"
-    ],
-    [
-      243,
-      171,
-      0,
-      119,
-      8,
-      "IMAGE"
-    ],
-    [
-      244,
-      166,
-      9,
-      172,
-      0,
+      3,
       "IMAGE"
     ],
     [
@@ -1514,15 +1146,7 @@
       172,
       0,
       119,
-      9,
-      "IMAGE"
-    ],
-    [
-      271,
-      15,
-      0,
-      166,
-      0,
+      4,
       "IMAGE"
     ],
     [
@@ -1532,30 +1156,6 @@
       78,
       0,
       "IMAGE"
-    ],
-    [
-      293,
-      204,
-      0,
-      166,
-      1,
-      "INT"
-    ],
-    [
-      294,
-      204,
-      0,
-      119,
-      11,
-      "INT"
-    ],
-    [
-      297,
-      78,
-      0,
-      3,
-      3,
-      "LATENT"
     ],
     [
       298,
@@ -1572,6 +1172,110 @@
       125,
       0,
       "IMAGE"
+    ],
+    [
+      302,
+      15,
+      0,
+      47,
+      0,
+      "IMAGE"
+    ],
+    [
+      303,
+      15,
+      0,
+      61,
+      0,
+      "IMAGE"
+    ],
+    [
+      304,
+      15,
+      0,
+      118,
+      0,
+      "IMAGE"
+    ],
+    [
+      305,
+      15,
+      0,
+      156,
+      0,
+      "IMAGE"
+    ],
+    [
+      306,
+      15,
+      0,
+      120,
+      0,
+      "IMAGE"
+    ],
+    [
+      307,
+      15,
+      0,
+      163,
+      0,
+      "IMAGE"
+    ],
+    [
+      308,
+      15,
+      0,
+      169,
+      0,
+      "IMAGE"
+    ],
+    [
+      309,
+      15,
+      0,
+      170,
+      0,
+      "IMAGE"
+    ],
+    [
+      310,
+      15,
+      0,
+      171,
+      0,
+      "IMAGE"
+    ],
+    [
+      311,
+      15,
+      0,
+      172,
+      0,
+      "IMAGE"
+    ],
+    [
+      312,
+      47,
+      0,
+      132,
+      0,
+      "IMAGE"
+    ],
+    [
+      313,
+      78,
+      0,
+      206,
+      0,
+      "LATENT"
+    ],
+    [
+      314,
+      206,
+      0,
+      3,
+      3,
+      "LATENT"
     ]
   ],
   "groups": [],

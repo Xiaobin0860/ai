@@ -20,8 +20,8 @@
         2
       ],
       "latent_image": [
-        "134",
-        3
+        "206",
+        0
       ]
     },
     "class_type": "KSampler",
@@ -60,7 +60,7 @@
       "coarse": "disable",
       "resolution": 832,
       "image": [
-        "166",
+        "15",
         0
       ]
     },
@@ -71,12 +71,12 @@
   },
   "61": {
     "inputs": {
-      "low_threshold": 101,
-      "high_threshold": 202,
-      "resolution": 576,
+      "low_threshold": 42,
+      "high_threshold": 192,
+      "resolution": 64,
       "image": [
-        "166",
-        1
+        "15",
+        0
       ]
     },
     "class_type": "CannyEdgePreprocessor",
@@ -90,63 +90,13 @@
       "intensity_threshold": 9,
       "resolution": 960,
       "image": [
-        "166",
-        2
+        "15",
+        0
       ]
     },
     "class_type": "LineartStandardPreprocessor",
     "_meta": {
       "title": "LineartStandardPreprocessor"
-    }
-  },
-  "119": {
-    "inputs": {
-      "select": 1,
-      "sel_mode": true,
-      "input1": [
-        "47",
-        0
-      ],
-      "input2": [
-        "61",
-        0
-      ],
-      "input3": [
-        "118",
-        0
-      ],
-      "input4": [
-        "156",
-        0
-      ],
-      "input5": [
-        "120",
-        0
-      ],
-      "input6": [
-        "163",
-        0
-      ],
-      "input7": [
-        "169",
-        0
-      ],
-      "input8": [
-        "170",
-        0
-      ],
-      "input9": [
-        "171",
-        0
-      ],
-      "input10": [
-        "172",
-        0
-      ]
-    },
-    "class_type": "ImpactSwitch",
-    "_meta": {
-      "title": "PreprocessorSwitchAfter"
     }
   },
   "120": {
@@ -156,8 +106,8 @@
       "detect_face": "enable",
       "resolution": 576,
       "image": [
-        "166",
-        4
+        "15",
+        0
       ]
     },
     "class_type": "OpenposePreprocessor",
@@ -216,7 +166,7 @@
       "start_percent_3": 0,
       "end_percent_3": 0.22,
       "image_1": [
-        "119",
+        "47",
         0
       ]
     },
@@ -259,8 +209,8 @@
       "safe": "enable",
       "resolution": 512,
       "image": [
-        "166",
-        3
+        "15",
+        0
       ]
     },
     "class_type": "HEDPreprocessor",
@@ -273,8 +223,8 @@
       "preprocessor": "CannyEdgePreprocessor",
       "resolution": 512,
       "image": [
-        "166",
-        5
+        "15",
+        0
       ]
     },
     "class_type": "AIO_Preprocessor",
@@ -282,26 +232,13 @@
       "title": "ImagePreprocessor"
     }
   },
-  "166": {
-    "inputs": {
-      "select": 1,
-      "input": [
-        "15",
-        0
-      ]
-    },
-    "class_type": "ImpactInversedSwitch",
-    "_meta": {
-      "title": "PreprocessorSwitchPre"
-    }
-  },
   "169": {
     "inputs": {
       "pyrUp_iters": 3,
       "resolution": 512,
       "image": [
-        "166",
-        6
+        "15",
+        0
       ]
     },
     "class_type": "TilePreprocessor",
@@ -316,8 +253,8 @@
       "boost": "disable",
       "resolution": 512,
       "image": [
-        "166",
-        7
+        "15",
+        0
       ]
     },
     "class_type": "LeReS-DepthMapPreprocessor",
@@ -331,8 +268,8 @@
       "bg_threshold": 0.1,
       "resolution": 512,
       "image": [
-        "166",
-        8
+        "15",
+        0
       ]
     },
     "class_type": "MiDaS-DepthMapPreprocessor",
@@ -346,13 +283,24 @@
       "dist_threshold": 0.1,
       "resolution": 512,
       "image": [
-        "166",
-        9
+        "15",
+        0
       ]
     },
     "class_type": "M-LSDPreprocessor",
     "_meta": {
       "title": "MLSDPreprocessor"
+    }
+  },
+  "206": {
+    "inputs": {
+      "width": 512,
+      "height": 768,
+      "batch_size": 4
+    },
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "EmptyLatent"
     }
   }
 }
