@@ -242,6 +242,7 @@ impl Generator {
             //指定的preprocessor随机, 注意这是显示可读的preprocessor名
             &acfg.preprocessor
         };
+        trace!("preprocessor: {preprocessors:?}");
         let preprocessor = comfy_preprocessor(rand_element(preprocessors).as_str()).to_owned();
         Ok(CnCfg {
             model: rand_element(&cn.model).clone(),
@@ -296,6 +297,8 @@ impl Generator {
             } else {
                 sampler.denoise = asampler.denoise_max;
             }
+            sampler.sampler_name = rand_element(&asampler.sampler_name).clone();
+            sampler.scheduler = rand_element(&asampler.scheduler).clone();
         }
         Ok(())
     }
