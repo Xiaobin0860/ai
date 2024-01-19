@@ -1,6 +1,6 @@
 {
-  "last_node_id": 206,
-  "last_link_id": 314,
+  "last_node_id": 207,
+  "last_link_id": 315,
   "nodes": [
     {
       "id": 130,
@@ -676,53 +676,6 @@
       "shape": 1
     },
     {
-      "id": 35,
-      "type": "VAEDecode",
-      "pos": [
-        2205,
-        644
-      ],
-      "size": {
-        "0": 210,
-        "1": 46
-      },
-      "flags": {},
-      "order": 18,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "samples",
-          "type": "LATENT",
-          "link": 135,
-          "label": "samples"
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": 191,
-          "label": "vae"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            114,
-            301
-          ],
-          "shape": 3,
-          "label": "IMAGE",
-          "slot_index": 0
-        }
-      ],
-      "title": "VaeDecode",
-      "properties": {
-        "Node name for S&R": "VAEDecode"
-      },
-      "shape": 1
-    },
-    {
       "id": 134,
       "type": "Efficient Loader",
       "pos": [
@@ -885,35 +838,6 @@
       "shape": 1
     },
     {
-      "id": 125,
-      "type": "SaveImage",
-      "pos": [
-        2435,
-        643
-      ],
-      "size": {
-        "0": 416,
-        "1": 601
-      },
-      "flags": {},
-      "order": 19,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 301,
-          "label": "images"
-        }
-      ],
-      "title": "SaveImage",
-      "properties": {},
-      "widgets_values": [
-        "out"
-      ],
-      "shape": 1
-    },
-    {
       "id": 206,
       "type": "RepeatLatentBatch",
       "pos": [
@@ -1034,6 +958,94 @@
         0.22
       ],
       "shape": 1
+    },
+    {
+      "id": 35,
+      "type": "VAEDecode",
+      "pos": [
+        2205,
+        644
+      ],
+      "size": {
+        "0": 210,
+        "1": 46
+      },
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 135,
+          "label": "samples"
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 191,
+          "label": "vae"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            114,
+            315
+          ],
+          "shape": 3,
+          "label": "IMAGE",
+          "slot_index": 0
+        }
+      ],
+      "title": "VaeDecode",
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "shape": 1
+    },
+    {
+      "id": 207,
+      "type": "Image Save",
+      "pos": [
+        2449,
+        645
+      ],
+      "size": {
+        "0": 315,
+        "1": 346
+      },
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 315
+        }
+      ],
+      "title": "ImageSave",
+      "properties": {
+        "Node name for S&R": "Image Save"
+      },
+      "widgets_values": [
+        "[time(%Y-%m-%d)]",
+        "ComfyUI",
+        "_",
+        4,
+        "false",
+        "png",
+        100,
+        "false",
+        "false",
+        "false",
+        "true",
+        "true",
+        "true"
+      ]
     }
   ],
   "links": [
@@ -1166,14 +1178,6 @@
       "IMAGE"
     ],
     [
-      301,
-      35,
-      0,
-      125,
-      0,
-      "IMAGE"
-    ],
-    [
       302,
       15,
       0,
@@ -1276,6 +1280,14 @@
       3,
       3,
       "LATENT"
+    ],
+    [
+      315,
+      35,
+      0,
+      207,
+      0,
+      "IMAGE"
     ]
   ],
   "groups": [],

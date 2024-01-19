@@ -31,7 +31,7 @@ pub struct EfficientLoader {
     /// The height of an empty latent vector
     pub empty_latent_height: u16,
     /// The number of skipped clips during clipping
-    pub clip_skip: i16,
+    pub clip_skip: i8,
     /// The batch size for loading data
-    pub batch_size: u16,
+    pub batch_size: u8,
 }

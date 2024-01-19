@@ -67,6 +67,7 @@ pub struct CnCfg {
     pub weight: f32, //0.1
     pub start: f32,
     pub end: f32,
+    pub resolution: u16,
 }
 impl Default for CnCfg {
     fn default() -> Self {
@@ -76,6 +77,7 @@ impl Default for CnCfg {
             weight: 1.0,
             start: 0.0,
             end: 1.0,
+            resolution: 512,
         }
     }
 }
@@ -84,10 +86,13 @@ impl CtrlnetStack {
     pub fn disable_all(&mut self) {
         self.switch_1 = "Off".into();
         self.controlnet_1 = "None".into();
+        self.image_1 = None;
         self.switch_2 = "Off".into();
         self.controlnet_2 = "None".into();
+        self.image_2 = None;
         self.switch_3 = "Off".into();
         self.controlnet_3 = "None".into();
+        self.image_3 = None;
     }
 
     pub fn enable(&mut self, idx: IdxControlNet, cfg: &CnCfg) {

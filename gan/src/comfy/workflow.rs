@@ -3,7 +3,7 @@ use std::{collections::HashMap, fs};
 use anyhow::Context;
 use serde_json::Value;
 
-use crate::{class_map, AppResult, Node};
+use crate::{my_class_map, AppResult, Node};
 
 /// The comfy ui workflow
 #[derive(Debug)]
@@ -52,8 +52,8 @@ impl Workflow {
             .ok_or(format!("get_node_mut: {typ} not found").into())
     }
 
-    fn get_node_id(&self, typ: &str) -> AppResult<&String> {
-        let comfy_class = *class_map().get(typ).unwrap_or(&typ);
+    pub fn get_node_id(&self, typ: &str) -> AppResult<&String> {
+        let comfy_class = *my_class_map().get(typ).unwrap_or(&typ);
         Ok(self
             .typ_id_map
             .get(comfy_class)

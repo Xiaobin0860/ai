@@ -1,18 +1,23 @@
-workflows = []
+# 随机流程
+workflows = ["图生图api.json", "文生图api.json"]
+
+# 总出图数
+total = 4000
 
 # CN Stack
 [ctrlnet_stack]
 title = "CtrlnetStack"
 switch_1 = true
-ctrl_type_1 = ["Canny", "Lineart", "AnimeLineart"]
-#0.05
+#随机CN类型 Canny|OpenPose|Depth|NormalMap|Lineart|AnimeLineart|SoftEdge|Segmentation|Tile
+ctrl_type_1 = ["AnimeLineart"]
 start_min_1 = 0
-start_max_1 = 1
-end_min_1 = 0
+start_max_1 = 0.4
+end_min_1 = 0.5
 end_max_1 = 1
-#0.5
-strength_min_1 = 0
-strength_max_1 = 1
+strength_min_1 = 0.5
+strength_max_1 = 1.35
+# 320|384|448|512|576|640|704|768|832
+resolution_1 = [448, 512, 576, 640, 704, 768]
 
 switch_2 = false
 ctrl_type_2 = ["OpenPose"]
@@ -20,8 +25,9 @@ start_min_2 = 0
 start_max_2 = 1
 end_min_2 = 0
 end_max_2 = 1
-strength_min_2 = 0
-strength_max_2 = 1
+strength_min_2 = 0.5
+strength_max_2 = 1.3
+resolution_2 = []
 
 switch_3 = false
 ctrl_type_3 = []
@@ -31,34 +37,43 @@ end_min_3 = 0
 end_max_3 = 1
 strength_min_3 = 0
 strength_max_3 = 1
+resolution_3 = []
 
 
 # LoRA Stack
 [lora_stack]
 title = "LoraStack"
-switch_1 = 1
-lora_name_1 = ["SCSFZH-000010", "SCSFZH-000015"]
-#0.5
-model_weight_min_1 = 1
-model_weight_max_1 = 1
+switch_1 = true
+model_name_1 = [
+    "SMJWSTEPONE1-000020.safetensors",
+    "SMJWSTEPONE1-000025.safetensors",
+]
+strength_min_1 = 0.5
+strength_max_1 = 1.2
 
-switch_2 = 0
-lora_name_2 = []
-model_weight_min_2 = 1
-model_weight_max_2 = 1
+switch_2 = false
+model_name_2 = []
+strength_min_2 = 1
+strength_max_2 = 1
 
-switch_3 = 0
-lora_name_3 = []
-model_weight_min_3 = 1
-model_weight_max_3 = 1
+switch_3 = false
+model_name_3 = ["lcm_lora_sdv15.safetensors"]
+strength_min_3 = 1
+strength_max_3 = 1
 
 
 # Efficient
 [efficient]
 title = "EfficientLoader"
-positive = ["SCSFZH,1girl,standing on a ship deck, sailing the seas"]
-negative = ["verybadimagenegative_v1.3"]
-batch_size = 1
+positive = [
+    "paper drawing,(SMJWSTEPONE:1.2),no humans,(simple and white background:1.3),",
+]
+negative = ["colors,humans,"]
+width = 768
+height = 576
+batch_size = 2
+vae_name = ["Baked VAE"]
+clip_skip = [-2]
 
 
 # Sampler
@@ -68,50 +83,23 @@ steps_min = 20
 steps_max = 20
 cfg_min = 7
 cfg_max = 7
-#0.05
-denoise_min = 0.3
-denoise_max = 0.8
-sampler_name = [
-    "euler",
-    "euler_ancestral",
-    "heun",
-    "heunpp2",
-    "dpm_2",
-    "dpm_2_ancestral",
-    "lms",
-    "dpm_fast",
-    "dpm_adaptive",
-    "dpmpp_2s_ancestral",
-    "dpmpp_sde",
-    "dpmpp_sde_gpu",
-    "dpmpp_2m",
-    "dpmpp_2m_sde",
-    "dpmpp_2m_sde_gpu",
-    "dpmpp_3m_sde",
-    "dpmpp_3m_sde_gpu",
-    "ddpm",
-    "lcm",
-    "ddim",
-    "uni_pc",
-    "uni_pc_bh2",
-]
-scheduler = [
-    "normal",
-    "karras",
-    "exponential",
-    "sgm_uniform",
-    "simple",
-    "ddim_uniform",
-]
+denoise_min = 1
+denoise_max = 1
+#euler|euler_ancestral|heun|heunpp2|dpm_2|dpm_2_ancestral|lms|dpm_fast|dpm_adaptive|dpmpp_2s_ancestral
+#dpmpp_sde|dpmpp_2m|dpmpp_2m_sde|dpmpp_3m_sde|ddpm|lcm|ddim|uni_pc|uni_pc_bh2
+sampler_name = ["dpmpp_2m"]
+#normal|karras|exponential|sgm_uniform|simple|ddim_uniform
+scheduler = ["karras"]
 
 
-# SaveImage
+# ImageSave
 [save_image]
-title = "SaveImage"
+title = "ImageSave"
+output_path = "照片改画素描静物一/out"
 filename_prefix = "a"
 
 
 # LoadImage
 [load_image]
 title = "LoadImage"
-images = []
+images = ["jw1.png", "jw2.jpg", "jw3.jpg", "jw4.jpg", "jw5.jpg"]

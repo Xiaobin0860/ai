@@ -5,10 +5,11 @@ use serde_json::Value;
 
 use crate::{
     CannyEdgePreprocessor, CropImage, CtrlnetStack, EfficientLoader, EmptyLatent, HEDPreprocessor,
-    ImagePreprocessor, ImageScaleToSide, KSampler, LeReSDepthMapPreprocessor, LineArtPreprocessor,
-    LineartStandardPreprocessor, LoadImage, LoraStack, MLSDPreprocessor, MiDaSDepthMapPreprocessor,
-    OpenposePreprocessor, PreprocessorSwitchAfter, PreprocessorSwitchPre, RepeatLatent, SaveImage,
-    TilePreprocessor, TxtimgSwitch, UpscaleImage, VaeDecode, VaeEncode,
+    ImagePreprocessor, ImageSave, ImageScaleToSide, KSampler, LeReSDepthMapPreprocessor,
+    LineArtPreprocessor, LineartStandardPreprocessor, LoadImage, LoraStack, MLSDPreprocessor,
+    MiDaSDepthMapPreprocessor, OpenposePreprocessor, PreprocessorSwitchAfter,
+    PreprocessorSwitchPre, RepeatLatent, SaveImage, TilePreprocessor, TxtimgSwitch, UpscaleImage,
+    VaeDecode, VaeEncode,
 };
 
 // TODO: 准确类型可能需要自已实现根据class_type来判断, 直接ComfyUI api json解析丢失类型信息
@@ -33,6 +34,7 @@ pub enum Inputs {
     VaeDecode(VaeDecode),
     VaeEncode(VaeEncode),
     /// Save Image
+    ImageSave(ImageSave),
     SaveImage(SaveImage),
     ImageScaleToSide(ImageScaleToSide),
     UpscaleImage(UpscaleImage),

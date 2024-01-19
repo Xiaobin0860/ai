@@ -1,11 +1,17 @@
+use serde_json::Value;
+
 pub const NODE_CTRLNET_STACK: &str = "CtrlnetStack";
 pub const NODE_LORA_STACK: &str = "LoraStack";
 pub const NODE_LOAD_IMAGE: &str = "LoadImage";
-pub const NODE_SAVE_IMAGE: &str = "SaveImage";
+pub const NODE_SAVE_IMAGE: &str = "ImageSave";
 pub const NODE_IMAGE_PREPROCESSOR: &str = "ImagePreprocessor";
 pub const NODE_EFFICIENT_LOADER: &str = "EfficientLoader";
 pub const NODE_KSAMPLER: &str = "KSampler";
 pub const NODE_LINEART_PREPROCESSOR: &str = "LineArtPreprocessor";
+pub const NODE_ANIMELINEART_PREPROCESSOR: &str = "LineArtPreprocessor";
+pub const NODE_CROP_IMAGE: &str = "CropImage";
+pub const NODE_REPEAT_LATENT: &str = "RepeatLatent";
+pub const NODE_EMPTY_LATENT: &str = "EmptyLatent";
 
 mod api;
 pub use api::*;
@@ -49,9 +55,22 @@ pub use latent::*;
 use std::collections::HashMap;
 use std::sync::OnceLock;
 
-pub fn class_map() -> &'static HashMap<&'static str, &'static str> {
+/// 自己类 => comfy类
+pub fn my_class_map() -> &'static HashMap<&'static str, &'static str> {
     static HASHMAP: OnceLock<HashMap<&'static str, &'static str>> = OnceLock::new();
     HASHMAP.get_or_init(|| serde_json::from_str(fixtures::class_names()).unwrap())
+}
+/// comfy类 => 自己类
+pub fn comfy_class_map() -> &'static HashMap<&'static str, &'static str> {
+    static HASHMAP: OnceLock<HashMap<&'static str, &'static str>> = OnceLock::new();
+    HASHMAP.get_or_init(|| my_class_map().iter().map(|(k, v)| (*v, *k)).collect())
+}
+
+pub fn create_input_id(id: &str, idx: usize) -> Value {
+    // [id, idx]
+    let id = Value::String(id.into());
+    let idx = Value::Number(idx.into());
+    Value::Array(vec![id, idx])
 }
 
 #[cfg(test)]

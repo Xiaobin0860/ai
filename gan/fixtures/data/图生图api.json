@@ -131,19 +131,6 @@
       "title": "OpenposePreprocessor"
     }
   },
-  "125": {
-    "inputs": {
-      "filename_prefix": "out",
-      "images": [
-        "35",
-        0
-      ]
-    },
-    "class_type": "SaveImage",
-    "_meta": {
-      "title": "SaveImage"
-    }
-  },
   "130": {
     "inputs": {
       "switch_1": "On",
@@ -336,6 +323,31 @@
     "class_type": "RepeatLatentBatch",
     "_meta": {
       "title": "RepeatLatent"
+    }
+  },
+  "207": {
+    "inputs": {
+      "output_path": "[time(%Y-%m-%d)]",
+      "filename_prefix": "ComfyUI",
+      "filename_delimiter": "_",
+      "filename_number_padding": 4,
+      "filename_number_start": "false",
+      "extension": "png",
+      "quality": 100,
+      "lossless_webp": "false",
+      "overwrite_mode": "false",
+      "show_history": "false",
+      "show_history_by_prefix": "true",
+      "embed_workflow": "true",
+      "show_previews": "true",
+      "images": [
+        "35",
+        0
+      ]
+    },
+    "class_type": "Image Save",
+    "_meta": {
+      "title": "ImageSave"
     }
   }
 }

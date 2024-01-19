@@ -56,7 +56,8 @@
       "control_v11p_sd15s2_lineart_anime.pth"
     ],
     "preprocessor": [
-      "AnimeLineArtPreprocessor"
+      "AnimeLineArtPreprocessor",
+      "Manga2Anime_LineArt_Preprocessor"
     ]
   },
   "SoftEdge": {

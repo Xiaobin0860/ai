@@ -3,12 +3,13 @@ use std::collections::HashMap;
 use anyhow::anyhow;
 use fixtures::control_nets;
 use rand::random;
-use tracing::{debug, trace};
+use tracing::{debug, trace, warn};
 
 use crate::{
-    rand_element, ACtrlnet, ACtrlnetStack, ALoraStack, AppResult, AutoCfg, CnCfg, Ctrlnet,
-    CtrlnetStack, IdxControlNet, IdxLoRA, LoraCfg, LoraStack, Workflow, NODE_KSAMPLER,
-    NODE_LINEART_PREPROCESSOR, NODE_LOAD_IMAGE,
+    comfy_class_map, create_input_id, rand_element, ACtrlnet, ACtrlnetStack, ALoraStack, AppResult,
+    AutoCfg, CnCfg, Ctrlnet, IdxControlNet, IdxLoRA, LoraCfg, LoraStack, Workflow, NODE_CROP_IMAGE,
+    NODE_EMPTY_LATENT, NODE_IMAGE_PREPROCESSOR, NODE_KSAMPLER, NODE_LINEART_PREPROCESSOR,
+    NODE_LOAD_IMAGE, NODE_REPEAT_LATENT,
 };
 
 const STEP_F32: f32 = 0.05;
@@ -31,6 +32,41 @@ impl Generator {
         self.rand_lora(wf, ac)?;
         self.rand_cn(wf, ac)?;
         self.rand_images(wf, ac)?;
+        self.rand_efficient(wf, ac)?;
+        Ok(())
+    }
+
+    fn rand_efficient(&mut self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<()> {
+        if let Some(ec) = &ac.efficient {
+            let efficient = wf.get_node_mut(&ec.title)?.efficient_loader_mut();
+            efficient.positive = rand_element(&ec.positive).clone();
+            efficient.negative = rand_element(&ec.negative).clone();
+            efficient.batch_size = ec.batch_size;
+            efficient.empty_latent_height = ec.height;
+            efficient.empty_latent_width = ec.width;
+            efficient.vae_name = rand_element(&ec.vae_name).clone();
+            efficient.clip_skip = *rand_element(&ec.clip_skip);
+            //图生图 用CropImage调整生图大小, 用RepeatLatent控制批次
+            if let Ok(crop) = wf.get_node_mut(NODE_CROP_IMAGE) {
+                let crop = crop.crop_image_mut();
+                crop.target_w = ec.width;
+                crop.target_h = ec.height;
+                trace!("img2img: w={}, h={}", crop.target_w, crop.target_h);
+            }
+            if let Ok(repeat) = wf.get_node_mut(NODE_REPEAT_LATENT) {
+                let repeat = repeat.repeat_latent_mut();
+                repeat.amount = ec.batch_size;
+                trace!("img2img: batch_size={}", repeat.amount);
+            }
+            //文生图 用EmptyLatent控制生图大小,批次
+            if let Ok(latent) = wf.get_node_mut(NODE_EMPTY_LATENT) {
+                let latent = latent.empty_latent_mut();
+                latent.height = ec.height;
+                latent.width = ec.width;
+                latent.batch_size = ec.batch_size;
+                trace!("txt2img: {latent:?}");
+            }
+        }
         Ok(())
     }
 
@@ -40,9 +76,9 @@ impl Generator {
             let img_name = rand_element(imgs);
             wf.get_node_mut(NODE_LOAD_IMAGE)?.load_image_mut().image = img_name.clone();
             if let Some(save) = &ac.save_image {
-                wf.get_node_mut(&save.title)?
-                    .save_image_mut()
-                    .filename_prefix = img_name.split('.').next().unwrap().to_owned();
+                let saver = wf.get_node_mut(&save.title)?.image_save_mut();
+                saver.filename_prefix = img_name.split('.').next().unwrap().to_owned();
+                saver.output_path = save.output_path.clone();
             }
         }
         Ok(())
@@ -51,42 +87,95 @@ impl Generator {
     fn rand_cn(&self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<()> {
         if let Some(acn) = &ac.ctrlnet_stack {
             if acn.switch() {
-                let cn_stack = wf.get_node_mut(acn.title.as_str())?.ctrlnet_stack_mut();
-                cn_stack.disable_all();
-                if let Some(cfg) = self.rand_cn1(cn_stack, acn)? {
-                    //preprocessor
-                    //TODO: rand preprocessor
-                    if cfg.preprocessor == NODE_LINEART_PREPROCESSOR {
-                        wf.get_node_mut(&cfg.preprocessor)?
-                            .line_art_preprocessor_mut()
-                            .coarse = if random::<bool>() {
-                            "enable".into()
-                        } else {
-                            "disable".into()
-                        };
-                    }
-                }
-                // self.rand_cn2(cn_stack, acn);
-                // self.rand_cn3(cn_stack, acn);
+                wf.get_node_mut(acn.title.as_str())?
+                    .ctrlnet_stack_mut()
+                    .disable_all();
+
+                self.rand_cn1(wf, acn)?;
+                self.rand_cn2(wf, acn)?;
+                self.rand_cn3(wf, acn)?;
             }
         }
         Ok(())
     }
 
-    fn rand_cn1(
-        &self,
-        cn_stack: &mut CtrlnetStack,
-        acn: &ACtrlnetStack,
-    ) -> AppResult<Option<CnCfg>> {
+    fn rand_preprocessor(&self, wf: &mut Workflow, cfg: &CnCfg) -> AppResult<String> {
+        //preprocessor特殊处理
+        let my_processor_name = *comfy_class_map()
+            .get(cfg.preprocessor.as_str())
+            .unwrap_or(&NODE_IMAGE_PREPROCESSOR);
+        match my_processor_name {
+            NODE_LINEART_PREPROCESSOR => {
+                // realistic|coarse
+                let processor = wf
+                    .get_node_mut(my_processor_name)?
+                    .line_art_preprocessor_mut();
+                processor.coarse = if random::<bool>() {
+                    "enable".into()
+                } else {
+                    "disable".into()
+                };
+                processor.resolution = cfg.resolution;
+            }
+            NODE_IMAGE_PREPROCESSOR => {
+                // resolution
+                let processor = wf.get_node_mut(my_processor_name)?.image_preprocessor_mut();
+                processor.resolution = cfg.resolution;
+                processor.preprocessor = cfg.preprocessor.clone();
+            }
+            _ => {
+                warn!("unhandled preprocessor {my_processor_name} {cfg:?}");
+            }
+        }
+        Ok(wf.get_node_id(my_processor_name)?.clone())
+    }
+
+    fn rand_cn1(&self, wf: &mut Workflow, acn: &ACtrlnetStack) -> AppResult<()> {
         let idx = IdxControlNet::ControlNet1;
         if let Some(acfg) = acn.cfg(&idx) {
             let cfg = self.rand_cn_cfg(&acfg)?;
             debug!("rand_cn1 acfg={acfg:?}, cn_cfg={cfg:?}");
-            cn_stack.enable(idx, &cfg);
-            Ok(Some(cfg))
-        } else {
-            Ok(None)
+            wf.get_node_mut(acn.title.as_str())?
+                .ctrlnet_stack_mut()
+                .enable(idx, &cfg);
+            let id = self.rand_preprocessor(wf, &cfg)?;
+            wf.get_node_mut(acn.title.as_str())?
+                .ctrlnet_stack_mut()
+                .image_1 = Some(create_input_id(&id, 0));
         }
+        Ok(())
+    }
+
+    fn rand_cn2(&self, wf: &mut Workflow, acn: &ACtrlnetStack) -> AppResult<()> {
+        let idx = IdxControlNet::ControlNet2;
+        if let Some(acfg) = acn.cfg(&idx) {
+            let cfg = self.rand_cn_cfg(&acfg)?;
+            debug!("rand_cn2 acfg={acfg:?}, cn_cfg={cfg:?}");
+            wf.get_node_mut(acn.title.as_str())?
+                .ctrlnet_stack_mut()
+                .enable(idx, &cfg);
+            let id = self.rand_preprocessor(wf, &cfg)?;
+            wf.get_node_mut(acn.title.as_str())?
+                .ctrlnet_stack_mut()
+                .image_2 = Some(create_input_id(&id, 0));
+        }
+        Ok(())
+    }
+
+    fn rand_cn3(&self, wf: &mut Workflow, acn: &ACtrlnetStack) -> AppResult<()> {
+        let idx = IdxControlNet::ControlNet3;
+        if let Some(acfg) = acn.cfg(&idx) {
+            let cfg = self.rand_cn_cfg(&acfg)?;
+            debug!("rand_cn3 acfg={acfg:?}, cn_cfg={cfg:?}");
+            wf.get_node_mut(acn.title.as_str())?
+                .ctrlnet_stack_mut()
+                .enable(idx, &cfg);
+            let id = self.rand_preprocessor(wf, &cfg)?;
+            wf.get_node_mut(acn.title.as_str())?
+                .ctrlnet_stack_mut()
+                .image_3 = Some(create_input_id(&id, 0));
+        }
+        Ok(())
     }
 
     fn rand_cn_cfg(&self, acfg: &ACtrlnet) -> AppResult<CnCfg> {
@@ -152,6 +241,7 @@ impl Generator {
             weight,
             start,
             end,
+            resolution: *rand_element(&acfg.resolution),
         })
     }
 

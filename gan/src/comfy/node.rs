@@ -1,14 +1,12 @@
-use anyhow::Context;
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_json::Value;
+use serde::{Deserialize, Serialize};
 
 use crate::{
-    CtrlnetStack, EfficientLoader, ImagePreprocessor, Inputs, KSampler, LineArtPreprocessor,
-    LoadImage, LoraStack, SaveImage, VaeDecode, NODE_SAVE_IMAGE,
+    CropImage, CtrlnetStack, EfficientLoader, EmptyLatent, ImagePreprocessor, ImageSave, Inputs,
+    KSampler, LineArtPreprocessor, LoadImage, LoraStack, RepeatLatent, SaveImage, VaeDecode,
 };
 
 /// A node in the comfy ui workflow
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Node {
     /// node inputs
     pub inputs: Inputs,
@@ -48,7 +46,11 @@ impl Node {
     impl_input_methods!(CtrlnetStack);
     impl_input_methods!(EfficientLoader);
     impl_input_methods!(ImagePreprocessor);
+    impl_input_methods!(ImageSave);
+    impl_input_methods!(CropImage);
     impl_input_methods!(SaveImage);
+    impl_input_methods!(RepeatLatent);
+    impl_input_methods!(EmptyLatent);
     impl_input_methods!(LoadImage);
     impl_input_methods!(LoraStack);
     impl_input_methods!(KSampler);
@@ -61,34 +63,4 @@ impl Node {
 pub struct Meta {
     /// node title
     pub title: String,
-}
-
-impl<'de> Deserialize<'de> for Node {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    where
-        D: Deserializer<'de>,
-    {
-        let json = Value::deserialize(deserializer)?;
-        let title = json["_meta"]["title"]
-            .as_str()
-            .context("title")
-            .unwrap()
-            .to_owned();
-        let class_type = json["class_type"]
-            .as_str()
-            .context("class_type")
-            .unwrap()
-            .to_owned();
-        let meta = Meta { title };
-        let inputs = json["inputs"].clone();
-        let inputs = match class_type.as_str() {
-            t if t == NODE_SAVE_IMAGE => Inputs::SaveImage(inputs.into()),
-            t => inputs.try_into().context(t.to_owned()).unwrap(),
-        };
-        Ok(Self {
-            inputs,
-            class_type,
-            meta,
-        })
-    }
 }

@@ -10,6 +10,7 @@
   "PreprocessorSwitchAfter": "ImpactSwitch",
   "OpenposePreprocessor": "OpenposePreprocessor",
   "SaveImage": "SaveImage",
+  "ImageSave": "Image Save",
   "LoraStack": "CR LoRA Stack",
   "CtrlnetStack": "CR Multi-ControlNet Stack",
   "EfficientLoader": "Efficient Loader",

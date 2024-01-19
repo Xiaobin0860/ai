@@ -10,8 +10,8 @@ pub struct AutoCfg {
     /// 工作流
     pub workflows: Vec<String>,
 
-    /// 每套参数出图次数
-    pub ct_per_params: usize,
+    /// 总出图数
+    pub total: usize,
 
     /// CN配置
     pub ctrlnet_stack: Option<ACtrlnetStack>,
@@ -41,7 +41,7 @@ pub struct ALoadImage {
 #[derive(Debug, Deserialize)]
 pub struct ASaveImage {
     pub title: String,
-
+    pub output_path: String,
     pub filename_prefix: String,
 }
 
@@ -99,6 +99,7 @@ pub struct ACtrlnetStack {
     //0.5
     pub strength_min_1: f32,
     pub strength_max_1: f32,
+    pub resolution_1: Vec<u16>,
 
     //先只支持共用图片
     // pub images_1: Vec<String>,
@@ -110,6 +111,7 @@ pub struct ACtrlnetStack {
     pub end_max_2: f32,
     pub strength_min_2: f32,
     pub strength_max_2: f32,
+    pub resolution_2: Vec<u16>,
 
     pub switch_3: bool,
     pub ctrl_type_3: Vec<String>,
@@ -119,6 +121,7 @@ pub struct ACtrlnetStack {
     pub end_max_3: f32,
     pub strength_min_3: f32,
     pub strength_max_3: f32,
+    pub resolution_3: Vec<u16>,
 }
 
 impl ACtrlnetStack {
@@ -138,6 +141,7 @@ impl ACtrlnetStack {
                         end_max: self.end_max_1,
                         strength_min: self.strength_min_1,
                         strength_max: self.strength_max_1,
+                        resolution: self.resolution_1.clone(),
                     })
                 } else {
                     None
@@ -153,6 +157,7 @@ impl ACtrlnetStack {
                         end_max: self.end_max_2,
                         strength_min: self.strength_min_2,
                         strength_max: self.strength_max_2,
+                        resolution: self.resolution_2.clone(),
                     })
                 } else {
                     None
@@ -168,6 +173,7 @@ impl ACtrlnetStack {
                         end_max: self.end_max_3,
                         strength_min: self.strength_min_3,
                         strength_max: self.strength_max_3,
+                        resolution: self.resolution_3.clone(),
                     })
                 } else {
                     None
@@ -186,6 +192,7 @@ pub struct ACtrlnet {
     pub end_max: f32,
     pub strength_min: f32,
     pub strength_max: f32,
+    pub resolution: Vec<u16>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -193,6 +200,11 @@ pub struct AEfficient {
     pub title: String,
     pub positive: Vec<String>,
     pub negative: Vec<String>,
+    pub width: u16,
+    pub height: u16,
+    pub batch_size: u8,
+    pub vae_name: Vec<String>,
+    pub clip_skip: Vec<i8>,
 }
 
 impl AutoCfg {
