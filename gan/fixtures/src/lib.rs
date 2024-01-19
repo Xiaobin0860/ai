@@ -18,3 +18,4 @@ include_str_as_fn!(meikao, "../data/美考api.json");
 include_str_as_fn!(txt2img, "../data/文生图api.json");
 include_str_as_fn!(img2img, "../data/图生图api.json");
 include_str_as_fn!(class_names, "../data/class_names.json");
+include_str_as_fn!(preprocessors, "../data/preprocessors.json");

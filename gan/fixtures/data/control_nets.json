@@ -13,7 +13,8 @@
     ],
     "preprocessor": [
       "MiDaS-DepthMapPreprocessor",
-      "Zoe-DepthMapPreprocessor"
+      "Zoe-DepthMapPreprocessor",
+      "LeReS-DepthMapPreprocessor"
     ]
   },
   "NormalMap": {

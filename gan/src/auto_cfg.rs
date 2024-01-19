@@ -91,6 +91,7 @@ pub struct ACtrlnetStack {
 
     pub switch_1: bool,
     pub ctrl_type_1: Vec<String>,
+    pub processor_1: Vec<String>,
     //0.05
     pub start_min_1: f32,
     pub start_max_1: f32,
@@ -105,6 +106,7 @@ pub struct ACtrlnetStack {
     // pub images_1: Vec<String>,
     pub switch_2: bool,
     pub ctrl_type_2: Vec<String>,
+    pub processor_2: Vec<String>,
     pub start_min_2: f32,
     pub start_max_2: f32,
     pub end_min_2: f32,
@@ -115,6 +117,7 @@ pub struct ACtrlnetStack {
 
     pub switch_3: bool,
     pub ctrl_type_3: Vec<String>,
+    pub processor_3: Vec<String>,
     pub start_min_3: f32,
     pub start_max_3: f32,
     pub end_min_3: f32,
@@ -135,6 +138,7 @@ impl ACtrlnetStack {
                 if self.switch_1 {
                     Some(ACtrlnet {
                         ctrl_type: self.ctrl_type_1.clone(),
+                        preprocessor: self.processor_1.clone(),
                         start_min: self.start_min_1,
                         start_max: self.start_max_1,
                         end_min: self.end_min_1,
@@ -151,6 +155,7 @@ impl ACtrlnetStack {
                 if self.switch_2 {
                     Some(ACtrlnet {
                         ctrl_type: self.ctrl_type_2.clone(),
+                        preprocessor: self.processor_2.clone(),
                         start_min: self.start_min_2,
                         start_max: self.start_max_2,
                         end_min: self.end_min_2,
@@ -167,6 +172,7 @@ impl ACtrlnetStack {
                 if self.switch_3 {
                     Some(ACtrlnet {
                         ctrl_type: self.ctrl_type_3.clone(),
+                        preprocessor: self.processor_3.clone(),
                         start_min: self.start_min_3,
                         start_max: self.start_max_3,
                         end_min: self.end_min_3,
@@ -186,6 +192,7 @@ impl ACtrlnetStack {
 #[derive(Debug)]
 pub struct ACtrlnet {
     pub ctrl_type: Vec<String>,
+    pub preprocessor: Vec<String>,
     pub start_min: f32,
     pub start_max: f32,
     pub end_min: f32,

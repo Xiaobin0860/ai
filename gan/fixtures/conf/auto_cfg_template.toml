@@ -10,6 +10,8 @@ title = "CtrlnetStack"
 switch_1 = true
 #随机CN类型 Canny|OpenPose|Depth|NormalMap|Lineart|AnimeLineart|SoftEdge|Segmentation|Tile
 ctrl_type_1 = ["AnimeLineart"]
+#指定随机处理器 realistic|coarse|anime|anime_denoise
+processor_1 = ["anime_denoise"]
 start_min_1 = 0
 start_max_1 = 0.4
 end_min_1 = 0.5
@@ -20,7 +22,8 @@ strength_max_1 = 1.35
 resolution_1 = [448, 512, 576, 640, 704, 768]
 
 switch_2 = false
-ctrl_type_2 = ["OpenPose"]
+ctrl_type_2 = []
+processor_2 = []
 start_min_2 = 0
 start_max_2 = 1
 end_min_2 = 0
@@ -31,6 +34,7 @@ resolution_2 = []
 
 switch_3 = false
 ctrl_type_3 = []
+processor_3 = []
 start_min_3 = 0
 start_max_3 = 1
 end_min_3 = 0

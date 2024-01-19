@@ -6,10 +6,10 @@ use rand::random;
 use tracing::{debug, trace, warn};
 
 use crate::{
-    comfy_class_map, create_input_id, rand_element, ACtrlnet, ACtrlnetStack, ALoraStack, AppResult,
-    AutoCfg, CnCfg, Ctrlnet, IdxControlNet, IdxLoRA, LoraCfg, LoraStack, Workflow, NODE_CROP_IMAGE,
-    NODE_EMPTY_LATENT, NODE_IMAGE_PREPROCESSOR, NODE_KSAMPLER, NODE_LINEART_PREPROCESSOR,
-    NODE_LOAD_IMAGE, NODE_REPEAT_LATENT,
+    comfy_class_map, comfy_preprocessor, create_input_id, rand_element, ACtrlnet, ACtrlnetStack,
+    ALoraStack, AppResult, AutoCfg, CnCfg, Ctrlnet, IdxControlNet, IdxLoRA, LoraCfg, LoraStack,
+    Workflow, NODE_CROP_IMAGE, NODE_EMPTY_LATENT, NODE_IMAGE_PREPROCESSOR, NODE_KSAMPLER,
+    NODE_LINEART_PREPROCESSOR, NODE_LOAD_IMAGE, NODE_REPEAT_LATENT,
 };
 
 const STEP_F32: f32 = 0.05;
@@ -235,9 +235,17 @@ impl Generator {
         } else {
             acfg.end_max
         };
+        let preprocessors = if acfg.preprocessor.is_empty() {
+            //所有可用的preprocessor随机, 注意这是comfy的preprocessor名
+            &cn.preprocessor
+        } else {
+            //指定的preprocessor随机, 注意这是显示可读的preprocessor名
+            &acfg.preprocessor
+        };
+        let preprocessor = comfy_preprocessor(rand_element(preprocessors).as_str()).to_owned();
         Ok(CnCfg {
             model: rand_element(&cn.model).clone(),
-            preprocessor: rand_element(&cn.preprocessor).clone(),
+            preprocessor,
             weight,
             start,
             end,
@@ -258,6 +266,8 @@ impl Generator {
                     + asampler.steps_min;
                 trace!("steps: {steps}");
                 sampler.steps = steps;
+            } else {
+                sampler.steps = asampler.steps_max;
             }
             //rand [cfg_min, cfg_max]
             if asampler.cfg_max - asampler.cfg_min > STEP_F32 {
@@ -265,6 +275,8 @@ impl Generator {
                     random::<f32>() * (asampler.cfg_max - asampler.cfg_min) + asampler.cfg_min;
                 trace!("cfg: {cfg}");
                 sampler.cfg = cfg;
+            } else {
+                sampler.cfg = asampler.cfg_max;
             }
             //rand [denoise_min, denoise_max]
             if asampler.denoise_max - asampler.denoise_min > STEP_F32 {
@@ -281,6 +293,8 @@ impl Generator {
                 }
                 trace!("denoise: {vs:?}");
                 sampler.denoise = *rand_element(&vs);
+            } else {
+                sampler.denoise = asampler.denoise_max;
             }
         }
         Ok(())

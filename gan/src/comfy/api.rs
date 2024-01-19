@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use reqwest::Client;
 use serde::Deserialize;
-use serde_json::{json, Value};
+use serde_json::Value;
 use tracing::info;
 
 #[derive(Debug, Deserialize)]
@@ -48,14 +48,6 @@ impl Comfy {
         data.insert("prompt", prompt);
         let client_id = self.uuid.clone().into();
         data.insert("client_id", &client_id);
-        let extra_data = json!({
-            "extra_pnginfo": {
-                "workflow": {
-                    "nodes": []
-                }
-            }
-        });
-        data.insert("extra_data", &extra_data);
         let json = serde_json::to_string(&data).unwrap();
         info!("{json}");
         self.client
@@ -69,7 +61,7 @@ impl Comfy {
 
 #[cfg(test)]
 mod comfy_tests {
-    use super::*;
+    use serde_json::json;
 
     #[test]
     fn extra_pnginfo_should_work() {

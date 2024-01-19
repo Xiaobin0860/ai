@@ -1,0 +1,13 @@
+{
+  "realistic": "LineArtPreprocessor",
+  "coarse": "LineArtPreprocessor",
+  "anime": "AnimeLineArtPreprocessor",
+  "anime_denoise": "Manga2Anime_LineArt_Preprocessor",
+  "pidinet": "PiDiNetPreprocessor",
+  "hed": "HEDPreprocessor",
+  "midas_depth": "MiDaS-DepthMapPreprocessor",
+  "leres_depth": "LeReS-DepthMapPreprocessor",
+  "zoe_depth": "Zoe-DepthMapPreprocessor",
+  "canny": "CannyEdgePreprocessor",
+  "bae": "BAE-NormalMapPreprocessor"
+}

@@ -66,6 +66,15 @@ pub fn comfy_class_map() -> &'static HashMap<&'static str, &'static str> {
     HASHMAP.get_or_init(|| my_class_map().iter().map(|(k, v)| (*v, *k)).collect())
 }
 
+/// processor名 => comfy preprocessor类
+pub fn preprocessor_map() -> &'static HashMap<&'static str, &'static str> {
+    static HASHMAP: OnceLock<HashMap<&'static str, &'static str>> = OnceLock::new();
+    HASHMAP.get_or_init(|| serde_json::from_str(fixtures::preprocessors()).unwrap())
+}
+pub fn comfy_preprocessor(name: &str) -> &str {
+    preprocessor_map().get(name).unwrap_or(&name)
+}
+
 pub fn create_input_id(id: &str, idx: usize) -> Value {
     // [id, idx]
     let id = Value::String(id.into());
@@ -79,6 +88,23 @@ mod comfy_tests {
     use tracing::trace;
 
     use super::*;
+
+    #[test]
+    fn class_map_should_work() {
+        let map = my_class_map();
+        assert_eq!(map.get("CtrlnetStack"), Some(&"CR Multi-ControlNet Stack"));
+        let map = comfy_class_map();
+        assert_eq!(map.get("CR LoRA Stack"), Some(&"LoraStack"));
+    }
+
+    #[test]
+    fn processor_map_should_work() {
+        let map = preprocessor_map();
+        assert_eq!(
+            map.get("anime_denoise"),
+            Some(&"Manga2Anime_LineArt_Preprocessor")
+        );
+    }
 
     #[test]
     fn node_inputs_convert_should_work() {
