@@ -36,10 +36,12 @@ async fn main() -> AppResult<()> {
                     if remaining == 0 {
                         let mut wf = Workflow::from_file(args.workflow.as_str())?;
                         gen.rand(&mut wf, &ac)?;
-                        wf.get_node_mut(NODE_KSAMPLER)?.k_sampler_mut().seed =
-                            rand::random::<u32>() as i64;
-                        let prompt = wf.to_json()?;
-                        api.queue_prompt(&prompt).await;
+                        for _ in 0..ac.ct_per_params {
+                            wf.get_node_mut(NODE_KSAMPLER)?.k_sampler_mut().seed =
+                                rand::random::<u32>() as i64;
+                            let prompt = wf.to_json()?;
+                            api.queue_prompt(&prompt).await;
+                        }
                     }
                 }
             }

@@ -3,6 +3,8 @@ workflows = ["图生图api.json", "文生图api.json"]
 
 # 总出图数
 total = 4000
+# 每套参数出图数(只变化种子), 不改batch_size
+ct_per_params = 2
 
 # CN Stack
 [ctrlnet_stack]
@@ -75,7 +77,8 @@ positive = [
 negative = ["colors,humans,"]
 width = 768
 height = 576
-batch_size = 2
+# comfyui 多张图不知道是哪里有变化,不利于重现,所以这里只用1, 程序主动变种子生成多张图
+batch_size = 1
 vae_name = ["Baked VAE"]
 clip_skip = [-2]
 

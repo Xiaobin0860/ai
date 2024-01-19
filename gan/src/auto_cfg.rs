@@ -13,6 +13,9 @@ pub struct AutoCfg {
     /// 总出图数
     pub total: usize,
 
+    /// 每套参数出图数(只变化种子)
+    pub ct_per_params: usize,
+
     /// CN配置
     pub ctrlnet_stack: Option<ACtrlnetStack>,
 
