@@ -1,13 +1,458 @@
 {
   "last_node_id": 207,
-  "last_link_id": 315,
+  "last_link_id": 316,
   "nodes": [
+    {
+      "id": 61,
+      "type": "CannyEdgePreprocessor",
+      "pos": [
+        96,
+        143
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 303,
+          "label": "image"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            229
+          ],
+          "shape": 3,
+          "label": "IMAGE",
+          "slot_index": 0
+        }
+      ],
+      "title": "CannyEdgePreprocessor",
+      "properties": {
+        "Node name for S&R": "CannyEdgePreprocessor"
+      },
+      "widgets_values": [
+        101,
+        202,
+        576
+      ],
+      "color": "#223",
+      "bgcolor": "#335",
+      "shape": 1
+    },
+    {
+      "id": 47,
+      "type": "LineArtPreprocessor",
+      "pos": [
+        96,
+        33
+      ],
+      "size": {
+        "0": 315,
+        "1": 82
+      },
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 302,
+          "label": "image"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            312
+          ],
+          "shape": 3,
+          "label": "IMAGE",
+          "slot_index": 0
+        }
+      ],
+      "title": "LineArtPreprocessor",
+      "properties": {
+        "Node name for S&R": "LineArtPreprocessor"
+      },
+      "widgets_values": [
+        "enable",
+        832
+      ],
+      "color": "#223",
+      "bgcolor": "#335",
+      "shape": 1
+    },
+    {
+      "id": 118,
+      "type": "LineartStandardPreprocessor",
+      "pos": [
+        95,
+        281
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 304,
+          "label": "image"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [],
+          "shape": 3,
+          "label": "IMAGE",
+          "slot_index": 0
+        }
+      ],
+      "title": "LineartStandardPreprocessor",
+      "properties": {
+        "Node name for S&R": "LineartStandardPreprocessor"
+      },
+      "widgets_values": [
+        6,
+        9,
+        960
+      ],
+      "color": "#223",
+      "bgcolor": "#335",
+      "shape": 1
+    },
+    {
+      "id": 120,
+      "type": "OpenposePreprocessor",
+      "pos": [
+        96,
+        538
+      ],
+      "size": {
+        "0": 315,
+        "1": 150
+      },
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 306,
+          "label": "image"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [],
+          "shape": 3,
+          "label": "IMAGE",
+          "slot_index": 0
+        },
+        {
+          "name": "POSE_KEYPOINT",
+          "type": "POSE_KEYPOINT",
+          "links": null,
+          "shape": 3,
+          "label": "POSE_KEYPOINT"
+        }
+      ],
+      "title": "OpenposePreprocessor",
+      "properties": {
+        "Node name for S&R": "OpenposePreprocessor"
+      },
+      "widgets_values": [
+        "enable",
+        "enable",
+        "enable",
+        576
+      ],
+      "color": "#223",
+      "bgcolor": "#335",
+      "shape": 1
+    },
+    {
+      "id": 156,
+      "type": "HEDPreprocessor",
+      "pos": [
+        94,
+        421
+      ],
+      "size": {
+        "0": 315,
+        "1": 82
+      },
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 305
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            233
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "HEDPreprocessor",
+      "properties": {
+        "Node name for S&R": "HEDPreprocessor"
+      },
+      "widgets_values": [
+        "enable",
+        512
+      ],
+      "color": "#223",
+      "bgcolor": "#335",
+      "shape": 1
+    },
+    {
+      "id": 163,
+      "type": "AIO_Preprocessor",
+      "pos": [
+        96,
+        719
+      ],
+      "size": {
+        "0": 315,
+        "1": 82
+      },
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 307
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            237
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "ImagePreprocessor",
+      "properties": {
+        "Node name for S&R": "AIO_Preprocessor"
+      },
+      "widgets_values": [
+        "CannyEdgePreprocessor",
+        512
+      ],
+      "shape": 1
+    },
+    {
+      "id": 169,
+      "type": "TilePreprocessor",
+      "pos": [
+        96,
+        834
+      ],
+      "size": {
+        "0": 315,
+        "1": 82
+      },
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 308
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "TilePreprocessor",
+      "properties": {
+        "Node name for S&R": "TilePreprocessor"
+      },
+      "widgets_values": [
+        3,
+        512
+      ],
+      "shape": 1
+    },
+    {
+      "id": 170,
+      "type": "LeReS-DepthMapPreprocessor",
+      "pos": [
+        95,
+        949
+      ],
+      "size": {
+        "0": 315,
+        "1": 130
+      },
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 309
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            241
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "LeReSDepthMapPreprocessor",
+      "properties": {
+        "Node name for S&R": "LeReS-DepthMapPreprocessor"
+      },
+      "widgets_values": [
+        0,
+        0,
+        "disable",
+        512
+      ],
+      "shape": 1
+    },
+    {
+      "id": 171,
+      "type": "MiDaS-DepthMapPreprocessor",
+      "pos": [
+        94,
+        1112
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 310
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "MiDaSDepthMapPreprocessor",
+      "properties": {
+        "Node name for S&R": "MiDaS-DepthMapPreprocessor"
+      },
+      "widgets_values": [
+        6.283185307179586,
+        0.1,
+        512
+      ],
+      "shape": 1
+    },
+    {
+      "id": 172,
+      "type": "M-LSDPreprocessor",
+      "pos": [
+        95,
+        1251
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 311
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            245
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "MLSDPreprocessor",
+      "properties": {
+        "Node name for S&R": "M-LSDPreprocessor"
+      },
+      "widgets_values": [
+        0.1,
+        0.1,
+        512
+      ],
+      "shape": 1
+    },
     {
       "id": 130,
       "type": "CR LoRA Stack",
       "pos": [
-        680,
-        400
+        480,
+        30
       ],
       "size": {
         "0": 389,
@@ -64,65 +509,31 @@
       "shape": 1
     },
     {
-      "id": 171,
-      "type": "MiDaS-DepthMapPreprocessor",
+      "id": 35,
+      "type": "VAEDecode",
       "pos": [
-        270,
-        1470
+        1820,
+        190
       ],
       "size": {
-        "0": 315,
-        "1": 106
+        "0": 210,
+        "1": 46
       },
       "flags": {},
-      "order": 11,
+      "order": 17,
       "mode": 0,
       "inputs": [
         {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 310
-        }
-      ],
-      "outputs": [
+          "name": "samples",
+          "type": "LATENT",
+          "link": 135,
+          "label": "samples"
+        },
         {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "title": "MiDaSDepthMapPreprocessor",
-      "properties": {
-        "Node name for S&R": "MiDaS-DepthMapPreprocessor"
-      },
-      "widgets_values": [
-        6.283185307179586,
-        0.1,
-        512
-      ],
-      "shape": 1
-    },
-    {
-      "id": 170,
-      "type": "LeReS-DepthMapPreprocessor",
-      "pos": [
-        260,
-        1300
-      ],
-      "size": {
-        "0": 315,
-        "1": 130
-      },
-      "flags": {},
-      "order": 10,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 309
+          "name": "vae",
+          "type": "VAE",
+          "link": 191,
+          "label": "vae"
         }
       ],
       "outputs": [
@@ -130,390 +541,263 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            241
+            114,
+            315
           ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "title": "LeReSDepthMapPreprocessor",
-      "properties": {
-        "Node name for S&R": "LeReS-DepthMapPreprocessor"
-      },
-      "widgets_values": [
-        0,
-        0,
-        "disable",
-        512
-      ],
-      "shape": 1
-    },
-    {
-      "id": 169,
-      "type": "TilePreprocessor",
-      "pos": [
-        260,
-        1160
-      ],
-      "size": {
-        "0": 315,
-        "1": 82
-      },
-      "flags": {},
-      "order": 9,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 308
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "title": "TilePreprocessor",
-      "properties": {
-        "Node name for S&R": "TilePreprocessor"
-      },
-      "widgets_values": [
-        3,
-        512
-      ],
-      "shape": 1
-    },
-    {
-      "id": 163,
-      "type": "AIO_Preprocessor",
-      "pos": [
-        260,
-        1030
-      ],
-      "size": {
-        "0": 315,
-        "1": 82
-      },
-      "flags": {},
-      "order": 8,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 307
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            237
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "title": "ImagePreprocessor",
-      "properties": {
-        "Node name for S&R": "AIO_Preprocessor"
-      },
-      "widgets_values": [
-        "CannyEdgePreprocessor",
-        512
-      ],
-      "shape": 1
-    },
-    {
-      "id": 120,
-      "type": "OpenposePreprocessor",
-      "pos": [
-        260,
-        830
-      ],
-      "size": {
-        "0": 315,
-        "1": 150
-      },
-      "flags": {},
-      "order": 7,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 306,
-          "label": "image"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [],
           "shape": 3,
           "label": "IMAGE",
+          "slot_index": 0
+        }
+      ],
+      "title": "VaeDecode",
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "shape": 1
+    },
+    {
+      "id": 132,
+      "type": "CR Multi-ControlNet Stack",
+      "pos": [
+        450,
+        410
+      ],
+      "size": {
+        "0": 419,
+        "1": 454
+      },
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image_1",
+          "type": "IMAGE",
+          "link": 312,
+          "label": "image_1"
+        },
+        {
+          "name": "image_2",
+          "type": "IMAGE",
+          "link": null,
+          "label": "image_2"
+        },
+        {
+          "name": "image_3",
+          "type": "IMAGE",
+          "link": null,
+          "label": "image_3"
+        },
+        {
+          "name": "controlnet_stack",
+          "type": "CONTROL_NET_STACK",
+          "link": null,
+          "label": "controlnet_stack"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONTROLNET_STACK",
+          "type": "CONTROL_NET_STACK",
+          "links": [
+            179
+          ],
+          "shape": 3,
+          "label": "CONTROLNET_STACK",
           "slot_index": 0
         },
         {
-          "name": "POSE_KEYPOINT",
-          "type": "POSE_KEYPOINT",
+          "name": "show_help",
+          "type": "STRING",
           "links": null,
           "shape": 3,
-          "label": "POSE_KEYPOINT"
+          "label": "show_help"
         }
       ],
-      "title": "OpenposePreprocessor",
+      "title": "CtrlnetStack",
       "properties": {
-        "Node name for S&R": "OpenposePreprocessor"
+        "Node name for S&R": "CR Multi-ControlNet Stack"
       },
       "widgets_values": [
-        "enable",
-        "enable",
-        "enable",
-        576
+        "On",
+        "control_v11p_sd15_softedge_fp16.safetensors",
+        1,
+        0,
+        1,
+        "Off",
+        "None",
+        1,
+        0,
+        1,
+        "Off",
+        "None",
+        1,
+        0,
+        0.22
       ],
-      "color": "#223",
-      "bgcolor": "#335",
       "shape": 1
     },
     {
-      "id": 156,
-      "type": "HEDPreprocessor",
+      "id": 78,
+      "type": "VAEEncode",
       "pos": [
-        260,
-        700
+        1292,
+        250
       ],
       "size": {
-        "0": 315,
-        "1": 82
+        "0": 210,
+        "1": 46
       },
       "flags": {},
-      "order": 6,
+      "order": 15,
       "mode": 0,
       "inputs": [
         {
-          "name": "image",
+          "name": "pixels",
           "type": "IMAGE",
-          "link": 305
+          "link": 283,
+          "label": "pixels"
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 190,
+          "label": "vae"
         }
       ],
       "outputs": [
         {
-          "name": "IMAGE",
-          "type": "IMAGE",
+          "name": "LATENT",
+          "type": "LATENT",
           "links": [
-            233
+            316
           ],
           "shape": 3,
+          "label": "LATENT",
           "slot_index": 0
         }
       ],
-      "title": "HEDPreprocessor",
+      "title": "VaeEncode",
       "properties": {
-        "Node name for S&R": "HEDPreprocessor"
+        "Node name for S&R": "VAEEncode"
       },
-      "widgets_values": [
-        "enable",
-        512
-      ],
-      "color": "#223",
-      "bgcolor": "#335",
       "shape": 1
     },
     {
-      "id": 118,
-      "type": "LineartStandardPreprocessor",
+      "id": 3,
+      "type": "KSampler",
       "pos": [
-        260,
-        550
+        1505,
+        190
       ],
       "size": {
         "0": 315,
-        "1": 106
+        "1": 262
       },
       "flags": {},
-      "order": 5,
+      "order": 16,
       "mode": 0,
       "inputs": [
         {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 304,
-          "label": "image"
+          "name": "model",
+          "type": "MODEL",
+          "link": 183,
+          "label": "model"
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 187,
+          "label": "positive"
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 188,
+          "label": "negative"
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 316,
+          "label": "latent_image"
         }
       ],
       "outputs": [
         {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [],
-          "shape": 3,
-          "label": "IMAGE",
-          "slot_index": 0
-        }
-      ],
-      "title": "LineartStandardPreprocessor",
-      "properties": {
-        "Node name for S&R": "LineartStandardPreprocessor"
-      },
-      "widgets_values": [
-        6,
-        9,
-        960
-      ],
-      "color": "#223",
-      "bgcolor": "#335",
-      "shape": 1
-    },
-    {
-      "id": 61,
-      "type": "CannyEdgePreprocessor",
-      "pos": [
-        260,
-        390
-      ],
-      "size": {
-        "0": 315,
-        "1": 106
-      },
-      "flags": {},
-      "order": 4,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 303,
-          "label": "image"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
+          "name": "LATENT",
+          "type": "LATENT",
           "links": [
-            229
+            135
           ],
-          "shape": 3,
-          "label": "IMAGE",
-          "slot_index": 0
+          "slot_index": 0,
+          "label": "LATENT"
         }
       ],
-      "title": "CannyEdgePreprocessor",
       "properties": {
-        "Node name for S&R": "CannyEdgePreprocessor"
+        "Node name for S&R": "KSampler"
       },
       "widgets_values": [
-        101,
-        202,
-        576
+        62521205193819,
+        "fixed",
+        20,
+        7,
+        "dpmpp_2m",
+        "karras",
+        1
       ],
-      "color": "#223",
-      "bgcolor": "#335",
+      "color": "#323",
+      "bgcolor": "#535",
       "shape": 1
     },
     {
-      "id": 172,
-      "type": "M-LSDPreprocessor",
+      "id": 207,
+      "type": "Image Save",
       "pos": [
-        270,
-        1610
+        2033,
+        190
       ],
       "size": {
         "0": 315,
-        "1": 106
+        "1": 346
       },
       "flags": {},
-      "order": 12,
+      "order": 18,
       "mode": 0,
       "inputs": [
         {
-          "name": "image",
+          "name": "images",
           "type": "IMAGE",
-          "link": 311
+          "link": 315
         }
       ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            245
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "title": "MLSDPreprocessor",
+      "title": "ImageSave",
       "properties": {
-        "Node name for S&R": "M-LSDPreprocessor"
+        "Node name for S&R": "Image Save"
       },
       "widgets_values": [
-        0.1,
-        0.1,
-        512
+        "[time(%Y-%m-%d)]",
+        "ComfyUI",
+        "_",
+        4,
+        "false",
+        "png",
+        100,
+        "false",
+        "false",
+        "false",
+        "true",
+        "true",
+        "false"
       ],
-      "shape": 1
-    },
-    {
-      "id": 47,
-      "type": "LineArtPreprocessor",
-      "pos": [
-        260,
-        260
-      ],
-      "size": {
-        "0": 315,
-        "1": 82
-      },
-      "flags": {},
-      "order": 3,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 302,
-          "label": "image"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            312
-          ],
-          "shape": 3,
-          "label": "IMAGE",
-          "slot_index": 0
-        }
-      ],
-      "title": "LineArtPreprocessor",
-      "properties": {
-        "Node name for S&R": "LineArtPreprocessor"
-      },
-      "widgets_values": [
-        "enable",
-        832
-      ],
-      "color": "#223",
-      "bgcolor": "#335",
       "shape": 1
     },
     {
       "id": 15,
       "type": "LoadImage",
       "pos": [
-        -195,
-        686
+        -322,
+        391
       ],
       "size": {
         "0": 315,
@@ -566,8 +850,8 @@
       "id": 182,
       "type": "Crop Image TargetSize (JPS)",
       "pos": [
-        1152,
-        1131
+        894,
+        683
       ],
       "size": {
         "0": 315,
@@ -609,78 +893,11 @@
       "shape": 1
     },
     {
-      "id": 3,
-      "type": "KSampler",
-      "pos": [
-        1866,
-        629
-      ],
-      "size": {
-        "0": 315,
-        "1": 262
-      },
-      "flags": {},
-      "order": 17,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "model",
-          "type": "MODEL",
-          "link": 183,
-          "label": "model"
-        },
-        {
-          "name": "positive",
-          "type": "CONDITIONING",
-          "link": 187,
-          "label": "positive"
-        },
-        {
-          "name": "negative",
-          "type": "CONDITIONING",
-          "link": 188,
-          "label": "negative"
-        },
-        {
-          "name": "latent_image",
-          "type": "LATENT",
-          "link": 314,
-          "label": "latent_image"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "LATENT",
-          "type": "LATENT",
-          "links": [
-            135
-          ],
-          "slot_index": 0,
-          "label": "LATENT"
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "KSampler"
-      },
-      "widgets_values": [
-        62521205193819,
-        "fixed",
-        20,
-        7,
-        "dpmpp_2m",
-        "karras",
-        0.75
-      ],
-      "color": "#323",
-      "bgcolor": "#535",
-      "shape": 1
-    },
-    {
       "id": 134,
       "type": "Efficient Loader",
       "pos": [
-        1095,
-        624
+        890,
+        190
       ],
       "size": {
         "0": 400,
@@ -785,267 +1002,11 @@
         "A1111",
         512,
         768,
-        2
+        1
       ],
       "color": "#223333",
       "bgcolor": "#335555",
       "shape": 1
-    },
-    {
-      "id": 78,
-      "type": "VAEEncode",
-      "pos": [
-        1529,
-        1099
-      ],
-      "size": {
-        "0": 210,
-        "1": 46
-      },
-      "flags": {},
-      "order": 15,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "pixels",
-          "type": "IMAGE",
-          "link": 283,
-          "label": "pixels"
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": 190,
-          "label": "vae"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "LATENT",
-          "type": "LATENT",
-          "links": [
-            313
-          ],
-          "shape": 3,
-          "label": "LATENT",
-          "slot_index": 0
-        }
-      ],
-      "title": "VaeEncode",
-      "properties": {
-        "Node name for S&R": "VAEEncode"
-      },
-      "shape": 1
-    },
-    {
-      "id": 206,
-      "type": "RepeatLatentBatch",
-      "pos": [
-        1705,
-        973
-      ],
-      "size": {
-        "0": 315,
-        "1": 58
-      },
-      "flags": {},
-      "order": 16,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "samples",
-          "type": "LATENT",
-          "link": 313
-        }
-      ],
-      "outputs": [
-        {
-          "name": "LATENT",
-          "type": "LATENT",
-          "links": [
-            314
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "title": "RepeatLatent",
-      "properties": {
-        "Node name for S&R": "RepeatLatentBatch"
-      },
-      "widgets_values": [
-        4
-      ]
-    },
-    {
-      "id": 132,
-      "type": "CR Multi-ControlNet Stack",
-      "pos": [
-        662,
-        794
-      ],
-      "size": {
-        "0": 419,
-        "1": 454
-      },
-      "flags": {},
-      "order": 13,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image_1",
-          "type": "IMAGE",
-          "link": 312,
-          "label": "image_1"
-        },
-        {
-          "name": "image_2",
-          "type": "IMAGE",
-          "link": null,
-          "label": "image_2"
-        },
-        {
-          "name": "image_3",
-          "type": "IMAGE",
-          "link": null,
-          "label": "image_3"
-        },
-        {
-          "name": "controlnet_stack",
-          "type": "CONTROL_NET_STACK",
-          "link": null,
-          "label": "controlnet_stack"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "CONTROLNET_STACK",
-          "type": "CONTROL_NET_STACK",
-          "links": [
-            179
-          ],
-          "shape": 3,
-          "label": "CONTROLNET_STACK",
-          "slot_index": 0
-        },
-        {
-          "name": "show_help",
-          "type": "STRING",
-          "links": null,
-          "shape": 3,
-          "label": "show_help"
-        }
-      ],
-      "title": "CtrlnetStack",
-      "properties": {
-        "Node name for S&R": "CR Multi-ControlNet Stack"
-      },
-      "widgets_values": [
-        "On",
-        "control_v11p_sd15_softedge_fp16.safetensors",
-        1,
-        0,
-        1,
-        "Off",
-        "None",
-        1,
-        0,
-        1,
-        "Off",
-        "None",
-        1,
-        0,
-        0.22
-      ],
-      "shape": 1
-    },
-    {
-      "id": 35,
-      "type": "VAEDecode",
-      "pos": [
-        2205,
-        644
-      ],
-      "size": {
-        "0": 210,
-        "1": 46
-      },
-      "flags": {},
-      "order": 18,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "samples",
-          "type": "LATENT",
-          "link": 135,
-          "label": "samples"
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": 191,
-          "label": "vae"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            114,
-            315
-          ],
-          "shape": 3,
-          "label": "IMAGE",
-          "slot_index": 0
-        }
-      ],
-      "title": "VaeDecode",
-      "properties": {
-        "Node name for S&R": "VAEDecode"
-      },
-      "shape": 1
-    },
-    {
-      "id": 207,
-      "type": "Image Save",
-      "pos": [
-        2449,
-        645
-      ],
-      "size": {
-        "0": 315,
-        "1": 346
-      },
-      "flags": {},
-      "order": 19,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 315
-        }
-      ],
-      "title": "ImageSave",
-      "properties": {
-        "Node name for S&R": "Image Save"
-      },
-      "widgets_values": [
-        "[time(%Y-%m-%d)]",
-        "ComfyUI",
-        "_",
-        4,
-        "false",
-        "png",
-        100,
-        "false",
-        "false",
-        "false",
-        "true",
-        "true",
-        "true"
-      ]
     }
   ],
   "links": [
@@ -1266,28 +1227,20 @@
       "IMAGE"
     ],
     [
-      313,
-      78,
-      0,
-      206,
-      0,
-      "LATENT"
-    ],
-    [
-      314,
-      206,
-      0,
-      3,
-      3,
-      "LATENT"
-    ],
-    [
       315,
       35,
       0,
       207,
       0,
       "IMAGE"
+    ],
+    [
+      316,
+      78,
+      0,
+      3,
+      3,
+      "LATENT"
     ]
   ],
   "groups": [],

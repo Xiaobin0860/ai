@@ -6,7 +6,7 @@
       "cfg": 7,
       "sampler_name": "dpmpp_2m",
       "scheduler": "karras",
-      "denoise": 0.75,
+      "denoise": 1,
       "model": [
         "134",
         0
@@ -20,8 +20,8 @@
         2
       ],
       "latent_image": [
-        "206",
-        0
+        "134",
+        3
       ]
     },
     "class_type": "KSampler",
@@ -279,17 +279,6 @@
       "title": "MLSDPreprocessor"
     }
   },
-  "206": {
-    "inputs": {
-      "width": 512,
-      "height": 768,
-      "batch_size": 4
-    },
-    "class_type": "EmptyLatentImage",
-    "_meta": {
-      "title": "EmptyLatent"
-    }
-  },
   "207": {
     "inputs": {
       "output_path": "[time(%Y-%m-%d)]",
@@ -304,7 +293,7 @@
       "show_history": "false",
       "show_history_by_prefix": "true",
       "embed_workflow": "true",
-      "show_previews": "true",
+      "show_previews": "false",
       "images": [
         "35",
         0

@@ -6,7 +6,7 @@
       "cfg": 7,
       "sampler_name": "dpmpp_2m",
       "scheduler": "karras",
-      "denoise": 0.75,
+      "denoise": 1,
       "model": [
         "134",
         0
@@ -20,7 +20,7 @@
         2
       ],
       "latent_image": [
-        "206",
+        "78",
         0
       ]
     },
@@ -192,7 +192,7 @@
       "weight_interpretation": "A1111",
       "empty_latent_width": 512,
       "empty_latent_height": 768,
-      "batch_size": 2,
+      "batch_size": 1,
       "lora_stack": [
         "130",
         0
@@ -312,19 +312,6 @@
       "title": "CropImage"
     }
   },
-  "206": {
-    "inputs": {
-      "amount": 4,
-      "samples": [
-        "78",
-        0
-      ]
-    },
-    "class_type": "RepeatLatentBatch",
-    "_meta": {
-      "title": "RepeatLatent"
-    }
-  },
   "207": {
     "inputs": {
       "output_path": "[time(%Y-%m-%d)]",
@@ -339,7 +326,7 @@
       "show_history": "false",
       "show_history_by_prefix": "true",
       "embed_workflow": "true",
-      "show_previews": "true",
+      "show_previews": "false",
       "images": [
         "35",
         0
