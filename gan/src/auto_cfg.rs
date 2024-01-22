@@ -1,8 +1,68 @@
 use std::fs;
 
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 use crate::{AppResult, IdxControlNet};
+
+/// 应用状态
+#[derive(Debug, Serialize, Deserialize)]
+pub struct AppState {
+    #[serde(skip)]
+    db_file: String,
+
+    /// 当前跑到第几个配置 [0, auto_cfgs.len)
+    #[serde(default)]
+    pub cfg_idx: usize,
+
+    /// 当前配置跑到第几个循环 [0, total)
+    #[serde(default)]
+    pub total_idx: usize,
+}
+impl AppState {
+    fn from_json(toml_str: &str) -> AppResult<Self> {
+        Ok(serde_json::from_str(toml_str)?)
+    }
+
+    pub fn from_file(db_file: &str) -> AppResult<Self> {
+        let content = fs::read_to_string(db_file).unwrap_or("{}".to_owned());
+        let mut s = Self::from_json(content.as_str())?;
+        s.db_file = db_file.to_owned();
+        Ok(s)
+    }
+
+    pub fn clean(&mut self) {
+        self.cfg_idx = 0;
+        self.total_idx = 0;
+    }
+
+    pub fn save(&self) -> AppResult<()> {
+        let content = serde_json::to_string(self)?;
+        fs::write(self.db_file.as_str(), content)?;
+        Ok(())
+    }
+
+    pub fn update(&mut self, cfg_idx: usize, total_idx: usize) -> AppResult<()> {
+        self.cfg_idx = cfg_idx;
+        self.total_idx = total_idx;
+        self.save()
+    }
+}
+
+#[derive(Debug, Deserialize)]
+pub struct AppCfg {
+    pub comfy_api: String,
+    pub auto_cfgs: Vec<String>,
+}
+
+impl AppCfg {
+    pub fn from_toml(toml_str: &str) -> AppResult<Self> {
+        Ok(toml::from_str(toml_str)?)
+    }
+
+    pub fn from_file(toml_file: &str) -> AppResult<Self> {
+        Self::from_toml(fs::read_to_string(toml_file)?.as_str())
+    }
+}
 
 /// 自动出图配置
 #[derive(Debug, Deserialize)]
@@ -258,5 +318,12 @@ mod ac_tests {
         assert!(lora_stack.switch_1);
         assert!(!lora_stack.model_name_1.is_empty());
         assert_eq!(&lora_stack.title, NODE_LORA_STACK);
+    }
+
+    #[test]
+    fn state_should_work() {
+        let state = AppState::from_file("nonononononono").unwrap();
+        assert_eq!(0, state.cfg_idx);
+        assert_eq!(0, state.total_idx);
     }
 }

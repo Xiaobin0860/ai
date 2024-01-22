@@ -1,0 +1,5 @@
+# 每个auto_cfg是一组需要跑的参数配置
+auto_cfgs = ["auto_cfg1.toml", "auto_cfg2.toml"]
+
+# comfy ui api地址
+comfy_api = "192.168.0.13:8188"

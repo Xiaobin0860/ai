@@ -15,19 +15,17 @@ use crate::{
 const STEP_F32: f32 = 0.05;
 
 pub struct Generator {
-    pub seed: i64,
     cns: HashMap<String, Ctrlnet>,
 }
 
 impl Generator {
     pub fn new() -> Self {
         Self {
-            seed: -1,
             cns: serde_json::from_str(control_nets()).unwrap(),
         }
     }
 
-    pub fn rand(&mut self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<()> {
+    pub fn rand(&self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<()> {
         self.rand_sampler(wf, ac)?;
         self.rand_lora(wf, ac)?;
         self.rand_cn(wf, ac)?;
@@ -36,7 +34,7 @@ impl Generator {
         Ok(())
     }
 
-    fn rand_efficient(&mut self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<()> {
+    fn rand_efficient(&self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<()> {
         if let Some(ec) = &ac.efficient {
             let efficient = wf.get_node_mut(&ec.title)?.efficient_loader_mut();
             efficient.positive = rand_element(&ec.positive).clone();
@@ -70,7 +68,7 @@ impl Generator {
         Ok(())
     }
 
-    fn rand_images(&mut self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<()> {
+    fn rand_images(&self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<()> {
         if let Some(cfg) = &ac.load_image {
             let imgs = &cfg.images;
             let img_name = rand_element(imgs);
@@ -254,12 +252,9 @@ impl Generator {
         })
     }
 
-    fn rand_sampler(&mut self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<()> {
-        if -1 == self.seed {
-            self.seed = random::<u32>() as i64;
-        }
+    fn rand_sampler(&self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<()> {
         let sampler = wf.get_node_mut(NODE_KSAMPLER)?.k_sampler_mut();
-        sampler.seed = self.seed;
+        sampler.seed = random::<u32>() as i64;
         if let Some(asampler) = &ac.sampler {
             //rand [steps_min, steps_max]
             if asampler.steps_max > asampler.steps_min {
@@ -303,7 +298,7 @@ impl Generator {
         Ok(())
     }
 
-    fn rand_lora(&mut self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<()> {
+    fn rand_lora(&self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<()> {
         if let Some(alora) = &ac.lora_stack {
             if alora.switch() {
                 let lora_stack = wf.get_node_mut(alora.title.as_str())?.lora_stack_mut();
@@ -316,7 +311,7 @@ impl Generator {
         Ok(())
     }
 
-    fn rand_lora1(&mut self, lora_stack: &mut LoraStack, alora: &ALoraStack) {
+    fn rand_lora1(&self, lora_stack: &mut LoraStack, alora: &ALoraStack) {
         if !alora.switch_1 {
             return;
         }
@@ -328,7 +323,7 @@ impl Generator {
         lora_stack.enable(IdxLoRA::LoRA1, &cfg);
     }
 
-    fn rand_lora2(&mut self, lora_stack: &mut LoraStack, alora: &ALoraStack) {
+    fn rand_lora2(&self, lora_stack: &mut LoraStack, alora: &ALoraStack) {
         if !alora.switch_2 {
             return;
         }
@@ -340,7 +335,7 @@ impl Generator {
         lora_stack.enable(IdxLoRA::LoRA2, &cfg);
     }
 
-    fn rand_lora3(&mut self, lora_stack: &mut LoraStack, alora: &ALoraStack) {
+    fn rand_lora3(&self, lora_stack: &mut LoraStack, alora: &ALoraStack) {
         if !alora.switch_3 {
             return;
         }

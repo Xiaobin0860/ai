@@ -3,3 +3,7 @@
 /Cargo.lock
 /*.json
 /test_auto_cfg.toml
+/*.db
+/app_cfg.toml
+/auto_cfg1.toml
+/auto_cfg2.toml

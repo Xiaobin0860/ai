@@ -3,7 +3,7 @@ use std::{collections::HashMap, fs};
 use anyhow::Context;
 use serde_json::Value;
 
-use crate::{my_class_map, AppResult, Node};
+use crate::{my_class_map, AppResult, Node, NODE_KSAMPLER};
 
 /// The comfy ui workflow
 #[derive(Debug)]
@@ -58,5 +58,10 @@ impl Workflow {
             .typ_id_map
             .get(comfy_class)
             .context(format!("no id {typ}:{comfy_class}"))?)
+    }
+
+    pub fn set_seed(&mut self, seed: i64) -> AppResult<()> {
+        self.get_node_mut(NODE_KSAMPLER)?.k_sampler_mut().seed = seed;
+        Ok(())
     }
 }

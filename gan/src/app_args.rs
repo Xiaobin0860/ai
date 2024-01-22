@@ -3,17 +3,11 @@ use clap::Parser;
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 pub struct AppArgs {
-    /// comfy api url
-    #[arg(long, default_value = "192.168.0.13:8188")]
-    pub comfy_host: String,
+    #[arg(long, default_value = "app_cfg.toml")]
+    pub cfg: String,
 
-    /// comfy ui workflow json file
-    #[arg(long, default_value = "ai改画-素描-几何体.json")]
-    pub workflow: String,
-
-    /// auto generate config file
-    #[arg(long, default_value = "test_auto_cfg.toml")]
-    pub auto_cfg: String,
+    #[arg(long)]
+    pub clean: bool,
 }
 
 impl Default for AppArgs {

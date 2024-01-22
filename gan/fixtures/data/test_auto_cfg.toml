@@ -1,8 +1,8 @@
 # 随机流程
-workflows = ["图生图api.json", "文生图api.json"]
+workflows = ["文生图api.json"]
 
-# 总出图数
-total = 4000
+# 总出图数 为了好算及保存进度 这里是控制循环次数, 实际出图数=total*ct_per_params*workflows_len
+total = 500
 # 每套参数出图数(只变化种子), 不改batch_size
 ct_per_params = 2
 
@@ -12,27 +12,27 @@ title = "CtrlnetStack"
 switch_1 = true
 #随机CN类型 Canny|OpenPose|Depth|NormalMap|Lineart|AnimeLineart|SoftEdge|Segmentation|Tile
 ctrl_type_1 = ["AnimeLineart"]
-#指定随机处理器 realistic|coarse|anime|anime_denoise
-processor_1 = ["anime_denoise"]
+#指定随机处理器 realistic|coarse|anime|anime_denoise|pidinet
+processor_1 = ["pidinet"]
 start_min_1 = 0
-start_max_1 = 0.4
-end_min_1 = 0.5
-end_max_1 = 1
-strength_min_1 = 0.5
-strength_max_1 = 1.35
+start_max_1 = 0
+end_min_1 = 0.4
+end_max_1 = 0.6
+strength_min_1 = 0.8
+strength_max_1 = 1
 # 320|384|448|512|576|640|704|768|832
-resolution_1 = [448, 512, 576, 640, 704, 768]
+resolution_1 = [576, 640, 704]
 
-switch_2 = false
-ctrl_type_2 = []
-processor_2 = []
-start_min_2 = 0
-start_max_2 = 1
-end_min_2 = 0
-end_max_2 = 1
-strength_min_2 = 0.5
-strength_max_2 = 1.3
-resolution_2 = []
+switch_2 = true
+ctrl_type_2 = ["Lineart"]
+processor_2 = ["realistic"]
+start_min_2 = 0.4
+start_max_2 = 0.65
+end_min_2 = 0.7
+end_max_2 = 0.9
+strength_min_2 = 0.7
+strength_max_2 = 1
+resolution_2 = [640, 832]
 
 switch_3 = false
 ctrl_type_3 = []
@@ -51,10 +51,10 @@ resolution_3 = []
 title = "LoraStack"
 switch_1 = true
 model_name_1 = [
-    "SMJWSTEPONE1-000020.safetensors",
-    "SMJWSTEPONE1-000025.safetensors",
+    "SMJWSTEPTHREE1-000020.safetensors",
+    "SMJWSTEPTHREE1-000025.safetensors",
 ]
-strength_min_1 = 0.5
+strength_min_1 = 0.8
 strength_max_1 = 1.2
 
 switch_2 = false
@@ -72,7 +72,7 @@ strength_max_3 = 1
 [efficient]
 title = "EfficientLoader"
 positive = [
-    "paper drawing,(SMJWSTEPONE:1.2),no humans,(simple and white background:1.3),",
+    "paper drawing,(SMJWSTEPTHREE:1.2),no humans,(simple and white background:1.3),",
 ]
 negative = ["colors,humans,"]
 width = 768
@@ -94,7 +94,7 @@ denoise_min = 1
 denoise_max = 1
 #euler|euler_ancestral|heun|heunpp2|dpm_2|dpm_2_ancestral|lms|dpm_fast|dpm_adaptive|dpmpp_2s_ancestral
 #dpmpp_sde|dpmpp_2m|dpmpp_2m_sde|dpmpp_3m_sde|ddpm|lcm|ddim|uni_pc|uni_pc_bh2
-sampler_name = ["dpmpp_2m"]
+sampler_name = ["dpmpp_2m_sde"]
 #normal|karras|exponential|sgm_uniform|simple|ddim_uniform
 scheduler = ["karras"]
 
@@ -102,7 +102,7 @@ scheduler = ["karras"]
 # ImageSave
 [save_image]
 title = "ImageSave"
-output_path = "照片改画素描静物一/out"
+output_path = "照片改画素描静物三/out"
 filename_prefix = "a"
 
 
