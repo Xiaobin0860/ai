@@ -9,7 +9,7 @@ use crate::{
     comfy_class_map, comfy_preprocessor, create_input_id, rand_element, ACtrlnet, ACtrlnetStack,
     ALoraStack, AppResult, AutoCfg, CnCfg, Ctrlnet, IdxControlNet, IdxLoRA, LoraCfg, LoraStack,
     Workflow, NODE_CROP_IMAGE, NODE_EMPTY_LATENT, NODE_IMAGE_PREPROCESSOR, NODE_KSAMPLER,
-    NODE_LINEART_PREPROCESSOR, NODE_LOAD_IMAGE, NODE_REPEAT_LATENT,
+    NODE_LINEART_PREPROCESSOR, NODE_LOAD_IMAGE, NODE_REPEAT_LATENT, NODE_TILE_PREPROCESSOR,
 };
 
 const STEP_F32: f32 = 0.05;
@@ -114,6 +114,12 @@ impl Generator {
                     "disable".into()
                 };
                 processor.resolution = cfg.resolution;
+            }
+            NODE_TILE_PREPROCESSOR => {
+                // resolution
+                let processor = wf.get_node_mut(my_processor_name)?.tile_preprocessor_mut();
+                processor.resolution = cfg.resolution;
+                processor.pyrup_iters = random::<u8>() % 3 + 1;
             }
             NODE_IMAGE_PREPROCESSOR => {
                 // resolution

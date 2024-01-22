@@ -5,6 +5,7 @@ pub const NODE_LORA_STACK: &str = "LoraStack";
 pub const NODE_LOAD_IMAGE: &str = "LoadImage";
 pub const NODE_SAVE_IMAGE: &str = "ImageSave";
 pub const NODE_IMAGE_PREPROCESSOR: &str = "ImagePreprocessor";
+pub const NODE_TILE_PREPROCESSOR: &str = "TilePreprocessor";
 pub const NODE_EFFICIENT_LOADER: &str = "EfficientLoader";
 pub const NODE_KSAMPLER: &str = "KSampler";
 pub const NODE_LINEART_PREPROCESSOR: &str = "LineArtPreprocessor";
