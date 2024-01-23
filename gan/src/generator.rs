@@ -8,8 +8,9 @@ use tracing::{debug, trace, warn};
 use crate::{
     comfy_class_map, comfy_preprocessor, create_input_id, rand_element, ACtrlnet, ACtrlnetStack,
     ALoraStack, AppResult, AutoCfg, CnCfg, Ctrlnet, IdxControlNet, IdxLoRA, LoraCfg, LoraStack,
-    Workflow, NODE_CROP_IMAGE, NODE_EMPTY_LATENT, NODE_IMAGE_PREPROCESSOR, NODE_KSAMPLER,
-    NODE_LINEART_PREPROCESSOR, NODE_LOAD_IMAGE, NODE_REPEAT_LATENT, NODE_TILE_PREPROCESSOR,
+    Workflow, NODE_CANNY_PREPROCESSOR, NODE_CROP_IMAGE, NODE_EMPTY_LATENT, NODE_IMAGE_PREPROCESSOR,
+    NODE_KSAMPLER, NODE_LINEART_PREPROCESSOR, NODE_LOAD_IMAGE, NODE_REPEAT_LATENT,
+    NODE_TILE_PREPROCESSOR,
 };
 
 const STEP_F32: f32 = 0.05;
@@ -43,6 +44,7 @@ impl Generator {
             efficient.empty_latent_height = ec.height;
             efficient.empty_latent_width = ec.width;
             efficient.vae_name = rand_element(&ec.vae_name).clone();
+            efficient.ckpt_name = ec.ckpt_name.clone();
             efficient.clip_skip = *rand_element(&ec.clip_skip);
             //图生图 用CropImage调整生图大小, 用RepeatLatent控制批次
             if let Ok(crop) = wf.get_node_mut(NODE_CROP_IMAGE) {
@@ -126,6 +128,14 @@ impl Generator {
                 let processor = wf.get_node_mut(my_processor_name)?.image_preprocessor_mut();
                 processor.resolution = cfg.resolution;
                 processor.preprocessor = cfg.preprocessor.clone();
+            }
+            NODE_CANNY_PREPROCESSOR => {
+                let processor = wf
+                    .get_node_mut(my_processor_name)?
+                    .canny_edge_preprocessor_mut();
+                processor.resolution = cfg.resolution;
+                processor.low_threshold = 100;
+                processor.high_threshold = 200;
             }
             _ => {
                 warn!("unhandled preprocessor {my_processor_name} {cfg:?}");

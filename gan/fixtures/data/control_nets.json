@@ -7,6 +7,14 @@
       "CannyEdgePreprocessor"
     ]
   },
+  "CannyXL": {
+    "model": [
+      "controlnet-canny-sdxl-1.0.safetensors"
+    ],
+    "preprocessor": [
+      "CannyEdgePreprocessor"
+    ]
+  },
   "Depth": {
     "model": [
       "control_v11f1p_sd15_depth.pth"

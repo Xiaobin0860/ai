@@ -275,6 +275,7 @@ pub struct AEfficient {
     pub batch_size: u8,
     pub vae_name: Vec<String>,
     pub clip_skip: Vec<i8>,
+    pub ckpt_name: String,
 }
 
 impl AutoCfg {
