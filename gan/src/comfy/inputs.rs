@@ -6,8 +6,8 @@ use serde_json::Value;
 use crate::{
     CannyEdgePreprocessor, CropImage, CtrlnetStack, EfficientLoader, EmptyLatent, HEDPreprocessor,
     ImagePreprocessor, ImageSave, ImageScaleToSide, KSampler, LeReSDepthMapPreprocessor,
-    LineArtPreprocessor, LineartStandardPreprocessor, LoadImage, LoraStack, MLSDPreprocessor,
-    MiDaSDepthMapPreprocessor, OpenposePreprocessor, PreprocessorSwitchAfter,
+    LineArtPreprocessor, LineartStandardPreprocessor, LoadImage, LoraStack, LoraStacker,
+    MLSDPreprocessor, MiDaSDepthMapPreprocessor, OpenposePreprocessor, PreprocessorSwitchAfter,
     PreprocessorSwitchPre, RepeatLatent, SaveImage, TilePreprocessor, TxtimgSwitch, UpscaleImage,
     VaeDecode, VaeEncode,
 };
@@ -22,6 +22,7 @@ pub enum Inputs {
     LoadImage(LoadImage),
     /// CR LoRA Stack
     LoraStack(LoraStack),
+    LoraStacker(LoraStacker),
     /// CR Multi-ControlNet Stack
     CtrlnetStack(CtrlnetStack),
     /// ImagePreprocessor

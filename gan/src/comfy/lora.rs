@@ -6,6 +6,7 @@ pub enum IdxLoRA {
     LoRA1,
     LoRA2,
     LoRA3,
+    LoRA4,
 }
 
 /// LoRA stack
@@ -84,6 +85,9 @@ impl LoraStack {
                 self.model_weight_3 = cfg.model_weight;
                 self.clip_weight_3 = cfg.clip_weight;
             }
+            _ => {
+                panic!("invalid lora index: {:?}", idx);
+            }
         }
     }
 }
@@ -103,6 +107,103 @@ impl Default for LoraStack {
             lora_name_3: "None".into(),
             model_weight_3: 1.0,
             clip_weight_3: 1.0,
+        }
+    }
+}
+
+/// LoRA stacker
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct LoraStacker {
+    pub input_mode: String,
+    pub lora_count: u8,
+
+    pub lora_name_1: String,
+    lora_wt_1: f32,
+    model_str_1: f32,
+    clip_str_1: f32,
+
+    lora_name_2: String,
+    lora_wt_2: f32,
+    model_str_2: f32,
+    clip_str_2: f32,
+
+    lora_name_3: String,
+    lora_wt_3: f32,
+    model_str_3: f32,
+    clip_str_3: f32,
+
+    lora_name_4: String,
+    lora_wt_4: f32,
+    model_str_4: f32,
+    clip_str_4: f32,
+}
+
+impl LoraStacker {
+    pub fn disable_all(&mut self) {
+        self.lora_count = 0;
+        self.lora_name_1 = "None".into();
+        self.lora_name_2 = "None".into();
+        self.lora_name_3 = "None".into();
+        self.lora_name_4 = "None".into();
+    }
+
+    pub fn enable(&mut self, idx: IdxLoRA, cfg: &LoraCfg) {
+        debug_assert_eq!(self.input_mode, "simple");
+        trace!("enable lora: {idx:?} {cfg:?}");
+        match idx {
+            IdxLoRA::LoRA1 => {
+                self.lora_name_1 = cfg.lora_name.clone();
+                self.lora_wt_1 = cfg.model_weight;
+                self.model_str_1 = cfg.model_weight;
+                self.clip_str_1 = cfg.clip_weight;
+            }
+            IdxLoRA::LoRA2 => {
+                self.lora_name_2 = cfg.lora_name.clone();
+                self.lora_wt_2 = cfg.model_weight;
+                self.model_str_2 = cfg.model_weight;
+                self.clip_str_2 = cfg.clip_weight;
+            }
+            IdxLoRA::LoRA3 => {
+                self.lora_name_3 = cfg.lora_name.clone();
+                self.lora_wt_3 = cfg.model_weight;
+                self.model_str_3 = cfg.model_weight;
+                self.clip_str_3 = cfg.clip_weight;
+            }
+            IdxLoRA::LoRA4 => {
+                self.lora_name_4 = cfg.lora_name.clone();
+                self.lora_wt_4 = cfg.model_weight;
+                self.model_str_4 = cfg.model_weight;
+                self.clip_str_4 = cfg.clip_weight;
+            }
+        }
+    }
+}
+
+impl Default for LoraStacker {
+    fn default() -> Self {
+        Self {
+            input_mode: "simple".into(),
+            lora_count: 0,
+
+            lora_name_1: "None".into(),
+            lora_wt_1: 1.0,
+            model_str_1: 1.0,
+            clip_str_1: 1.0,
+
+            lora_name_2: "None".into(),
+            lora_wt_2: 1.0,
+            model_str_2: 1.0,
+            clip_str_2: 1.0,
+
+            lora_name_3: "None".into(),
+            lora_wt_3: 1.0,
+            model_str_3: 1.0,
+            clip_str_3: 1.0,
+
+            lora_name_4: "None".into(),
+            lora_wt_4: 1.0,
+            model_str_4: 1.0,
+            clip_str_4: 1.0,
         }
     }
 }

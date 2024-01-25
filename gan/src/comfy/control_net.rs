@@ -68,6 +68,7 @@ pub struct CnCfg {
     pub start: f32,
     pub end: f32,
     pub resolution: u16,
+    pub my_name: String,
 }
 impl Default for CnCfg {
     fn default() -> Self {
@@ -78,6 +79,7 @@ impl Default for CnCfg {
             start: 0.0,
             end: 1.0,
             resolution: 512,
+            my_name: "".into(),
         }
     }
 }

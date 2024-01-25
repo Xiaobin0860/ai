@@ -12,6 +12,7 @@
   "SaveImage": "SaveImage",
   "ImageSave": "Image Save",
   "LoraStack": "CR LoRA Stack",
+  "LoraStacker": "LoRA Stacker",
   "CtrlnetStack": "CR Multi-ControlNet Stack",
   "EfficientLoader": "Efficient Loader",
   "HEDPreprocessor": "HEDPreprocessor",

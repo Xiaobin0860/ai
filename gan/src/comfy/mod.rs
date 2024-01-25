@@ -2,6 +2,7 @@ use serde_json::Value;
 
 pub const NODE_CTRLNET_STACK: &str = "CtrlnetStack";
 pub const NODE_LORA_STACK: &str = "LoraStack";
+pub const NODE_LORA_STACKER: &str = "LoraStacker";
 pub const NODE_LOAD_IMAGE: &str = "LoadImage";
 pub const NODE_SAVE_IMAGE: &str = "ImageSave";
 pub const NODE_IMAGE_PREPROCESSOR: &str = "ImagePreprocessor";
@@ -185,6 +186,8 @@ mod comfy_tests {
         let wf = Workflow::from_json(wf);
         println!("txt2img: {:?}", wf);
         assert!(wf.is_ok());
+        let wf = wf.unwrap();
+        assert!(wf.get_node(NODE_LORA_STACKER).is_ok());
 
         let wf = img2img();
         let wf = Workflow::from_json(wf);

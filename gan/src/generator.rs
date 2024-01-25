@@ -7,10 +7,10 @@ use tracing::{debug, trace, warn};
 
 use crate::{
     comfy_class_map, comfy_preprocessor, create_input_id, rand_element, ACtrlnet, ACtrlnetStack,
-    ALoraStack, AppResult, AutoCfg, CnCfg, Ctrlnet, IdxControlNet, IdxLoRA, LoraCfg, LoraStack,
-    Workflow, NODE_CANNY_PREPROCESSOR, NODE_CROP_IMAGE, NODE_EMPTY_LATENT, NODE_IMAGE_PREPROCESSOR,
-    NODE_KSAMPLER, NODE_LINEART_PREPROCESSOR, NODE_LOAD_IMAGE, NODE_REPEAT_LATENT,
-    NODE_TILE_PREPROCESSOR,
+    ALoraStack, ALoraStacker, AppResult, AutoCfg, CnCfg, Ctrlnet, IdxControlNet, IdxLoRA, LoraCfg,
+    LoraStack, LoraStacker, Workflow, NODE_CANNY_PREPROCESSOR, NODE_CROP_IMAGE, NODE_EMPTY_LATENT,
+    NODE_IMAGE_PREPROCESSOR, NODE_KSAMPLER, NODE_LINEART_PREPROCESSOR, NODE_LOAD_IMAGE,
+    NODE_REPEAT_LATENT, NODE_TILE_PREPROCESSOR,
 };
 
 const STEP_F32: f32 = 0.05;
@@ -99,7 +99,12 @@ impl Generator {
         Ok(())
     }
 
-    fn rand_preprocessor(&self, wf: &mut Workflow, cfg: &CnCfg) -> AppResult<String> {
+    fn rand_preprocessor(
+        &self,
+        wf: &mut Workflow,
+        cfg: &CnCfg,
+        acn_stack: &ACtrlnetStack,
+    ) -> AppResult<String> {
         //preprocessor特殊处理
         let my_processor_name = *comfy_class_map()
             .get(cfg.preprocessor.as_str())
@@ -110,6 +115,21 @@ impl Generator {
                 let processor = wf
                     .get_node_mut(my_processor_name)?
                     .line_art_preprocessor_mut();
+                match cfg.my_name.as_str() {
+                    "realistic" => {
+                        processor.coarse = "disable".into();
+                    }
+                    "coarse" => {
+                        processor.coarse = "enable".into();
+                    }
+                    _ => {
+                        processor.coarse = if random::<bool>() {
+                            "enable".into()
+                        } else {
+                            "disable".into()
+                        };
+                    }
+                }
                 processor.coarse = if random::<bool>() {
                     "enable".into()
                 } else {
@@ -121,7 +141,11 @@ impl Generator {
                 // resolution
                 let processor = wf.get_node_mut(my_processor_name)?.tile_preprocessor_mut();
                 processor.resolution = cfg.resolution;
-                processor.pyrup_iters = random::<u8>() % 3 + 1;
+                processor.pyrup_iters = if acn_stack.tile_pyrup_iters > 0 {
+                    acn_stack.tile_pyrup_iters
+                } else {
+                    random::<u8>() % 3 + 1
+                };
             }
             NODE_IMAGE_PREPROCESSOR => {
                 // resolution
@@ -134,8 +158,13 @@ impl Generator {
                     .get_node_mut(my_processor_name)?
                     .canny_edge_preprocessor_mut();
                 processor.resolution = cfg.resolution;
-                processor.low_threshold = 100;
-                processor.high_threshold = 200;
+                if acn_stack.canny_low_threshold > 0 {
+                    processor.low_threshold = acn_stack.canny_low_threshold;
+                    processor.high_threshold = acn_stack.canny_high_threshold;
+                } else {
+                    processor.low_threshold = *rand_element(&[40, 60, 80, 100]);
+                    processor.high_threshold = processor.low_threshold * 2;
+                }
             }
             _ => {
                 warn!("unhandled preprocessor {my_processor_name} {cfg:?}");
@@ -152,7 +181,7 @@ impl Generator {
             wf.get_node_mut(acn.title.as_str())?
                 .ctrlnet_stack_mut()
                 .enable(idx, &cfg);
-            let id = self.rand_preprocessor(wf, &cfg)?;
+            let id = self.rand_preprocessor(wf, &cfg, acn)?;
             wf.get_node_mut(acn.title.as_str())?
                 .ctrlnet_stack_mut()
                 .image_1 = Some(create_input_id(&id, 0));
@@ -168,7 +197,7 @@ impl Generator {
             wf.get_node_mut(acn.title.as_str())?
                 .ctrlnet_stack_mut()
                 .enable(idx, &cfg);
-            let id = self.rand_preprocessor(wf, &cfg)?;
+            let id = self.rand_preprocessor(wf, &cfg, acn)?;
             wf.get_node_mut(acn.title.as_str())?
                 .ctrlnet_stack_mut()
                 .image_2 = Some(create_input_id(&id, 0));
@@ -184,7 +213,7 @@ impl Generator {
             wf.get_node_mut(acn.title.as_str())?
                 .ctrlnet_stack_mut()
                 .enable(idx, &cfg);
-            let id = self.rand_preprocessor(wf, &cfg)?;
+            let id = self.rand_preprocessor(wf, &cfg, acn)?;
             wf.get_node_mut(acn.title.as_str())?
                 .ctrlnet_stack_mut()
                 .image_3 = Some(create_input_id(&id, 0));
@@ -257,7 +286,8 @@ impl Generator {
             &acfg.preprocessor
         };
         trace!("preprocessor: {preprocessors:?}");
-        let preprocessor = comfy_preprocessor(rand_element(preprocessors).as_str()).to_owned();
+        let my_name = rand_element(preprocessors).to_owned();
+        let preprocessor = comfy_preprocessor(&my_name).to_owned();
         Ok(CnCfg {
             model: rand_element(&cn.model).clone(),
             preprocessor,
@@ -265,6 +295,7 @@ impl Generator {
             start,
             end,
             resolution: *rand_element(&acfg.resolution),
+            my_name,
         })
     }
 
@@ -316,15 +347,63 @@ impl Generator {
 
     fn rand_lora(&self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<()> {
         if let Some(alora) = &ac.lora_stack {
+            let lora_stack = wf.get_node_mut(alora.title.as_str())?.lora_stack_mut();
+            lora_stack.disable_all();
             if alora.switch() {
-                let lora_stack = wf.get_node_mut(alora.title.as_str())?.lora_stack_mut();
-                lora_stack.disable_all();
                 self.rand_lora1(lora_stack, alora);
                 self.rand_lora2(lora_stack, alora);
                 self.rand_lora3(lora_stack, alora);
             }
         }
+        if let Some(astacker) = &ac.lora_stacker {
+            let stacker = wf.get_node_mut(astacker.title.as_str())?.lora_stacker_mut();
+            stacker.disable_all();
+            stacker.lora_count = astacker.lora_count;
+            for i in 1..=astacker.lora_count {
+                self.rand_loran(i, astacker, stacker);
+            }
+        }
         Ok(())
+    }
+
+    fn rand_loran(&self, i: u8, alora: &ALoraStacker, stacker: &mut LoraStacker) {
+        match i {
+            1 => {
+                let cfg = rand_lora_cfg(
+                    &alora.model_name_1,
+                    alora.strength_min_1,
+                    alora.strength_max_1,
+                );
+                stacker.enable(IdxLoRA::LoRA1, &cfg);
+            }
+            2 => {
+                let cfg = rand_lora_cfg(
+                    &alora.model_name_2,
+                    alora.strength_min_2,
+                    alora.strength_max_2,
+                );
+                stacker.enable(IdxLoRA::LoRA2, &cfg);
+            }
+            3 => {
+                let cfg = rand_lora_cfg(
+                    &alora.model_name_3,
+                    alora.strength_min_3,
+                    alora.strength_max_3,
+                );
+                stacker.enable(IdxLoRA::LoRA3, &cfg);
+            }
+            4 => {
+                let cfg = rand_lora_cfg(
+                    &alora.model_name_4,
+                    alora.strength_min_4,
+                    alora.strength_max_4,
+                );
+                stacker.enable(IdxLoRA::LoRA4, &cfg);
+            }
+            _ => {
+                warn!("unhandled lora {i}");
+            }
+        }
     }
 
     fn rand_lora1(&self, lora_stack: &mut LoraStack, alora: &ALoraStack) {
@@ -391,6 +470,6 @@ fn rand_lora_cfg(names: &[String], wmodel_min: f32, wmodel_max: f32) -> LoraCfg 
     LoraCfg {
         lora_name: rand_element(names).clone(),
         model_weight,
-        ..Default::default()
+        clip_weight: model_weight,
     }
 }

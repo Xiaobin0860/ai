@@ -2,37 +2,42 @@
 workflows = ["文生图api.json"]
 
 # 总出图数 为了好算及保存进度 这里是控制循环次数, 实际出图数=total*ct_per_params*workflows_len
-total = 500
+total = 600
 # 每套参数出图数(只变化种子), 不改batch_size
 ct_per_params = 2
 
 # CN Stack
 [ctrlnet_stack]
 title = "CtrlnetStack"
+# 0随机40|60|80|100|120
+canny_low_threshold = 60
+canny_high_threshold = 120
+# 0随机[1, 4]
+tile_pyrup_iters = 1
 switch_1 = true
 #随机CN类型 Canny|OpenPose|Depth|NormalMap|Lineart|AnimeLineart|SoftEdge|Segmentation|Tile
-ctrl_type_1 = ["CannyXL"]
+ctrl_type_1 = ["Lineart"]
 #指定随机处理器 realistic|coarse|anime|anime_denoise|pidinet
-processor_1 = []
+processor_1 = ["coarse"]
 start_min_1 = 0
 start_max_1 = 0
-end_min_1 = 1
-end_max_1 = 1
-strength_min_1 = 0.7
-strength_max_1 = 1
+end_min_1 = 0.9
+end_max_1 = 0.9
+strength_min_1 = 0.9
+strength_max_1 = 0.9
 # 320|384|448|512|576|640|704|768|832
-resolution_1 = [512]
+resolution_1 = [768]
 
-switch_2 = false
-ctrl_type_2 = ["Tile"]
+switch_2 = true
+ctrl_type_2 = ["OpenPose"]
 processor_2 = []
 start_min_2 = 0
 start_max_2 = 0
-end_min_2 = 0.4
-end_max_2 = 0.7
-strength_min_2 = 0.7
+end_min_2 = 1
+end_max_2 = 1
+strength_min_2 = 1
 strength_max_2 = 1
-resolution_2 = [64, 128]
+resolution_2 = [512]
 
 switch_3 = false
 ctrl_type_3 = []
@@ -47,66 +52,73 @@ resolution_3 = []
 
 
 # LoRA Stack
-[lora_stack]
-title = "LoraStack"
-switch_1 = true
-model_name_1 = ["SMJWSTEPONE_XL-000025.safetensors"]
-strength_min_1 = 0.8
-strength_max_1 = 1
+[lora_stacker]
+title = "LoraStacker"
+lora_count = 4
+model_name_1 = ["quick sketch.safetensors"]
+strength_min_1 = 0.75
+strength_max_1 = 0.75
 
-switch_2 = false
-model_name_2 = []
-strength_min_2 = 1
-strength_max_2 = 1
+model_name_2 = ["SXXMZH1.safetensors"]
+strength_min_2 = 0.5
+strength_max_2 = 1.3
 
-switch_3 = true
-model_name_3 = ["lcm_lora_sdxl.safetensors"]
-strength_min_3 = 1
-strength_max_3 = 1
+model_name_3 = ["animeoutlineV4_16.safetensors"]
+strength_min_3 = 0.5
+strength_max_3 = 0.5
+
+model_name_4 = ["lcm_lora_sdv15.safetensors"]
+strength_min_4 = 0.65
+strength_max_4 = 0.65
 
 
 # Efficient
 [efficient]
 title = "EfficientLoader"
 positive = [
-    "natural light, SMJWSTEPONE, ((sketch)), best quality, low res, simple background, black and white, ((bright background)), monochrome, pencil drawing, (line contour:0.85),",
+    "1people,sketch,sketches,XXsketch,(black and white:1.2),simple white background,solo,((quick sketch)),(pencil stroke),",
 ]
-negative = [
-    "text, watermark, bad hands, (color:2), color, watercolor, oil paint, grain, frames, (((realistic))),",
-]
-width = 768
-height = 576
+negative = ["verybadimagenegative_v1.3,colors,"]
+width = 1024
+height = 1365
 # comfyui 多张图不知道是哪里有变化,不利于重现,所以这里只用1, 程序主动变种子生成多张图
 batch_size = 1
-vae_name = ["sdxl_vae.safetensors"]
+vae_name = ["Baked VAE"]
 clip_skip = [-1]
-ckpt_name = "sd_xl_base_1.0_0.9vae.safetensors"
+ckpt_name = "realisticVisionV50_v50VAE.safetensors"
 
 
 # Sampler
 [sampler]
 title = "KSampler"
-steps_min = 8
-steps_max = 8
-cfg_min = 2
+steps_min = 6
+steps_max = 9
+cfg_min = 1
 cfg_max = 2
-denoise_min = 0.8
+denoise_min = 1
 denoise_max = 1
 #euler|euler_ancestral|heun|heunpp2|dpm_2|dpm_2_ancestral|lms|dpm_fast|dpm_adaptive|dpmpp_2s_ancestral
 #dpmpp_sde|dpmpp_2m|dpmpp_2m_sde|dpmpp_3m_sde|ddpm|lcm|ddim|uni_pc|uni_pc_bh2
 sampler_name = ["lcm"]
 #normal|karras|exponential|sgm_uniform|simple|ddim_uniform
-scheduler = ["sgm_uniform"]
+scheduler = ["karras"]
 
 
 # ImageSave
 [save_image]
 title = "ImageSave"
-output_path = "XL照片改画素描静物一"
+output_path = "照片改画-速写-单人"
 filename_prefix = "a"
 
 
 # LoadImage
 [load_image]
 title = "LoadImage"
-images = ["jw1.png", "jw2.jpg", "jw3.jpg", "jw4.jpg", "jw5.jpg"]
+images = [
+    "picsx1.png",
+    "picsx2.png",
+    "picsx3.png",
+    "picsx4.png",
+    "picsx5.png",
+    "picsx6.jpg",
+]

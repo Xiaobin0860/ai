@@ -90,6 +90,7 @@ pub struct AutoCfg {
 
     /// lora配置
     pub lora_stack: Option<ALoraStack>,
+    pub lora_stacker: Option<ALoraStacker>,
 
     /// 采样器配置 seed, steps, cfg, denoise, sampler_name, scheduler
     pub sampler: Option<ASampler>,
@@ -135,6 +136,28 @@ impl ALoraStack {
 }
 
 #[derive(Debug, Deserialize)]
+pub struct ALoraStacker {
+    pub title: String,
+    pub lora_count: u8,
+
+    pub model_name_1: Vec<String>,
+    pub strength_min_1: f32,
+    pub strength_max_1: f32,
+
+    pub model_name_2: Vec<String>,
+    pub strength_min_2: f32,
+    pub strength_max_2: f32,
+
+    pub model_name_3: Vec<String>,
+    pub strength_min_3: f32,
+    pub strength_max_3: f32,
+
+    pub model_name_4: Vec<String>,
+    pub strength_min_4: f32,
+    pub strength_max_4: f32,
+}
+
+#[derive(Debug, Deserialize)]
 pub struct ASampler {
     pub title: String,
 
@@ -151,6 +174,10 @@ pub struct ASampler {
 #[derive(Debug, Deserialize)]
 pub struct ACtrlnetStack {
     pub title: String,
+
+    pub canny_low_threshold: u8,
+    pub canny_high_threshold: u8,
+    pub tile_pyrup_iters: u8,
 
     pub switch_1: bool,
     pub ctrl_type_1: Vec<String>,
@@ -294,8 +321,7 @@ mod ac_tests {
     use tracing::trace;
 
     use crate::{
-        NODE_CTRLNET_STACK, NODE_EFFICIENT_LOADER, NODE_KSAMPLER, NODE_LOAD_IMAGE, NODE_LORA_STACK,
-        NODE_SAVE_IMAGE,
+        NODE_CTRLNET_STACK, NODE_EFFICIENT_LOADER, NODE_KSAMPLER, NODE_LOAD_IMAGE, NODE_SAVE_IMAGE,
     };
 
     use super::*;
@@ -315,10 +341,6 @@ mod ac_tests {
         assert_eq!(&cfg.save_image.unwrap().title, NODE_SAVE_IMAGE);
         assert_eq!(&cfg.sampler.unwrap().title, NODE_KSAMPLER);
         assert_eq!(cfg.load_image.unwrap().title, NODE_LOAD_IMAGE);
-        let lora_stack = &cfg.lora_stack.unwrap();
-        assert!(lora_stack.switch_1);
-        assert!(!lora_stack.model_name_1.is_empty());
-        assert_eq!(&lora_stack.title, NODE_LORA_STACK);
     }
 
     #[test]
