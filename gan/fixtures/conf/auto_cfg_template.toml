@@ -86,6 +86,8 @@ batch_size = 1
 vae_name = ["Baked VAE"]
 clip_skip = [-1]
 ckpt_name = "realisticVisionV50_v50VAE.safetensors"
+# A1111|comfy|compel|comfy++|down_weight
+weight_interpretation = "comfy"
 
 
 # Sampler

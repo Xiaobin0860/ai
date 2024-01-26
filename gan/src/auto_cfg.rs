@@ -303,6 +303,7 @@ pub struct AEfficient {
     pub vae_name: Vec<String>,
     pub clip_skip: Vec<i8>,
     pub ckpt_name: String,
+    pub weight_interpretation: String,
 }
 
 impl AutoCfg {

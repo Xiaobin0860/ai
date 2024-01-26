@@ -46,6 +46,7 @@ impl Generator {
             efficient.vae_name = rand_element(&ec.vae_name).clone();
             efficient.ckpt_name = ec.ckpt_name.clone();
             efficient.clip_skip = *rand_element(&ec.clip_skip);
+            efficient.weight_interpretation = ec.weight_interpretation.clone();
             //图生图 用CropImage调整生图大小, 用RepeatLatent控制批次
             if let Ok(crop) = wf.get_node_mut(NODE_CROP_IMAGE) {
                 let crop = crop.crop_image_mut();
