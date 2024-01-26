@@ -32,6 +32,12 @@ impl Generator {
         self.rand_cn(wf, ac)?;
         let land = self.rand_images(wf, ac)?;
         self.rand_efficient(wf, ac, land)?;
+        if let Some(aif) = &ac.image_filter {
+            let filter = wf.get_node_mut(&aif.title)?.image_filter_mut();
+            if let Some(saturation) = aif.saturation {
+                filter.saturation = saturation;
+            }
+        }
         Ok(())
     }
 

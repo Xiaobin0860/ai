@@ -94,12 +94,29 @@ pub struct AutoCfg {
 
     /// 采样器配置 seed, steps, cfg, denoise, sampler_name, scheduler
     pub sampler: Option<ASampler>,
+
+    /// 图片处理
+    pub image_filter: Option<AImageFilter>,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct ALoadImage {
     pub title: String,
     pub images: Vec<String>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct AImageFilter {
+    pub title: String,
+    pub brightness: Option<f32>,
+    pub contrast: Option<f32>,
+    pub saturation: Option<f32>,
+    pub sharpness: Option<f32>,
+    /// [0, 16]
+    pub blur: Option<u8>,
+    pub gaussian_blur: Option<f32>,
+    pub edge_enhance: Option<f32>,
+    pub detail_enhance: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]

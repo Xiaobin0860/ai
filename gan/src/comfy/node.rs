@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    CannyEdgePreprocessor, CropImage, CtrlnetStack, EfficientLoader, EmptyLatent,
+    CannyEdgePreprocessor, CropImage, CtrlnetStack, EfficientLoader, EmptyLatent, ImageFilter,
     ImagePreprocessor, ImageSave, Inputs, KSampler, LineArtPreprocessor, LoadImage, LoraStack,
     LoraStacker, RepeatLatent, SaveImage, TilePreprocessor, VaeDecode,
 };
@@ -53,6 +53,7 @@ impl Node {
     impl_input_methods!(RepeatLatent);
     impl_input_methods!(EmptyLatent);
     impl_input_methods!(LoadImage);
+    impl_input_methods!(ImageFilter);
     impl_input_methods!(LoraStack);
     impl_input_methods!(LoraStacker);
     impl_input_methods!(KSampler);

@@ -97,3 +97,18 @@ pub struct CropImage {
     pub interpolation: String,
     pub image: Option<Value>,
 }
+
+/// ImageFilter "Image Filter Adjustments"
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct ImageFilter {
+    pub brightness: f32,
+    pub contrast: f32,
+    pub saturation: f32,
+    pub sharpness: f32,
+    /// [0, 16]
+    pub blur: u8,
+    pub gaussian_blur: f32,
+    pub edge_enhance: f32,
+    pub detail_enhance: String,
+    pub image: Option<Value>,
+}
