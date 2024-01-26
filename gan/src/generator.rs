@@ -30,19 +30,25 @@ impl Generator {
         self.rand_sampler(wf, ac)?;
         self.rand_lora(wf, ac)?;
         self.rand_cn(wf, ac)?;
-        self.rand_images(wf, ac)?;
-        self.rand_efficient(wf, ac)?;
+        let land = self.rand_images(wf, ac)?;
+        self.rand_efficient(wf, ac, land)?;
         Ok(())
     }
 
-    fn rand_efficient(&self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<()> {
+    fn rand_efficient(&self, wf: &mut Workflow, ac: &AutoCfg, land: bool) -> AppResult<()> {
         if let Some(ec) = &ac.efficient {
             let efficient = wf.get_node_mut(&ec.title)?.efficient_loader_mut();
+            //land交换w,h
+            let (w, h) = if land {
+                (ec.height, ec.width)
+            } else {
+                (ec.width, ec.height)
+            };
             efficient.positive = rand_element(&ec.positive).clone();
             efficient.negative = rand_element(&ec.negative).clone();
             efficient.batch_size = ec.batch_size;
-            efficient.empty_latent_height = ec.height;
-            efficient.empty_latent_width = ec.width;
+            efficient.empty_latent_width = w;
+            efficient.empty_latent_height = h;
             efficient.vae_name = rand_element(&ec.vae_name).clone();
             efficient.ckpt_name = ec.ckpt_name.clone();
             efficient.clip_skip = *rand_element(&ec.clip_skip);
@@ -50,8 +56,8 @@ impl Generator {
             //图生图 用CropImage调整生图大小, 用RepeatLatent控制批次
             if let Ok(crop) = wf.get_node_mut(NODE_CROP_IMAGE) {
                 let crop = crop.crop_image_mut();
-                crop.target_w = ec.width;
-                crop.target_h = ec.height;
+                crop.target_w = w;
+                crop.target_h = h;
                 trace!("img2img: w={}, h={}", crop.target_w, crop.target_h);
             }
             if let Ok(repeat) = wf.get_node_mut(NODE_REPEAT_LATENT) {
@@ -62,8 +68,8 @@ impl Generator {
             //文生图 用EmptyLatent控制生图大小,批次
             if let Ok(latent) = wf.get_node_mut(NODE_EMPTY_LATENT) {
                 let latent = latent.empty_latent_mut();
-                latent.height = ec.height;
-                latent.width = ec.width;
+                latent.width = w;
+                latent.height = h;
                 latent.batch_size = ec.batch_size;
                 trace!("txt2img: {latent:?}");
             }
@@ -71,10 +77,15 @@ impl Generator {
         Ok(())
     }
 
-    fn rand_images(&self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<()> {
+    // 图片名以`land_`开头, 返回`true`
+    fn rand_images(&self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<bool> {
+        let mut land = false;
         if let Some(cfg) = &ac.load_image {
             let imgs = &cfg.images;
             let img_name = rand_element(imgs);
+            if img_name.starts_with("land_") {
+                land = true;
+            }
             wf.get_node_mut(NODE_LOAD_IMAGE)?.load_image_mut().image = img_name.clone();
             if let Some(save) = &ac.save_image {
                 let saver = wf.get_node_mut(&save.title)?.image_save_mut();
@@ -82,7 +93,7 @@ impl Generator {
                 saver.output_path = save.output_path.clone();
             }
         }
-        Ok(())
+        Ok(land)
     }
 
     fn rand_cn(&self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<()> {

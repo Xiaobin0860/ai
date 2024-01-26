@@ -116,6 +116,7 @@ filename_prefix = "a"
 # LoadImage
 [load_image]
 title = "LoadImage"
+# land_ 开头自动交换 width,height
 images = [
     "picsx1.png",
     "picsx2.png",
