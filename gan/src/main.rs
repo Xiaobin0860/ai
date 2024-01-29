@@ -50,7 +50,7 @@ async fn main() -> AppResult<()> {
                     let remaining = status.status.exec_info.queue_remaining;
                     info!("remaining: {remaining}");
                     if remaining == 0 {
-                        do_gen(&ac, &api, &gen).await?;
+                        do_gen(&ac, &api, &gen, total_idx).await?;
                         total_idx += 1;
                         if total_idx >= ac.total {
                             total_idx = 0;
@@ -80,11 +80,11 @@ async fn main() -> AppResult<()> {
     Ok(())
 }
 
-async fn do_gen(ac: &AutoCfg, api: &Comfy, gen: &Generator) -> AppResult<()> {
+async fn do_gen(ac: &AutoCfg, api: &Comfy, gen: &Generator, idx: usize) -> AppResult<()> {
     // 对每个流程, 随机参数, 生`ct_per_params`次, 即每次空闲跑`流程数*ct_per_params`个图
     for wf in ac.workflows.iter() {
         let mut wf = Workflow::from_file(wf.as_str())?;
-        gen.rand(&mut wf, ac)?;
+        gen.rand(&mut wf, ac, idx)?;
         for _ in 0..ac.ct_per_params {
             wf.set_seed(rand::random::<u32>() as i64)?;
             let prompt = wf.to_json()?;

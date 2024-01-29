@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use anyhow::anyhow;
+use anyhow::{anyhow, Context};
 use fixtures::control_nets;
 use rand::random;
 use tracing::{debug, trace, warn};
@@ -15,6 +15,8 @@ use crate::{
 
 const STEP_F32: f32 = 0.05;
 
+type TargetSize = (u16, u16);
+
 pub struct Generator {
     cns: HashMap<String, Ctrlnet>,
 }
@@ -26,12 +28,12 @@ impl Generator {
         }
     }
 
-    pub fn rand(&self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<()> {
+    pub fn rand(&self, wf: &mut Workflow, ac: &AutoCfg, idx: usize) -> AppResult<()> {
         self.rand_sampler(wf, ac)?;
         self.rand_lora(wf, ac)?;
-        self.rand_cn(wf, ac)?;
-        let land = self.rand_images(wf, ac)?;
-        self.rand_efficient(wf, ac, land)?;
+        let land = self.rand_images(wf, ac, idx)?;
+        let size = self.rand_efficient(wf, ac, land)?;
+        self.rand_cn(wf, ac, size)?;
         if let Some(aif) = &ac.image_filter {
             let filter = wf.get_node_mut(&aif.title)?.image_filter_mut();
             if let Some(saturation) = aif.saturation {
@@ -41,77 +43,82 @@ impl Generator {
         Ok(())
     }
 
-    fn rand_efficient(&self, wf: &mut Workflow, ac: &AutoCfg, land: bool) -> AppResult<()> {
-        if let Some(ec) = &ac.efficient {
-            let efficient = wf.get_node_mut(&ec.title)?.efficient_loader_mut();
-            //land交换w,h
-            let (w, h) = if land {
-                (ec.height, ec.width)
-            } else {
-                (ec.width, ec.height)
-            };
-            efficient.positive = rand_element(&ec.positive).clone();
-            efficient.negative = rand_element(&ec.negative).clone();
-            efficient.batch_size = ec.batch_size;
-            efficient.empty_latent_width = w;
-            efficient.empty_latent_height = h;
-            efficient.vae_name = rand_element(&ec.vae_name).clone();
-            efficient.ckpt_name = ec.ckpt_name.clone();
-            efficient.clip_skip = *rand_element(&ec.clip_skip);
-            efficient.weight_interpretation = ec.weight_interpretation.clone();
-            //图生图 用CropImage调整生图大小, 用RepeatLatent控制批次
-            if let Ok(crop) = wf.get_node_mut(NODE_CROP_IMAGE) {
-                let crop = crop.crop_image_mut();
-                crop.target_w = w;
-                crop.target_h = h;
-                trace!("img2img: w={}, h={}", crop.target_w, crop.target_h);
-            }
-            if let Ok(repeat) = wf.get_node_mut(NODE_REPEAT_LATENT) {
-                let repeat = repeat.repeat_latent_mut();
-                repeat.amount = ec.batch_size;
-                trace!("img2img: batch_size={}", repeat.amount);
-            }
-            //文生图 用EmptyLatent控制生图大小,批次
-            if let Ok(latent) = wf.get_node_mut(NODE_EMPTY_LATENT) {
-                let latent = latent.empty_latent_mut();
-                latent.width = w;
-                latent.height = h;
-                latent.batch_size = ec.batch_size;
-                trace!("txt2img: {latent:?}");
-            }
+    fn rand_efficient(&self, wf: &mut Workflow, ac: &AutoCfg, land: bool) -> AppResult<TargetSize> {
+        let ec = &ac.efficient;
+        //land交换w,h
+        let (w, h) = if land {
+            (ec.height, ec.width)
+        } else {
+            (ec.width, ec.height)
+        };
+        let efficient = wf.get_node_mut(&ec.title)?.efficient_loader_mut();
+        efficient.positive = rand_element(&ec.positive).clone();
+        efficient.negative = rand_element(&ec.negative).clone();
+        efficient.batch_size = ec.batch_size;
+        efficient.empty_latent_width = w;
+        efficient.empty_latent_height = h;
+        efficient.vae_name = rand_element(&ec.vae_name).clone();
+        efficient.ckpt_name = ec.ckpt_name.clone();
+        efficient.clip_skip = *rand_element(&ec.clip_skip);
+        efficient.weight_interpretation = ec.weight_interpretation.clone();
+        //图生图 用CropImage调整生图大小, 用RepeatLatent控制批次
+        if let Ok(crop) = wf.get_node_mut(NODE_CROP_IMAGE) {
+            let crop = crop.crop_image_mut();
+            crop.target_w = w;
+            crop.target_h = h;
+            trace!("img2img: w={}, h={}", crop.target_w, crop.target_h);
         }
-        Ok(())
+        if let Ok(repeat) = wf.get_node_mut(NODE_REPEAT_LATENT) {
+            let repeat = repeat.repeat_latent_mut();
+            repeat.amount = ec.batch_size;
+            trace!("img2img: batch_size={}", repeat.amount);
+        }
+        //文生图 用EmptyLatent控制生图大小,批次
+        if let Ok(latent) = wf.get_node_mut(NODE_EMPTY_LATENT) {
+            let latent = latent.empty_latent_mut();
+            latent.width = w;
+            latent.height = h;
+            latent.batch_size = ec.batch_size;
+            trace!("txt2img: {latent:?}");
+        }
+        Ok((w, h))
     }
 
     // 图片名以`land_`开头, 返回`true`
-    fn rand_images(&self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<bool> {
+    fn rand_images(&self, wf: &mut Workflow, ac: &AutoCfg, idx: usize) -> AppResult<bool> {
         let mut land = false;
-        if let Some(cfg) = &ac.load_image {
+        let img_name = if let Some(cfg) = &ac.load_image {
             let imgs = &cfg.images;
-            let img_name = rand_element(imgs);
+            let img_name = imgs.get(idx % imgs.len()).context("get img")?;
             if img_name.starts_with("land_") {
                 land = true;
             }
             wf.get_node_mut(NODE_LOAD_IMAGE)?.load_image_mut().image = img_name.clone();
-            if let Some(save) = &ac.save_image {
-                let saver = wf.get_node_mut(&save.title)?.image_save_mut();
-                saver.filename_prefix = img_name.split('.').next().unwrap().to_owned();
-                saver.output_path = save.output_path.clone();
-            }
-        }
+            img_name
+        } else {
+            &ac.save_image.filename_prefix
+        };
+        let save = &ac.save_image;
+        let saver = wf.get_node_mut(&save.title)?.image_save_mut();
+        saver.filename_prefix = img_name
+            .split('.')
+            .next()
+            .context("get img_name")?
+            .to_owned();
+        saver.output_path = save.output_path.clone();
         Ok(land)
     }
 
-    fn rand_cn(&self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<()> {
+    fn rand_cn(&self, wf: &mut Workflow, ac: &AutoCfg, size: TargetSize) -> AppResult<()> {
         if let Some(acn) = &ac.ctrlnet_stack {
             if acn.switch() {
                 wf.get_node_mut(acn.title.as_str())?
                     .ctrlnet_stack_mut()
                     .disable_all();
 
-                self.rand_cn1(wf, acn)?;
-                self.rand_cn2(wf, acn)?;
-                self.rand_cn3(wf, acn)?;
+                self.rand_cn1(wf, acn, size)?;
+                self.rand_cn2(wf, acn, size)?;
+                self.rand_cn3(wf, acn, size)?;
             }
         }
         Ok(())
@@ -191,10 +198,10 @@ impl Generator {
         Ok(wf.get_node_id(my_processor_name)?.clone())
     }
 
-    fn rand_cn1(&self, wf: &mut Workflow, acn: &ACtrlnetStack) -> AppResult<()> {
+    fn rand_cn1(&self, wf: &mut Workflow, acn: &ACtrlnetStack, size: TargetSize) -> AppResult<()> {
         let idx = IdxControlNet::ControlNet1;
         if let Some(acfg) = acn.cfg(&idx) {
-            let cfg = self.rand_cn_cfg(&acfg)?;
+            let cfg = self.rand_cn_cfg(&acfg, size)?;
             debug!("rand_cn1 acfg={acfg:?}, cn_cfg={cfg:?}");
             wf.get_node_mut(acn.title.as_str())?
                 .ctrlnet_stack_mut()
@@ -207,10 +214,10 @@ impl Generator {
         Ok(())
     }
 
-    fn rand_cn2(&self, wf: &mut Workflow, acn: &ACtrlnetStack) -> AppResult<()> {
+    fn rand_cn2(&self, wf: &mut Workflow, acn: &ACtrlnetStack, size: TargetSize) -> AppResult<()> {
         let idx = IdxControlNet::ControlNet2;
         if let Some(acfg) = acn.cfg(&idx) {
-            let cfg = self.rand_cn_cfg(&acfg)?;
+            let cfg = self.rand_cn_cfg(&acfg, size)?;
             debug!("rand_cn2 acfg={acfg:?}, cn_cfg={cfg:?}");
             wf.get_node_mut(acn.title.as_str())?
                 .ctrlnet_stack_mut()
@@ -223,10 +230,10 @@ impl Generator {
         Ok(())
     }
 
-    fn rand_cn3(&self, wf: &mut Workflow, acn: &ACtrlnetStack) -> AppResult<()> {
+    fn rand_cn3(&self, wf: &mut Workflow, acn: &ACtrlnetStack, size: TargetSize) -> AppResult<()> {
         let idx = IdxControlNet::ControlNet3;
         if let Some(acfg) = acn.cfg(&idx) {
-            let cfg = self.rand_cn_cfg(&acfg)?;
+            let cfg = self.rand_cn_cfg(&acfg, size)?;
             debug!("rand_cn3 acfg={acfg:?}, cn_cfg={cfg:?}");
             wf.get_node_mut(acn.title.as_str())?
                 .ctrlnet_stack_mut()
@@ -239,7 +246,7 @@ impl Generator {
         Ok(())
     }
 
-    fn rand_cn_cfg(&self, acfg: &ACtrlnet) -> AppResult<CnCfg> {
+    fn rand_cn_cfg(&self, acfg: &ACtrlnet, size: TargetSize) -> AppResult<CnCfg> {
         let ctrl_type = rand_element(&acfg.ctrl_type);
         let cn = self
             .cns
@@ -306,13 +313,15 @@ impl Generator {
         trace!("preprocessor: {preprocessors:?}");
         let my_name = rand_element(preprocessors).to_owned();
         let preprocessor = comfy_preprocessor(&my_name).to_owned();
+        let resolution = *rand_element(&acfg.resolution);
+        let resolution = if resolution > 0 { resolution } else { size.0 };
         Ok(CnCfg {
             model: rand_element(&cn.model).clone(),
             preprocessor,
             weight,
             start,
             end,
-            resolution: *rand_element(&acfg.resolution),
+            resolution,
             my_name,
         })
     }
@@ -320,46 +329,45 @@ impl Generator {
     fn rand_sampler(&self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<()> {
         let sampler = wf.get_node_mut(NODE_KSAMPLER)?.k_sampler_mut();
         sampler.seed = random::<u32>() as i64;
-        if let Some(asampler) = &ac.sampler {
-            //rand [steps_min, steps_max]
-            if asampler.steps_max > asampler.steps_min {
-                let steps = random::<u8>() % (asampler.steps_max - asampler.steps_min + 1)
-                    + asampler.steps_min;
-                trace!("steps: {steps}");
-                sampler.steps = steps;
-            } else {
-                sampler.steps = asampler.steps_max;
-            }
-            //rand [cfg_min, cfg_max]
-            if asampler.cfg_max - asampler.cfg_min > STEP_F32 {
-                let cfg =
-                    random::<f32>() * (asampler.cfg_max - asampler.cfg_min) + asampler.cfg_min;
-                trace!("cfg: {cfg}");
-                sampler.cfg = cfg;
-            } else {
-                sampler.cfg = asampler.cfg_max;
-            }
-            //rand [denoise_min, denoise_max]
-            if asampler.denoise_max - asampler.denoise_min > STEP_F32 {
-                let mut vs = Vec::new();
-                let mut max = asampler.denoise_max;
-                vs.push(max);
-                while max > asampler.denoise_min {
-                    max -= STEP_F32;
-                    if max < asampler.denoise_min {
-                        vs.push(asampler.denoise_min);
-                        break;
-                    }
-                    vs.push(max);
-                }
-                trace!("denoise: {vs:?}");
-                sampler.denoise = *rand_element(&vs);
-            } else {
-                sampler.denoise = asampler.denoise_max;
-            }
-            sampler.sampler_name = rand_element(&asampler.sampler_name).clone();
-            sampler.scheduler = rand_element(&asampler.scheduler).clone();
+        let asampler = &ac.sampler;
+        //rand [steps_min, steps_max]
+        if asampler.steps_max > asampler.steps_min {
+            let steps =
+                random::<u8>() % (asampler.steps_max - asampler.steps_min + 1) + asampler.steps_min;
+            trace!("steps: {steps}");
+            sampler.steps = steps;
+        } else {
+            sampler.steps = asampler.steps_max;
         }
+        //rand [cfg_min, cfg_max]
+        if asampler.cfg_max - asampler.cfg_min > STEP_F32 {
+            let cfg = random::<f32>() * (asampler.cfg_max - asampler.cfg_min) + asampler.cfg_min;
+            trace!("cfg: {cfg}");
+            sampler.cfg = cfg;
+        } else {
+            sampler.cfg = asampler.cfg_max;
+        }
+        //rand [denoise_min, denoise_max]
+        if asampler.denoise_max - asampler.denoise_min > STEP_F32 {
+            let mut vs = Vec::new();
+            let mut max = asampler.denoise_max;
+            vs.push(max);
+            while max > asampler.denoise_min {
+                max -= STEP_F32;
+                if max < asampler.denoise_min {
+                    vs.push(asampler.denoise_min);
+                    break;
+                }
+                vs.push(max);
+            }
+            trace!("denoise: {vs:?}");
+            sampler.denoise = *rand_element(&vs);
+        } else {
+            sampler.denoise = asampler.denoise_max;
+        }
+        sampler.sampler_name = rand_element(&asampler.sampler_name).clone();
+        sampler.scheduler = rand_element(&asampler.scheduler).clone();
+
         Ok(())
     }
 

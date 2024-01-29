@@ -76,27 +76,27 @@ pub struct AutoCfg {
     /// 每套参数出图数(只变化种子)
     pub ct_per_params: usize,
 
-    /// CN配置
-    pub ctrlnet_stack: Option<ACtrlnetStack>,
-
     /// efficient配置 chkpt_name, vae_name, clip_skip, positive, negative, w,h
-    pub efficient: Option<AEfficient>,
+    pub efficient: AEfficient,
+
+    /// 采样器配置 seed, steps, cfg, denoise, sampler_name, scheduler
+    pub sampler: ASampler,
+
+    /// 图片保存
+    pub save_image: ASaveImage,
 
     /// 图片加载
     pub load_image: Option<ALoadImage>,
 
-    /// 图片保存
-    pub save_image: Option<ASaveImage>,
+    /// 图片处理
+    pub image_filter: Option<AImageFilter>,
+
+    /// CN配置
+    pub ctrlnet_stack: Option<ACtrlnetStack>,
 
     /// lora配置
     pub lora_stack: Option<ALoraStack>,
     pub lora_stacker: Option<ALoraStacker>,
-
-    /// 采样器配置 seed, steps, cfg, denoise, sampler_name, scheduler
-    pub sampler: Option<ASampler>,
-
-    /// 图片处理
-    pub image_filter: Option<AImageFilter>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -355,9 +355,9 @@ mod ac_tests {
         assert!(ctrlnet_stack.switch_1);
         assert!(!ctrlnet_stack.ctrl_type_1.is_empty());
         assert_eq!(&ctrlnet_stack.title, NODE_CTRLNET_STACK);
-        assert_eq!(&cfg.efficient.unwrap().title, NODE_EFFICIENT_LOADER);
-        assert_eq!(&cfg.save_image.unwrap().title, NODE_SAVE_IMAGE);
-        assert_eq!(&cfg.sampler.unwrap().title, NODE_KSAMPLER);
+        assert_eq!(&cfg.efficient.title, NODE_EFFICIENT_LOADER);
+        assert_eq!(&cfg.save_image.title, NODE_SAVE_IMAGE);
+        assert_eq!(&cfg.sampler.title, NODE_KSAMPLER);
         assert_eq!(cfg.load_image.unwrap().title, NODE_LOAD_IMAGE);
     }
 
