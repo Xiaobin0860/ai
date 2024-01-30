@@ -17,7 +17,8 @@ tile_pyrup_iters = 1
 switch_1 = true
 #随机CN类型 Canny|OpenPose|Depth|NormalMap|Lineart|AnimeLineart|SoftEdge|Segmentation|Tile
 ctrl_type_1 = ["Lineart"]
-#指定随机处理器 realistic|coarse|anime|anime_denoise|pidinet
+#指定随机处理器 realistic|coarse|anime|anime_denoise|pidinet|midas_depth|leres_depth|zoe_depth
+#canny|hed|bae
 processor_1 = ["coarse"]
 start_min_1 = 0
 start_max_1 = 0
