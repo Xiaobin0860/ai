@@ -14,6 +14,7 @@ pub const NODE_CANNY_PREPROCESSOR: &str = "CannyEdgePreprocessor";
 pub const NODE_CROP_IMAGE: &str = "CropImage";
 pub const NODE_REPEAT_LATENT: &str = "RepeatLatent";
 pub const NODE_EMPTY_LATENT: &str = "EmptyLatent";
+pub const NODE_EMPTY_IMAGE: &str = "EmptyImage";
 
 mod api;
 pub use api::*;
@@ -193,5 +194,7 @@ mod comfy_tests {
         let wf = Workflow::from_json(wf);
         println!("img2img: {:?}", wf);
         assert!(wf.is_ok());
+        let wf = wf.unwrap();
+        assert!(wf.get_node(NODE_EMPTY_IMAGE).is_ok());
     }
 }

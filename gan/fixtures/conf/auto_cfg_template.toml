@@ -126,3 +126,11 @@ images = [
     "picsx5.png",
     "picsx6.jpg",
 ]
+
+# EmptyImage
+[empty_image]
+title = "EmptyImage"
+#width = efficient.width
+#height = efficient.height
+#batch_size = efficient.batch_size=1
+color = 0xffffff

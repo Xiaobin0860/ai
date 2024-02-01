@@ -97,6 +97,14 @@ pub struct AutoCfg {
     /// lora配置
     pub lora_stack: Option<ALoraStack>,
     pub lora_stacker: Option<ALoraStacker>,
+
+    pub empty_image: Option<AEmptyImage>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct AEmptyImage {
+    pub title: String,
+    pub color: u32,
 }
 
 #[derive(Debug, Deserialize)]

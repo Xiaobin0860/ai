@@ -112,3 +112,12 @@ pub struct ImageFilter {
     pub detail_enhance: String,
     pub image: Option<Value>,
 }
+
+/// EmptyImage
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct EmptyImage {
+    pub width: u16,
+    pub height: u16,
+    pub batch_size: u8,
+    pub color: u32,
+}

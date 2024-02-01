@@ -8,9 +8,9 @@ use tracing::{debug, trace, warn};
 use crate::{
     comfy_class_map, comfy_preprocessor, create_input_id, rand_element, ACtrlnet, ACtrlnetStack,
     ALoraStack, ALoraStacker, AppResult, AutoCfg, CnCfg, Ctrlnet, IdxControlNet, IdxLoRA, LoraCfg,
-    LoraStack, LoraStacker, Workflow, NODE_CANNY_PREPROCESSOR, NODE_CROP_IMAGE, NODE_EMPTY_LATENT,
-    NODE_IMAGE_PREPROCESSOR, NODE_KSAMPLER, NODE_LINEART_PREPROCESSOR, NODE_LOAD_IMAGE,
-    NODE_REPEAT_LATENT, NODE_TILE_PREPROCESSOR,
+    LoraStack, LoraStacker, Workflow, NODE_CANNY_PREPROCESSOR, NODE_CROP_IMAGE, NODE_EMPTY_IMAGE,
+    NODE_EMPTY_LATENT, NODE_IMAGE_PREPROCESSOR, NODE_KSAMPLER, NODE_LINEART_PREPROCESSOR,
+    NODE_LOAD_IMAGE, NODE_REPEAT_LATENT, NODE_TILE_PREPROCESSOR,
 };
 
 const STEP_F32: f32 = 0.05;
@@ -81,6 +81,18 @@ impl Generator {
             latent.batch_size = ec.batch_size;
             trace!("txt2img: {latent:?}");
         }
+        //图生图纯色图输入
+        if let Some(aemc) = &ac.empty_image {
+            if let Ok(empty) = wf.get_node_mut(NODE_EMPTY_IMAGE) {
+                let empty = empty.empty_image_mut();
+                empty.width = w;
+                empty.height = h;
+                empty.batch_size = ec.batch_size;
+                empty.color = aemc.color;
+                trace!("img2img: {empty:?}");
+            }
+        }
+
         Ok((w, h))
     }
 

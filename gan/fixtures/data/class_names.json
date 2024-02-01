@@ -23,6 +23,7 @@
   "MiDaSDepthMapPreprocessor": "MiDaS-DepthMapPreprocessor",
   "MLSDPreprocessor": "M-LSDPreprocessor",
   "EmptyLatent": "EmptyLatentImage",
+  "EmptyImage": "EmptyImage",
   "CropImage": "Crop Image TargetSize (JPS)",
   "ImageFilter": "Image Filter Adjustments",
   "UpscaleImage": "CR Upscale Image",

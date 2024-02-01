@@ -4,8 +4,8 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
 use crate::{
-    CannyEdgePreprocessor, CropImage, CtrlnetStack, EfficientLoader, EmptyLatent, HEDPreprocessor,
-    ImageFilter, ImagePreprocessor, ImageSave, ImageScaleToSide, KSampler,
+    CannyEdgePreprocessor, CropImage, CtrlnetStack, EfficientLoader, EmptyImage, EmptyLatent,
+    HEDPreprocessor, ImageFilter, ImagePreprocessor, ImageSave, ImageScaleToSide, KSampler,
     LeReSDepthMapPreprocessor, LineArtPreprocessor, LineartStandardPreprocessor, LoadImage,
     LoraStack, LoraStacker, MLSDPreprocessor, MiDaSDepthMapPreprocessor, OpenposePreprocessor,
     PreprocessorSwitchAfter, PreprocessorSwitchPre, RepeatLatent, SaveImage, TilePreprocessor,
@@ -41,6 +41,7 @@ pub enum Inputs {
     UpscaleImage(UpscaleImage),
     CropImage(CropImage),
     ImageFilter(ImageFilter),
+    EmptyImage(EmptyImage),
 
     EmptyLatent(EmptyLatent),
     RepeatLatent(RepeatLatent),
