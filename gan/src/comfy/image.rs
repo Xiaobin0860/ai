@@ -95,6 +95,8 @@ pub struct CropImage {
     pub offset: i32,
     /// bilinear
     pub interpolation: String,
+    #[serde(default)]
+    pub sharpening: f32,
     pub image: Option<Value>,
 }
 
