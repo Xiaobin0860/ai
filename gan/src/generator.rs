@@ -62,6 +62,9 @@ impl Generator {
     }
 
     fn apply_filter(&self, wf: &mut Workflow, aif: &AImageFilter) -> AppResult<()> {
+        if !aif.switch {
+            return Ok(());
+        }
         let filter = wf.get_node_mut(&aif.title)?.image_filter_mut();
         if let Some(brightness) = aif.brightness {
             filter.brightness = brightness;

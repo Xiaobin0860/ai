@@ -128,6 +128,20 @@ images = [
 ]
 
 
+# ImageFilter
+[image_filter]
+title = "ImageFilter"
+switch = false
+#brightness = 0
+#contrast = 1
+saturation = 0
+#sharpness = 1
+#blur = 0
+#gaussian_blur = 1
+#edge_enhance = 0
+#detail_enhance = "false"
+
+
 # EmptyImage
 [empty_image]
 title = "EmptyImage"

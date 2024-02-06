@@ -128,6 +128,7 @@ pub struct ALoadImage {
 #[derive(Debug, Deserialize)]
 pub struct AImageFilter {
     pub title: String,
+    pub switch: bool,
     pub brightness: Option<f32>,
     pub contrast: Option<f32>,
     pub saturation: Option<f32>,

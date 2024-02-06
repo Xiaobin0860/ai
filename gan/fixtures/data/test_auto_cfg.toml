@@ -128,17 +128,31 @@ images = [
 ]
 
 
-# EmptyImage 图生图输入纯色图
+# ImageFilter
+[image_filter]
+title = "ImageFilter"
+switch = false
+#brightness = 0
+#contrast = 1
+saturation = 0
+#sharpness = 1
+#blur = 0
+#gaussian_blur = 1
+#edge_enhance = 0
+#detail_enhance = "false"
+
+
+# EmptyImage
 [empty_image]
 title = "EmptyImage"
 switch = false
 #width = efficient.width
-#height = efficient.height
+#height = efficient.heightdetail_enhance
 #batch_size = efficient.batch_size=1
 color = 0xffffff
 
 
-# ImageRembg 图片去背景
+# ImageRembg
 [image_rembg]
 title = "ImageRembg"
 switch = false
