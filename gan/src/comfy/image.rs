@@ -123,3 +123,10 @@ pub struct EmptyImage {
     pub batch_size: u8,
     pub color: u32,
 }
+
+/// ImageRembg "Image Remove Background (rembg)"
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct ImageRembg {
+    pub model_name: String,
+    pub image: Option<Value>,
+}

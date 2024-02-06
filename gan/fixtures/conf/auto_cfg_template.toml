@@ -127,10 +127,20 @@ images = [
     "picsx6.jpg",
 ]
 
+
 # EmptyImage
 [empty_image]
 title = "EmptyImage"
+switch = false
 #width = efficient.width
-#height = efficient.height
+#height = efficient.heightdetail_enhance
 #batch_size = efficient.batch_size=1
 color = 0xffffff
+
+
+# ImageRembg
+[image_rembg]
+title = "ImageRembg"
+switch = false
+# u2net|u2netp|u2net_human_seg|u2net_cloth_seg|silueta|isnet-general-use|isnet-anime|sam
+model_name = "u2net"

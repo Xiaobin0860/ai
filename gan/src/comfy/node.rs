@@ -2,8 +2,8 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     CannyEdgePreprocessor, CropImage, CtrlnetStack, EfficientLoader, EmptyImage, EmptyLatent,
-    ImageFilter, ImagePreprocessor, ImageSave, Inputs, KSampler, LineArtPreprocessor, LoadImage,
-    LoraStack, LoraStacker, RepeatLatent, SaveImage, TilePreprocessor, VaeDecode,
+    ImageFilter, ImagePreprocessor, ImageRembg, ImageSave, Inputs, KSampler, LineArtPreprocessor,
+    LoadImage, LoraStack, LoraStacker, RepeatLatent, SaveImage, TilePreprocessor, VaeDecode,
 };
 
 /// A node in the comfy ui workflow
@@ -16,6 +16,9 @@ pub struct Node {
     /// node meta
     #[serde(rename = "_meta")]
     pub meta: Meta,
+
+    #[serde(skip)]
+    pub id: String,
 }
 
 use paste::paste;
@@ -55,6 +58,7 @@ impl Node {
     impl_input_methods!(LoadImage);
     impl_input_methods!(ImageFilter);
     impl_input_methods!(EmptyImage);
+    impl_input_methods!(ImageRembg);
     impl_input_methods!(LoraStack);
     impl_input_methods!(LoraStacker);
     impl_input_methods!(KSampler);

@@ -16,9 +16,10 @@ pub struct Workflow {
 
 impl Workflow {
     pub fn from_json(json: &str) -> AppResult<Self> {
-        let id_node_map: HashMap<String, Node> = serde_json::from_str(json)?;
+        let mut id_node_map: HashMap<String, Node> = serde_json::from_str(json)?;
         let mut typ_id_map = HashMap::new();
-        for (id, node) in &id_node_map {
+        for (id, node) in id_node_map.iter_mut() {
+            node.id = id.clone();
             let typ = &node.class_type;
             if typ_id_map.insert(typ.clone(), id.clone()).is_some() {
                 return Err(format!("duplicate node: {typ}").into());

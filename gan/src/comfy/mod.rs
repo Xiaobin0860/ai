@@ -6,6 +6,7 @@ pub const NODE_LORA_STACKER: &str = "LoraStacker";
 pub const NODE_LOAD_IMAGE: &str = "LoadImage";
 pub const NODE_SAVE_IMAGE: &str = "ImageSave";
 pub const NODE_IMAGE_PREPROCESSOR: &str = "ImagePreprocessor";
+pub const NODE_IMAGE_FILTER: &str = "ImageFilter";
 pub const NODE_TILE_PREPROCESSOR: &str = "TilePreprocessor";
 pub const NODE_EFFICIENT_LOADER: &str = "EfficientLoader";
 pub const NODE_KSAMPLER: &str = "KSampler";
@@ -116,6 +117,7 @@ mod comfy_tests {
             inputs: Inputs::CtrlnetStack(cn.clone()),
             class_type: "c".into(),
             meta: Meta { title: "t".into() },
+            id: "1".into(),
         };
         assert_eq!(cn.switch_1, "Off");
         let cn2 = node.ctrlnet_stack();
@@ -189,6 +191,7 @@ mod comfy_tests {
         assert!(wf.is_ok());
         let wf = wf.unwrap();
         assert!(wf.get_node(NODE_LORA_STACKER).is_ok());
+        assert!(wf.get_node(NODE_IMAGE_FILTER).is_ok());
 
         let wf = img2img();
         let wf = Workflow::from_json(wf);
@@ -196,5 +199,6 @@ mod comfy_tests {
         assert!(wf.is_ok());
         let wf = wf.unwrap();
         assert!(wf.get_node(NODE_EMPTY_IMAGE).is_ok());
+        assert!(wf.get_node(NODE_IMAGE_FILTER).is_ok());
     }
 }

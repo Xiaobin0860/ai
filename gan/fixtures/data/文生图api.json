@@ -1,7 +1,7 @@
 {
   "3": {
     "inputs": {
-      "seed": 500651953021157,
+      "seed": 1101895907685991,
       "steps": 7,
       "cfg": 1.4000000000000001,
       "sampler_name": "lcm",
@@ -31,7 +31,7 @@
   },
   "15": {
     "inputs": {
-      "image": "速写练习素材 (4).png",
+      "image": "01.jpg",
       "upload": "image"
     },
     "class_type": "LoadImage",
@@ -73,11 +73,7 @@
     "inputs": {
       "low_threshold": 50,
       "high_threshold": 150,
-      "resolution": 512,
-      "image": [
-        "15",
-        0
-      ]
+      "resolution": 512
     },
     "class_type": "CannyEdgePreprocessor",
     "_meta": {
@@ -88,11 +84,7 @@
     "inputs": {
       "guassian_sigma": 6,
       "intensity_threshold": 9,
-      "resolution": 960,
-      "image": [
-        "15",
-        0
-      ]
+      "resolution": 960
     },
     "class_type": "LineartStandardPreprocessor",
     "_meta": {
@@ -104,11 +96,7 @@
       "detect_hand": "enable",
       "detect_body": "enable",
       "detect_face": "enable",
-      "resolution": 512,
-      "image": [
-        "15",
-        0
-      ]
+      "resolution": 512
     },
     "class_type": "OpenposePreprocessor",
     "_meta": {
@@ -122,7 +110,7 @@
       "controlnet_strength_1": 0.75,
       "start_percent_1": 0,
       "end_percent_1": 0.85,
-      "switch_2": "On",
+      "switch_2": "Off",
       "controlnet_2": "control_v11p_sd15_openpose.pth",
       "controlnet_strength_2": 0.85,
       "start_percent_2": 0,
@@ -134,10 +122,6 @@
       "end_percent_3": 0.4,
       "image_1": [
         "47",
-        0
-      ],
-      "image_2": [
-        "120",
         0
       ]
     },
@@ -178,11 +162,7 @@
   "156": {
     "inputs": {
       "safe": "disable",
-      "resolution": 512,
-      "image": [
-        "15",
-        0
-      ]
+      "resolution": 512
     },
     "class_type": "HEDPreprocessor",
     "_meta": {
@@ -192,11 +172,7 @@
   "163": {
     "inputs": {
       "preprocessor": "BAE-NormalMapPreprocessor",
-      "resolution": 512,
-      "image": [
-        "15",
-        0
-      ]
+      "resolution": 512
     },
     "class_type": "AIO_Preprocessor",
     "_meta": {
@@ -206,11 +182,7 @@
   "169": {
     "inputs": {
       "pyrUp_iters": 2,
-      "resolution": 64,
-      "image": [
-        "15",
-        0
-      ]
+      "resolution": 64
     },
     "class_type": "TilePreprocessor",
     "_meta": {
@@ -222,11 +194,7 @@
       "rm_nearest": 0,
       "rm_background": 0,
       "boost": "disable",
-      "resolution": 512,
-      "image": [
-        "15",
-        0
-      ]
+      "resolution": 512
     },
     "class_type": "LeReS-DepthMapPreprocessor",
     "_meta": {
@@ -237,11 +205,7 @@
     "inputs": {
       "a": 6.283185307179586,
       "bg_threshold": 0.1,
-      "resolution": 512,
-      "image": [
-        "15",
-        0
-      ]
+      "resolution": 512
     },
     "class_type": "MiDaS-DepthMapPreprocessor",
     "_meta": {
@@ -252,11 +216,7 @@
     "inputs": {
       "score_threshold": 0.1,
       "dist_threshold": 0.1,
-      "resolution": 512,
-      "image": [
-        "15",
-        0
-      ]
+      "resolution": 512
     },
     "class_type": "M-LSDPreprocessor",
     "_meta": {
@@ -503,6 +463,39 @@
     "class_type": "LoRA Stacker",
     "_meta": {
       "title": "LoraStacker"
+    }
+  },
+  "218": {
+    "inputs": {
+      "model_name": "u2net",
+      "image": [
+        "15",
+        0
+      ]
+    },
+    "class_type": "Image Remove Background (rembg)",
+    "_meta": {
+      "title": "ImageRembg"
+    }
+  },
+  "219": {
+    "inputs": {
+      "brightness": 0,
+      "contrast": 1,
+      "saturation": 1,
+      "sharpness": 1,
+      "blur": 0,
+      "gaussian_blur": 0,
+      "edge_enhance": 0,
+      "detail_enhance": "false",
+      "image": [
+        "15",
+        0
+      ]
+    },
+    "class_type": "Image Filter Adjustments",
+    "_meta": {
+      "title": "ImageFilter"
     }
   }
 }

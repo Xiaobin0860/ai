@@ -7,9 +7,10 @@ use tracing::{debug, trace, warn};
 
 use crate::{
     comfy_class_map, comfy_preprocessor, create_input_id, rand_element, ACtrlnet, ACtrlnetStack,
-    ALoraStack, ALoraStacker, AppResult, AutoCfg, CnCfg, Ctrlnet, IdxControlNet, IdxLoRA, LoraCfg,
-    LoraStack, LoraStacker, Workflow, NODE_CANNY_PREPROCESSOR, NODE_CROP_IMAGE, NODE_EMPTY_IMAGE,
-    NODE_EMPTY_LATENT, NODE_IMAGE_PREPROCESSOR, NODE_KSAMPLER, NODE_LINEART_PREPROCESSOR,
+    AEmptyImage, AImageFilter, AImageRembg, ALoraStack, ALoraStacker, AppResult, AutoCfg, CnCfg,
+    Ctrlnet, IdxControlNet, IdxLoRA, LoraCfg, LoraStack, LoraStacker, Workflow,
+    NODE_CANNY_PREPROCESSOR, NODE_CROP_IMAGE, NODE_EMPTY_IMAGE, NODE_EMPTY_LATENT,
+    NODE_IMAGE_FILTER, NODE_IMAGE_PREPROCESSOR, NODE_KSAMPLER, NODE_LINEART_PREPROCESSOR,
     NODE_LOAD_IMAGE, NODE_REPEAT_LATENT, NODE_TILE_PREPROCESSOR,
 };
 
@@ -35,10 +36,56 @@ impl Generator {
         let size = self.rand_efficient(wf, ac, land)?;
         self.rand_cn(wf, ac, size)?;
         if let Some(aif) = &ac.image_filter {
-            let filter = wf.get_node_mut(&aif.title)?.image_filter_mut();
-            if let Some(saturation) = aif.saturation {
-                filter.saturation = saturation;
-            }
+            self.apply_filter(wf, aif)?;
+        }
+        if let Some(arembg) = &ac.image_rembg {
+            self.apply_rembg(wf, arembg)?;
+        }
+        Ok(())
+    }
+
+    fn apply_rembg(&self, wf: &mut Workflow, arembg: &AImageRembg) -> AppResult<()> {
+        if !arembg.switch {
+            return Ok(());
+        }
+        let rembg_node = wf.get_node_mut(&arembg.title).context("rembg")?;
+        let rembg = rembg_node.image_rembg_mut();
+        rembg.model_name = arembg.model_name.clone();
+        let rembg_id = rembg_node.id.clone();
+        //新版本增加的ImageRembg结点,认为有一定有ImageFilter结点
+        let filter = wf
+            .get_node_mut(NODE_IMAGE_FILTER)
+            .context("rembg needs filter")?
+            .image_filter_mut();
+        filter.image = Some(create_input_id(&rembg_id, 0));
+        Ok(())
+    }
+
+    fn apply_filter(&self, wf: &mut Workflow, aif: &AImageFilter) -> AppResult<()> {
+        let filter = wf.get_node_mut(&aif.title)?.image_filter_mut();
+        if let Some(brightness) = aif.brightness {
+            filter.brightness = brightness;
+        }
+        if let Some(contrast) = aif.contrast {
+            filter.contrast = contrast;
+        }
+        if let Some(saturation) = aif.saturation {
+            filter.saturation = saturation;
+        }
+        if let Some(sharpness) = aif.sharpness {
+            filter.sharpness = sharpness;
+        }
+        if let Some(blur) = aif.blur {
+            filter.blur = blur;
+        }
+        if let Some(gaussian_blur) = aif.gaussian_blur {
+            filter.gaussian_blur = gaussian_blur;
+        }
+        if let Some(edge_enhance) = aif.edge_enhance {
+            filter.edge_enhance = edge_enhance;
+        }
+        if let Some(detail_enhance) = &aif.detail_enhance {
+            filter.detail_enhance = detail_enhance.clone();
         }
         Ok(())
     }
@@ -83,17 +130,26 @@ impl Generator {
         }
         //图生图纯色图输入
         if let Some(aemc) = &ac.empty_image {
-            if let Ok(empty) = wf.get_node_mut(NODE_EMPTY_IMAGE) {
-                let empty = empty.empty_image_mut();
-                empty.width = w;
-                empty.height = h;
-                empty.batch_size = ec.batch_size;
-                empty.color = aemc.color;
-                trace!("img2img: {empty:?}");
-            }
+            self.apply_empty(aemc, (w, h), ec.batch_size, wf);
         }
 
         Ok((w, h))
+    }
+
+    fn apply_empty(&self, aemc: &AEmptyImage, (w, h): TargetSize, bs: u8, wf: &mut Workflow) {
+        if !aemc.switch {
+            return;
+        }
+        if let Ok(empty) = wf.get_node_mut(NODE_EMPTY_IMAGE) {
+            let empty = empty.empty_image_mut();
+            empty.width = w;
+            empty.height = h;
+            empty.batch_size = bs;
+            empty.color = aemc.color;
+            trace!("img2img: {empty:?}");
+        } else {
+            warn!("{NODE_EMPTY_IMAGE} not found");
+        }
     }
 
     // 图片名以`land_`开头, 返回`true`
@@ -146,12 +202,11 @@ impl Generator {
         let my_processor_name = *comfy_class_map()
             .get(cfg.preprocessor.as_str())
             .unwrap_or(&NODE_IMAGE_PREPROCESSOR);
+        let processor_node = wf.get_node_mut(my_processor_name)?;
         match my_processor_name {
             NODE_LINEART_PREPROCESSOR => {
                 // realistic|coarse
-                let processor = wf
-                    .get_node_mut(my_processor_name)?
-                    .line_art_preprocessor_mut();
+                let processor = processor_node.line_art_preprocessor_mut();
                 match cfg.my_name.as_str() {
                     "realistic" => {
                         processor.coarse = "disable".into();
@@ -176,7 +231,7 @@ impl Generator {
             }
             NODE_TILE_PREPROCESSOR => {
                 // resolution
-                let processor = wf.get_node_mut(my_processor_name)?.tile_preprocessor_mut();
+                let processor = processor_node.tile_preprocessor_mut();
                 processor.resolution = cfg.resolution;
                 processor.pyrup_iters = if acn_stack.tile_pyrup_iters > 0 {
                     acn_stack.tile_pyrup_iters
@@ -186,14 +241,12 @@ impl Generator {
             }
             NODE_IMAGE_PREPROCESSOR => {
                 // resolution
-                let processor = wf.get_node_mut(my_processor_name)?.image_preprocessor_mut();
+                let processor = processor_node.image_preprocessor_mut();
                 processor.resolution = cfg.resolution;
                 processor.preprocessor = cfg.preprocessor.clone();
             }
             NODE_CANNY_PREPROCESSOR => {
-                let processor = wf
-                    .get_node_mut(my_processor_name)?
-                    .canny_edge_preprocessor_mut();
+                let processor = processor_node.canny_edge_preprocessor_mut();
                 processor.resolution = cfg.resolution;
                 if acn_stack.canny_low_threshold > 0 {
                     processor.low_threshold = acn_stack.canny_low_threshold;
@@ -207,7 +260,7 @@ impl Generator {
                 warn!("unhandled preprocessor {my_processor_name} {cfg:?}");
             }
         }
-        Ok(wf.get_node_id(my_processor_name)?.clone())
+        Ok(processor_node.id.clone())
     }
 
     fn rand_cn1(&self, wf: &mut Workflow, acn: &ACtrlnetStack, size: TargetSize) -> AppResult<()> {

@@ -24,6 +24,7 @@
   "MLSDPreprocessor": "M-LSDPreprocessor",
   "EmptyLatent": "EmptyLatentImage",
   "EmptyImage": "EmptyImage",
+  "ImageRembg": "Image Remove Background (rembg)",
   "CropImage": "Crop Image TargetSize (JPS)",
   "ImageFilter": "Image Filter Adjustments",
   "UpscaleImage": "CR Upscale Image",

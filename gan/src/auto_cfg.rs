@@ -98,13 +98,25 @@ pub struct AutoCfg {
     pub lora_stack: Option<ALoraStack>,
     pub lora_stacker: Option<ALoraStacker>,
 
+    /// 图生图输入纯色图
     pub empty_image: Option<AEmptyImage>,
+
+    /// 图片去背景
+    pub image_rembg: Option<AImageRembg>,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct AEmptyImage {
     pub title: String,
+    pub switch: bool,
     pub color: u32,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct AImageRembg {
+    pub title: String,
+    pub switch: bool,
+    pub model_name: String,
 }
 
 #[derive(Debug, Deserialize)]

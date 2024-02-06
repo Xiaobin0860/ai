@@ -73,7 +73,7 @@ strength_min_4 = 0.65
 strength_max_4 = 0.65
 
 
-# Efficient
+# Efficient 设置主模,提示词,宽高(竖屏load_image加载图片以land_开头会自动交换w/h)
 [efficient]
 title = "EfficientLoader"
 positive = [
@@ -85,13 +85,13 @@ height = 1365
 # comfyui 多张图不知道是哪里有变化,不利于重现,所以这里只用1, 程序主动变种子生成多张图
 batch_size = 1
 vae_name = ["Baked VAE"]
-clip_skip = [-1]
+clip_skip = [-2]
 ckpt_name = "realisticVisionV50_v50VAE.safetensors"
 # A1111|comfy|compel|comfy++|down_weight
 weight_interpretation = "comfy"
 
 
-# Sampler
+# Sampler 采样器
 [sampler]
 title = "KSampler"
 steps_min = 6
@@ -107,14 +107,14 @@ sampler_name = ["lcm"]
 scheduler = ["karras"]
 
 
-# ImageSave
+# ImageSave 保存图片
 [save_image]
 title = "ImageSave"
 output_path = "照片改画-速写-单人"
 filename_prefix = "a"
 
 
-# LoadImage
+# LoadImage 加载图片
 [load_image]
 title = "LoadImage"
 # land_ 开头自动交换 width,height
@@ -126,3 +126,21 @@ images = [
     "picsx5.png",
     "picsx6.jpg",
 ]
+
+
+# EmptyImage 图生图输入纯色图
+[empty_image]
+title = "EmptyImage"
+switch = false
+#width = efficient.width
+#height = efficient.height
+#batch_size = efficient.batch_size=1
+color = 0xffffff
+
+
+# ImageRembg 图片去背景
+[image_rembg]
+title = "ImageRembg"
+switch = false
+# u2net|u2netp|u2net_human_seg|u2net_cloth_seg|silueta|isnet-general-use|isnet-anime|sam
+model_name = "u2net"

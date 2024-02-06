@@ -60,7 +60,7 @@
       "coarse": "enable",
       "resolution": 768,
       "image": [
-        "220",
+        "15",
         0
       ]
     },
@@ -138,7 +138,7 @@
       "controlnet_strength_1": 0.85,
       "start_percent_1": 0,
       "end_percent_1": 1,
-      "switch_2": "On",
+      "switch_2": "Off",
       "controlnet_2": "control_v11f1e_sd15_tile.bin",
       "controlnet_strength_2": 0.6,
       "start_percent_2": 0,
@@ -150,14 +150,6 @@
       "end_percent_3": 0.4,
       "image_1": [
         "47",
-        0
-      ],
-      "image_2": [
-        "169",
-        0
-      ],
-      "image_3": [
-        "163",
         0
       ]
     },
@@ -290,6 +282,7 @@
       "crop_position": "center",
       "offset": 0,
       "interpolation": "bilinear",
+      "sharpening": 0,
       "image": [
         "220",
         0
@@ -316,7 +309,7 @@
     "inputs": {
       "brightness": 0,
       "contrast": 1,
-      "saturation": 0,
+      "saturation": 1,
       "sharpness": 1,
       "blur": 0,
       "gaussian_blur": 0,
@@ -561,6 +554,19 @@
     "class_type": "Image Save",
     "_meta": {
       "title": "ImageSave"
+    }
+  },
+  "226": {
+    "inputs": {
+      "model_name": "u2net",
+      "image": [
+        "15",
+        0
+      ]
+    },
+    "class_type": "Image Remove Background (rembg)",
+    "_meta": {
+      "title": "ImageRembg"
     }
   }
 }
