@@ -1,6 +1,6 @@
 {
   "last_node_id": 230,
-  "last_link_id": 377,
+  "last_link_id": 387,
   "nodes": [
     {
       "id": 209,
@@ -280,7 +280,7 @@
         "1": 210
       },
       "flags": {},
-      "order": 14,
+      "order": 20,
       "mode": 2,
       "inputs": [
         {
@@ -307,7 +307,7 @@
         "1": 238
       },
       "flags": {},
-      "order": 20,
+      "order": 17,
       "mode": 2,
       "inputs": [
         {
@@ -334,7 +334,7 @@
         "1": 270
       },
       "flags": {},
-      "order": 13,
+      "order": 19,
       "mode": 2,
       "inputs": [
         {
@@ -361,7 +361,7 @@
         "1": 246
       },
       "flags": {},
-      "order": 15,
+      "order": 21,
       "mode": 2,
       "inputs": [
         {
@@ -387,7 +387,7 @@
         "1": 246
       },
       "flags": {},
-      "order": 16,
+      "order": 22,
       "mode": 2,
       "inputs": [
         {
@@ -413,7 +413,7 @@
         "1": 246
       },
       "flags": {},
-      "order": 12,
+      "order": 18,
       "mode": 2,
       "inputs": [
         {
@@ -440,7 +440,7 @@
         "1": 264
       },
       "flags": {},
-      "order": 21,
+      "order": 15,
       "mode": 2,
       "inputs": [
         {
@@ -775,7 +775,7 @@
         "1": 454
       },
       "flags": {},
-      "order": 22,
+      "order": 16,
       "mode": 0,
       "inputs": [
         {
@@ -848,6 +848,242 @@
       "shape": 1
     },
     {
+      "id": 219,
+      "type": "Image Filter Adjustments",
+      "pos": [
+        -484,
+        544
+      ],
+      "size": {
+        "0": 315,
+        "1": 226
+      },
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 373
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            378,
+            379,
+            380,
+            381,
+            382,
+            383,
+            384,
+            385,
+            386,
+            387
+          ],
+          "shape": 3
+        }
+      ],
+      "title": "ImageFilter",
+      "properties": {
+        "Node name for S&R": "Image Filter Adjustments"
+      },
+      "widgets_values": [
+        0,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        "false"
+      ],
+      "shape": 1
+    },
+    {
+      "id": 15,
+      "type": "LoadImage",
+      "pos": [
+        -1080,
+        455
+      ],
+      "size": {
+        "0": 315,
+        "1": 314
+      },
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            373,
+            374
+          ],
+          "shape": 3,
+          "label": "IMAGE",
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [],
+          "shape": 3,
+          "label": "MASK",
+          "slot_index": 1
+        }
+      ],
+      "title": "LoadImage",
+      "properties": {
+        "Node name for S&R": "LoadImageA"
+      },
+      "widgets_values": [
+        "01.jpg",
+        "image"
+      ],
+      "shape": 1
+    },
+    {
+      "id": 218,
+      "type": "Image Remove Background (rembg)",
+      "pos": [
+        -483,
+        361
+      ],
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 374
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "title": "ImageRembg",
+      "properties": {
+        "Node name for S&R": "Image Remove Background (rembg)"
+      },
+      "widgets_values": [
+        "u2net"
+      ],
+      "shape": 1
+    },
+    {
+      "id": 47,
+      "type": "LineArtPreprocessor",
+      "pos": [
+        -70,
+        -30
+      ],
+      "size": {
+        "0": 315,
+        "1": 82
+      },
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 378,
+          "label": "image",
+          "slot_index": 0
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            324,
+            369
+          ],
+          "shape": 3,
+          "label": "IMAGE",
+          "slot_index": 0
+        }
+      ],
+      "title": "LineArtPreprocessor",
+      "properties": {
+        "Node name for S&R": "LineArtPreprocessor"
+      },
+      "widgets_values": [
+        "enable",
+        768
+      ],
+      "color": "#223",
+      "bgcolor": "#335",
+      "shape": 1
+    },
+    {
+      "id": 61,
+      "type": "CannyEdgePreprocessor",
+      "pos": [
+        -70,
+        80
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 379,
+          "label": "image",
+          "slot_index": 0
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            229,
+            334
+          ],
+          "shape": 3,
+          "label": "IMAGE",
+          "slot_index": 0
+        }
+      ],
+      "title": "CannyEdgePreprocessor",
+      "properties": {
+        "Node name for S&R": "CannyEdgePreprocessor"
+      },
+      "widgets_values": [
+        50,
+        150,
+        512
+      ],
+      "color": "#223",
+      "bgcolor": "#335",
+      "shape": 1
+    },
+    {
       "id": 118,
       "type": "LineartStandardPreprocessor",
       "pos": [
@@ -859,14 +1095,15 @@
         "1": 106
       },
       "flags": {},
-      "order": 2,
+      "order": 7,
       "mode": 0,
       "inputs": [
         {
           "name": "image",
           "type": "IMAGE",
-          "link": null,
-          "label": "image"
+          "link": 380,
+          "label": "image",
+          "slot_index": 0
         }
       ],
       "outputs": [
@@ -904,13 +1141,14 @@
         "1": 82
       },
       "flags": {},
-      "order": 3,
+      "order": 8,
       "mode": 0,
       "inputs": [
         {
           "name": "image",
           "type": "IMAGE",
-          "link": null
+          "link": 381,
+          "slot_index": 0
         }
       ],
       "outputs": [
@@ -948,14 +1186,15 @@
         "1": 150
       },
       "flags": {},
-      "order": 4,
+      "order": 9,
       "mode": 0,
       "inputs": [
         {
           "name": "image",
           "type": "IMAGE",
-          "link": null,
-          "label": "image"
+          "link": 382,
+          "label": "image",
+          "slot_index": 0
         }
       ],
       "outputs": [
@@ -1003,13 +1242,14 @@
         "1": 82
       },
       "flags": {},
-      "order": 5,
+      "order": 10,
       "mode": 0,
       "inputs": [
         {
           "name": "image",
           "type": "IMAGE",
-          "link": null
+          "link": 383,
+          "slot_index": 0
         }
       ],
       "outputs": [
@@ -1048,13 +1288,14 @@
         "1": 82
       },
       "flags": {},
-      "order": 6,
+      "order": 11,
       "mode": 0,
       "inputs": [
         {
           "name": "image",
           "type": "IMAGE",
-          "link": null
+          "link": 384,
+          "slot_index": 0
         }
       ],
       "outputs": [
@@ -1092,13 +1333,14 @@
         "1": 130
       },
       "flags": {},
-      "order": 7,
+      "order": 12,
       "mode": 0,
       "inputs": [
         {
           "name": "image",
           "type": "IMAGE",
-          "link": null
+          "link": 385,
+          "slot_index": 0
         }
       ],
       "outputs": [
@@ -1139,13 +1381,14 @@
         "1": 106
       },
       "flags": {},
-      "order": 8,
+      "order": 13,
       "mode": 0,
       "inputs": [
         {
           "name": "image",
           "type": "IMAGE",
-          "link": null
+          "link": 386,
+          "slot_index": 0
         }
       ],
       "outputs": [
@@ -1184,13 +1427,14 @@
         "1": 106
       },
       "flags": {},
-      "order": 9,
+      "order": 14,
       "mode": 0,
       "inputs": [
         {
           "name": "image",
           "type": "IMAGE",
-          "link": null
+          "link": 387,
+          "slot_index": 0
         }
       ],
       "outputs": [
@@ -1215,231 +1459,6 @@
       ],
       "color": "#223",
       "bgcolor": "#335",
-      "shape": 1
-    },
-    {
-      "id": 47,
-      "type": "LineArtPreprocessor",
-      "pos": [
-        -70,
-        -30
-      ],
-      "size": {
-        "0": 315,
-        "1": 82
-      },
-      "flags": {},
-      "order": 19,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 375,
-          "label": "image"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            324,
-            369
-          ],
-          "shape": 3,
-          "label": "IMAGE",
-          "slot_index": 0
-        }
-      ],
-      "title": "LineArtPreprocessor",
-      "properties": {
-        "Node name for S&R": "LineArtPreprocessor"
-      },
-      "widgets_values": [
-        "enable",
-        768
-      ],
-      "color": "#223",
-      "bgcolor": "#335",
-      "shape": 1
-    },
-    {
-      "id": 219,
-      "type": "Image Filter Adjustments",
-      "pos": [
-        -484,
-        544
-      ],
-      "size": {
-        "0": 315,
-        "1": 226
-      },
-      "flags": {},
-      "order": 17,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 373
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": null,
-          "shape": 3
-        }
-      ],
-      "title": "ImageFilter",
-      "properties": {
-        "Node name for S&R": "Image Filter Adjustments"
-      },
-      "widgets_values": [
-        0,
-        1,
-        1,
-        1,
-        0,
-        0,
-        0,
-        "false"
-      ],
-      "shape": 1
-    },
-    {
-      "id": 15,
-      "type": "LoadImage",
-      "pos": [
-        -1080,
-        455
-      ],
-      "size": {
-        "0": 315,
-        "1": 314
-      },
-      "flags": {},
-      "order": 10,
-      "mode": 0,
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            373,
-            374,
-            375
-          ],
-          "shape": 3,
-          "label": "IMAGE",
-          "slot_index": 0
-        },
-        {
-          "name": "MASK",
-          "type": "MASK",
-          "links": [],
-          "shape": 3,
-          "label": "MASK",
-          "slot_index": 1
-        }
-      ],
-      "title": "LoadImage",
-      "properties": {
-        "Node name for S&R": "LoadImageA"
-      },
-      "widgets_values": [
-        "01.jpg",
-        "image"
-      ],
-      "shape": 1
-    },
-    {
-      "id": 61,
-      "type": "CannyEdgePreprocessor",
-      "pos": [
-        -70,
-        80
-      ],
-      "size": {
-        "0": 315,
-        "1": 106
-      },
-      "flags": {},
-      "order": 11,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": null,
-          "label": "image",
-          "slot_index": 0
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            229,
-            334
-          ],
-          "shape": 3,
-          "label": "IMAGE",
-          "slot_index": 0
-        }
-      ],
-      "title": "CannyEdgePreprocessor",
-      "properties": {
-        "Node name for S&R": "CannyEdgePreprocessor"
-      },
-      "widgets_values": [
-        50,
-        150,
-        512
-      ],
-      "color": "#223",
-      "bgcolor": "#335",
-      "shape": 1
-    },
-    {
-      "id": 218,
-      "type": "Image Remove Background (rembg)",
-      "pos": [
-        -483,
-        361
-      ],
-      "size": {
-        "0": 315,
-        "1": 58
-      },
-      "flags": {},
-      "order": 18,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 374
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": null,
-          "shape": 3
-        }
-      ],
-      "title": "ImageRembg",
-      "properties": {
-        "Node name for S&R": "Image Remove Background (rembg)"
-      },
-      "widgets_values": [
-        "u2net"
-      ],
       "shape": 1
     }
   ],
@@ -1653,10 +1672,82 @@
       "IMAGE"
     ],
     [
-      375,
-      15,
+      378,
+      219,
       0,
       47,
+      0,
+      "IMAGE"
+    ],
+    [
+      379,
+      219,
+      0,
+      61,
+      0,
+      "IMAGE"
+    ],
+    [
+      380,
+      219,
+      0,
+      118,
+      0,
+      "IMAGE"
+    ],
+    [
+      381,
+      219,
+      0,
+      156,
+      0,
+      "IMAGE"
+    ],
+    [
+      382,
+      219,
+      0,
+      120,
+      0,
+      "IMAGE"
+    ],
+    [
+      383,
+      219,
+      0,
+      163,
+      0,
+      "IMAGE"
+    ],
+    [
+      384,
+      219,
+      0,
+      169,
+      0,
+      "IMAGE"
+    ],
+    [
+      385,
+      219,
+      0,
+      170,
+      0,
+      "IMAGE"
+    ],
+    [
+      386,
+      219,
+      0,
+      171,
+      0,
+      "IMAGE"
+    ],
+    [
+      387,
+      219,
+      0,
+      172,
       0,
       "IMAGE"
     ]
