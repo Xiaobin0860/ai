@@ -26,7 +26,11 @@
   "EmptyImage": "EmptyImage",
   "ImageRembg": "Image Remove Background (rembg)",
   "CropImage": "Crop Image TargetSize (JPS)",
+  "ImageScaleSide": "Image scale to side",
   "ImageFilter": "Image Filter Adjustments",
   "UpscaleImage": "CR Upscale Image",
+  "TextString": "Text String",
+  "TextConcat": "Text Concatenate (JPS)",
+  "Tagger": "WD14Tagger|pysssss",
   "RepeatLatent": "RepeatLatentBatch"
 }

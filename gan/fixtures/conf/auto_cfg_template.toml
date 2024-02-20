@@ -15,7 +15,7 @@ canny_high_threshold = 120
 # 0随机[1, 4]
 tile_pyrup_iters = 1
 switch_1 = true
-#随机CN类型 Canny|OpenPose|Depth|NormalMap|Lineart|AnimeLineart|SoftEdge|Segmentation|Tile
+#随机CN类型 Canny|OpenPose|Depth|NormalMap|Lineart|AnimeLineart|SoftEdge|Segmentation|Tile|CannyXL|OpenPoseXL|LineartXL
 ctrl_type_1 = ["Lineart"]
 #指定随机处理器 realistic|coarse|anime|anime_denoise|pidinet|midas_depth|leres_depth|zoe_depth
 #canny|hed|bae
@@ -158,3 +158,9 @@ title = "ImageRembg"
 switch = false
 # u2net|u2netp|u2net_human_seg|u2net_cloth_seg|silueta|isnet-general-use|isnet-anime|sam
 model_name = "u2net"
+
+[tagger]
+title = "Tagger"
+switch = false
+# u2net|u2netp|u2net_human_seg|u2net_cloth_seg|silueta|isnet-general-use|isnet-anime|sam
+model = "u2net"

@@ -16,6 +16,10 @@ pub const NODE_CROP_IMAGE: &str = "CropImage";
 pub const NODE_REPEAT_LATENT: &str = "RepeatLatent";
 pub const NODE_EMPTY_LATENT: &str = "EmptyLatent";
 pub const NODE_EMPTY_IMAGE: &str = "EmptyImage";
+pub const NODE_IMAGE_SCALESIDE: &str = "ImageScaleSide";
+pub const NODE_TEXT_STRING: &str = "TextString";
+pub const NODE_TEXT_CONCAT: &str = "TextConcat";
+pub const NODE_IMAGE_TAGGER: &str = "Tagger";
 
 mod api;
 pub use api::*;
@@ -55,6 +59,9 @@ pub use switch::*;
 
 mod latent;
 pub use latent::*;
+
+mod text;
+pub use text::*;
 
 use std::collections::HashMap;
 use std::sync::OnceLock;
@@ -192,6 +199,10 @@ mod comfy_tests {
         let wf = wf.unwrap();
         assert!(wf.get_node(NODE_LORA_STACKER).is_ok());
         assert!(wf.get_node(NODE_IMAGE_FILTER).is_ok());
+        assert!(wf.get_node(NODE_IMAGE_SCALESIDE).is_ok());
+        assert!(wf.get_node(NODE_TEXT_STRING).is_ok());
+        assert!(wf.get_node(NODE_TEXT_CONCAT).is_ok());
+        assert!(wf.get_node(NODE_IMAGE_TAGGER).is_ok());
 
         let wf = img2img();
         let wf = Workflow::from_json(wf);

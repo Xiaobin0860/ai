@@ -3,6 +3,7 @@ use std::collections::HashMap;
 use anyhow::{anyhow, Context};
 use fixtures::control_nets;
 use rand::random;
+use serde_json::Value;
 use tracing::{debug, trace, warn};
 
 use crate::{
@@ -10,8 +11,9 @@ use crate::{
     AEmptyImage, AImageFilter, AImageRembg, ALoraStack, ALoraStacker, AppResult, AutoCfg, CnCfg,
     Ctrlnet, IdxControlNet, IdxLoRA, LoraCfg, LoraStack, LoraStacker, Workflow,
     NODE_CANNY_PREPROCESSOR, NODE_CROP_IMAGE, NODE_EMPTY_IMAGE, NODE_EMPTY_LATENT,
-    NODE_IMAGE_FILTER, NODE_IMAGE_PREPROCESSOR, NODE_KSAMPLER, NODE_LINEART_PREPROCESSOR,
-    NODE_LOAD_IMAGE, NODE_REPEAT_LATENT, NODE_TILE_PREPROCESSOR,
+    NODE_IMAGE_FILTER, NODE_IMAGE_PREPROCESSOR, NODE_IMAGE_SCALESIDE, NODE_IMAGE_TAGGER,
+    NODE_KSAMPLER, NODE_LINEART_PREPROCESSOR, NODE_LOAD_IMAGE, NODE_REPEAT_LATENT,
+    NODE_TEXT_CONCAT, NODE_TEXT_STRING, NODE_TILE_PREPROCESSOR,
 };
 
 const STEP_F32: f32 = 0.05;
@@ -101,8 +103,12 @@ impl Generator {
         } else {
             (ec.width, ec.height)
         };
+        //调整输入规格
+        if let Ok(scale) = wf.get_node_mut(NODE_IMAGE_SCALESIDE) {
+            let scale = scale.image_scale_side_mut();
+            scale.side_length = if w > h { w } else { h };
+        }
         let efficient = wf.get_node_mut(&ec.title)?.efficient_loader_mut();
-        efficient.positive = rand_element(&ec.positive).clone();
         efficient.negative = rand_element(&ec.negative).clone();
         efficient.batch_size = ec.batch_size;
         efficient.empty_latent_width = w;
@@ -111,6 +117,32 @@ impl Generator {
         efficient.ckpt_name = ec.ckpt_name.clone();
         efficient.clip_skip = *rand_element(&ec.clip_skip);
         efficient.weight_interpretation = ec.weight_interpretation.clone();
+        let positive: &String = rand_element(&ec.positive);
+        efficient.positive = Value::String(positive.into());
+        //提示词及图标打标
+        if let Ok(ts_node) = wf.get_node_mut(NODE_TEXT_STRING) {
+            //支持Tagger的版本
+            let ts = ts_node.text_string_mut();
+            ts.text = positive.into();
+            let mut ts_id = ts_node.id.clone();
+            let atagger = ac.tagger.clone().unwrap_or_default();
+            if atagger.switch {
+                //有自动打标
+                let tagger_node = wf.get_node_mut(&atagger.title)?;
+                let tagger = tagger_node.tagger_mut();
+                tagger.model = atagger.model.clone();
+                let tagger_id = tagger_node.id.clone();
+                let concat_node = wf.get_node_mut(NODE_TEXT_CONCAT)?;
+                let concat = concat_node.text_concat_mut();
+                concat.text2 = Some(create_input_id(&tagger_id, 0));
+                ts_id = concat_node.id.clone();
+            } else {
+                //无自动打标
+                wf.rem_node(NODE_IMAGE_TAGGER);
+            }
+            wf.get_node_mut(&ec.title)?.efficient_loader_mut().positive =
+                create_input_id(&ts_id, 0);
+        }
         //图生图 用CropImage调整生图大小, 用RepeatLatent控制批次
         if let Ok(crop) = wf.get_node_mut(NODE_CROP_IMAGE) {
             let crop = crop.crop_image_mut();

@@ -5,11 +5,12 @@ use serde_json::Value;
 
 use crate::{
     CannyEdgePreprocessor, CropImage, CtrlnetStack, EfficientLoader, EmptyImage, EmptyLatent,
-    HEDPreprocessor, ImageFilter, ImagePreprocessor, ImageRembg, ImageSave, ImageScaleToSide,
+    HEDPreprocessor, ImageFilter, ImagePreprocessor, ImageRembg, ImageSave, ImageScaleSide,
     KSampler, LeReSDepthMapPreprocessor, LineArtPreprocessor, LineartStandardPreprocessor,
     LoadImage, LoraStack, LoraStacker, MLSDPreprocessor, MiDaSDepthMapPreprocessor,
     OpenposePreprocessor, PreprocessorSwitchAfter, PreprocessorSwitchPre, RepeatLatent, SaveImage,
-    TilePreprocessor, TxtimgSwitch, UpscaleImage, VaeDecode, VaeEncode,
+    Tagger, TextConcat, TextString, TilePreprocessor, TxtimgSwitch, UpscaleImage, VaeDecode,
+    VaeEncode,
 };
 
 // TODO: 准确类型可能需要自已实现根据class_type来判断, 直接ComfyUI api json解析丢失类型信息
@@ -37,7 +38,7 @@ pub enum Inputs {
     /// Save Image
     ImageSave(ImageSave),
     SaveImage(SaveImage),
-    ImageScaleToSide(ImageScaleToSide),
+    ImageScaleSide(ImageScaleSide),
     UpscaleImage(UpscaleImage),
     CropImage(CropImage),
     ImageFilter(ImageFilter),
@@ -62,6 +63,11 @@ pub enum Inputs {
     TxtimgSwitch(TxtimgSwitch),
     PreprocessorSwitchPre(PreprocessorSwitchPre),
     PreprocessorSwitchAfter(PreprocessorSwitchAfter),
+
+    /// Text
+    TextString(TextString),
+    TextConcat(TextConcat),
+    Tagger(Tagger),
 }
 
 impl TryFrom<Value> for Inputs {

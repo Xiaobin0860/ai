@@ -10,8 +10,8 @@ pub struct EfficientLoader {
     pub vae_name: String,
     /// The name of the LORA model
     pub lora_name: String,
-    /// The positive prompts
-    pub positive: String,
+    /// The positive prompts 支持Tagger版本后连TextConcat0(有Tagger)或连TextString0(无Tagger), 旧版string Value
+    pub positive: Value,
     /// The negative prompts
     pub negative: String,
     /// The token normalization method

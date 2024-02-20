@@ -103,6 +103,16 @@ pub struct AutoCfg {
 
     /// 图片去背景
     pub image_rembg: Option<AImageRembg>,
+
+    /// 图片打标
+    pub tagger: Option<ATagger>,
+}
+
+#[derive(Debug, Default, Clone, Deserialize)]
+pub struct ATagger {
+    pub title: String,
+    pub switch: bool,
+    pub model: String,
 }
 
 #[derive(Debug, Deserialize)]

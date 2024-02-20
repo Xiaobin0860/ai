@@ -61,11 +61,15 @@ pub struct LoadImage {
     pub upload: String,
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct ImageScaleToSide {
-    pub side_length: usize,
+/// ImageScaleSide "Image scale to side"
+#[derive(Debug, Serialize, Deserialize, Clone, FromValue)]
+pub struct ImageScaleSide {
+    pub side_length: u16,
+    /// side Longest|Width|Height
     pub side: String,
+    /// area|nearest-exact|bilinear
     pub upscale_method: String,
+    /// disabled|center
     pub crop: String,
     pub image: Option<Value>,
 }
@@ -128,5 +132,19 @@ pub struct EmptyImage {
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct ImageRembg {
     pub model_name: String,
+    pub image: Option<Value>,
+}
+
+/// Tagger "WD14Tagger|pysssss"
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct Tagger {
+    /// wd-v1-4-convnextv2-tagger-v2|wd-v1-4-moat-tagger-v2
+    pub model: String,
+    pub threshold: f32,
+    pub character_threshold: f32,
+    pub replace_underscore: bool,
+    pub trailing_comma: bool,
+    pub exclude_tags: String,
+    /// input image ImageFilter
     pub image: Option<Value>,
 }

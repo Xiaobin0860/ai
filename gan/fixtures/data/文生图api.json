@@ -1,12 +1,12 @@
 {
   "3": {
     "inputs": {
-      "seed": 1101895907685991,
-      "steps": 7,
-      "cfg": 1.4000000000000001,
-      "sampler_name": "lcm",
-      "scheduler": "karras",
-      "denoise": 1,
+      "seed": 68994469905727,
+      "steps": 18,
+      "cfg": 7.3,
+      "sampler_name": "euler_ancestral",
+      "scheduler": "normal",
+      "denoise": 0.8200000000000001,
       "model": [
         "134",
         0
@@ -20,7 +20,7 @@
         2
       ],
       "latent_image": [
-        "209",
+        "254",
         0
       ]
     },
@@ -31,7 +31,7 @@
   },
   "15": {
     "inputs": {
-      "image": "01.jpg",
+      "image": "tx6.jpg",
       "upload": "image"
     },
     "class_type": "LoadImage",
@@ -57,8 +57,8 @@
   },
   "47": {
     "inputs": {
-      "coarse": "enable",
-      "resolution": 768,
+      "coarse": "disable",
+      "resolution": 192,
       "image": [
         "219",
         0
@@ -118,10 +118,10 @@
   "132": {
     "inputs": {
       "switch_1": "On",
-      "controlnet_1": "control_v11p_sd15_lineart.pth",
-      "controlnet_strength_1": 0.75,
+      "controlnet_1": "SDXL_lineart.safetensors",
+      "controlnet_strength_1": 0.9500000000000001,
       "start_percent_1": 0,
-      "end_percent_1": 0.85,
+      "end_percent_1": 1,
       "switch_2": "Off",
       "controlnet_2": "control_v11p_sd15_openpose.pth",
       "controlnet_strength_2": 0.85,
@@ -144,18 +144,21 @@
   },
   "134": {
     "inputs": {
-      "ckpt_name": "brav5Realisianv50_v10.safetensors",
+      "ckpt_name": "sd_xl_base_1.0.safetensors",
       "vae_name": "Baked VAE",
       "clip_skip": -2,
       "lora_name": "None",
       "lora_model_strength": 1,
       "lora_clip_strength": 1,
-      "positive": "1people,sketch,sketches,XXsketch,(black and white:1.2),simple white background,solo,((quick sketch)),(pencil stroke)",
-      "negative": "verybadimagenegative_v1.3,colors",
+      "positive": [
+        "241",
+        0
+      ],
+      "negative": "text, watermark, bad hands, (color:2), ugly eyes, color, watercolor, oil paint, grain, frames, (((realistic))), grey background, ((high light))",
       "token_normalization": "none",
-      "weight_interpretation": "A1111",
-      "empty_latent_width": 512,
-      "empty_latent_height": 512,
+      "weight_interpretation": "comfy",
+      "empty_latent_width": 576,
+      "empty_latent_height": 768,
       "batch_size": 1,
       "lora_stack": [
         "215",
@@ -284,25 +287,14 @@
       "title": "ImageSave"
     }
   },
-  "209": {
-    "inputs": {
-      "width": 576,
-      "height": 768,
-      "batch_size": 4
-    },
-    "class_type": "EmptyLatentImage",
-    "_meta": {
-      "title": "Empty Latent Image"
-    }
-  },
   "215": {
     "inputs": {
       "input_mode": "simple",
-      "lora_count": 4,
-      "lora_name_1": "quick sketch.safetensors",
-      "lora_wt_1": 0.75,
-      "model_str_1": 0.75,
-      "clip_str_1": 0.75,
+      "lora_count": 1,
+      "lora_name_1": "SMTXSTEPFOUR_XL2-000018.safetensors",
+      "lora_wt_1": 1.05,
+      "model_str_1": 1.05,
+      "clip_str_1": 1,
       "lora_name_2": "SXXMZH1.safetensors",
       "lora_wt_2": 0.55,
       "model_str_2": 0.55,
@@ -505,7 +497,7 @@
     "inputs": {
       "model_name": "u2net",
       "image": [
-        "15",
+        "247",
         0
       ]
     },
@@ -525,13 +517,79 @@
       "edge_enhance": 0,
       "detail_enhance": "false",
       "image": [
-        "15",
+        "247",
         0
       ]
     },
     "class_type": "Image Filter Adjustments",
     "_meta": {
       "title": "ImageFilter"
+    }
+  },
+  "241": {
+    "inputs": {
+      "text": "SMTXSTEPFOUR, (((sketch))), low res, (((simple background))), (((white background))), black and white,monochrome, ((pencil drawing)), (line contour:0.92)",
+      "text_b": "",
+      "text_c": "",
+      "text_d": ""
+    },
+    "class_type": "Text String",
+    "_meta": {
+      "title": "TextString"
+    }
+  },
+  "245": {
+    "inputs": {
+      "model": "wd-v1-4-convnextv2-tagger-v2",
+      "threshold": 0.35,
+      "character_threshold": 0.85,
+      "replace_underscore": false,
+      "trailing_comma": false,
+      "exclude_tags": ""
+    },
+    "class_type": "WD14Tagger|pysssss",
+    "_meta": {
+      "title": "Tagger"
+    }
+  },
+  "247": {
+    "inputs": {
+      "side_length": 768,
+      "side": "Longest",
+      "upscale_method": "area",
+      "crop": "disabled",
+      "image": [
+        "15",
+        0
+      ]
+    },
+    "class_type": "Image scale to side",
+    "_meta": {
+      "title": "ImageScaleSide"
+    }
+  },
+  "254": {
+    "inputs": {
+      "width": 576,
+      "height": 768,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "EmptyLatent"
+    }
+  },
+  "255": {
+    "inputs": {
+      "delimiter": "comma",
+      "text1": [
+        "241",
+        0
+      ]
+    },
+    "class_type": "Text Concatenate (JPS)",
+    "_meta": {
+      "title": "TextConcat"
     }
   }
 }

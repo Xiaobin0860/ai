@@ -53,6 +53,12 @@ impl Workflow {
             .ok_or(format!("get_node_mut: {typ} not found").into())
     }
 
+    pub fn rem_node(&mut self, typ: &str) {
+        if let Ok(id) = self.get_node_id(typ).cloned() {
+            self.id_node_map.remove(&id);
+        }
+    }
+
     pub fn get_node_id(&self, typ: &str) -> AppResult<&String> {
         let comfy_class = *my_class_map().get(typ).unwrap_or(&typ);
         Ok(self

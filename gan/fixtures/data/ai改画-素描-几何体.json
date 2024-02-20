@@ -174,7 +174,7 @@
     },
     "class_type": "Image scale to side",
     "_meta": {
-      "title": "ImageScaleToSide"
+      "title": "ImageScaleSide"
     }
   },
   "107": {

@@ -42,6 +42,14 @@
       "OpenposePreprocessor"
     ]
   },
+  "OpenPoseXL": {
+    "model": [
+      "OpenPoseXL2.safetensors"
+    ],
+    "preprocessor": [
+      "OpenposePreprocessor"
+    ]
+  },
   "Lineart": {
     "model": [
       "control_v11p_sd15_lineart.pth",
@@ -55,6 +63,22 @@
     "model": [
       "control_v11p_sd15_lineart.pth",
       "control_v11p_sd15_lineart_fp16.safetensors"
+    ],
+    "preprocessor": [
+      "LineArtPreprocessor"
+    ]
+  },
+  "LineartXL": {
+    "model": [
+      "SDXL_lineart.safetensors"
+    ],
+    "preprocessor": [
+      "LineArtPreprocessor"
+    ]
+  },
+  "CoarseXL": {
+    "model": [
+      "SDXL_lineart.safetensors"
     ],
     "preprocessor": [
       "LineArtPreprocessor"
