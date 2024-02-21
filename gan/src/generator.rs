@@ -128,18 +128,25 @@ impl Generator {
             let atagger = ac.tagger.clone().unwrap_or_default();
             if atagger.switch {
                 //有自动打标
+                let if_id = wf.get_node_id(NODE_IMAGE_FILTER)?.clone();
                 let tagger_node = wf.get_node_mut(&atagger.title)?;
                 let tagger = tagger_node.tagger_mut();
                 tagger.model = atagger.model.clone();
+                //Tagger.image = ImageFilter
+                tagger.image = Some(create_input_id(&if_id, 0));
                 let tagger_id = tagger_node.id.clone();
                 let concat_node = wf.get_node_mut(NODE_TEXT_CONCAT)?;
                 let concat = concat_node.text_concat_mut();
+                //TextConcat.text2 = Tagger
                 concat.text2 = Some(create_input_id(&tagger_id, 0));
                 ts_id = concat_node.id.clone();
+                trace!("Tagger-{tagger_id}.image={if_id}, TextConcat{ts_id}.text2={tagger_id}");
             } else {
-                //无自动打标
+                //无自动打标, 移除Tagger结点
                 wf.rem_node(NODE_IMAGE_TAGGER);
             }
+            //EfficientLoader.positive = Text
+            trace!("EfficientLoader.positive={ts_id}");
             wf.get_node_mut(&ec.title)?.efficient_loader_mut().positive =
                 create_input_id(&ts_id, 0);
         }

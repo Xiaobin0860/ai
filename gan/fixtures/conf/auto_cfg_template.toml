@@ -162,5 +162,5 @@ model_name = "u2net"
 [tagger]
 title = "Tagger"
 switch = false
-# u2net|u2netp|u2net_human_seg|u2net_cloth_seg|silueta|isnet-general-use|isnet-anime|sam
-model = "u2net"
+# wd-v1-4-convnextv2-tagger-v2|wd-v1-4-moat-tagger-v2|wd-v1-4-convnext-tagger-v2|wd-v1-4-convnext-tagger|wd-v1-4-vit-tagger-v2
+model = "wd-v1-4-convnextv2-tagger-v2"
