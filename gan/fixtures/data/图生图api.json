@@ -1,12 +1,12 @@
 {
   "3": {
     "inputs": {
-      "seed": 69654386857911,
-      "steps": 10,
-      "cfg": 3,
-      "sampler_name": "lcm",
-      "scheduler": "sgm_uniform",
-      "denoise": 0.9,
+      "seed": 99778450667322,
+      "steps": 30,
+      "cfg": 6,
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "karras",
+      "denoise": 0.77,
       "model": [
         "134",
         0
@@ -31,7 +31,7 @@
   },
   "15": {
     "inputs": {
-      "image": "pjw5.jpg",
+      "image": "land_cj3.jpg",
       "upload": "image"
     },
     "class_type": "LoadImage",
@@ -58,9 +58,9 @@
   "47": {
     "inputs": {
       "coarse": "enable",
-      "resolution": 768,
+      "resolution": 1024,
       "image": [
-        "15",
+        "220",
         0
       ]
     },
@@ -87,7 +87,7 @@
   "78": {
     "inputs": {
       "pixels": [
-        "182",
+        "220",
         0
       ],
       "vae": [
@@ -134,22 +134,30 @@
   "132": {
     "inputs": {
       "switch_1": "On",
-      "controlnet_1": "control_v11p_sd15_lineart.pth",
-      "controlnet_strength_1": 0.85,
+      "controlnet_1": "control_v11p_sd15_canny.pth",
+      "controlnet_strength_1": 0.93,
       "start_percent_1": 0,
       "end_percent_1": 1,
       "switch_2": "Off",
-      "controlnet_2": "control_v11f1e_sd15_tile.bin",
-      "controlnet_strength_2": 0.6,
+      "controlnet_2": "control_v11f1p_sd15_depth.pth",
+      "controlnet_strength_2": 0.5,
       "start_percent_2": 0,
-      "end_percent_2": 0.5,
+      "end_percent_2": 1,
       "switch_3": "Off",
       "controlnet_3": "control_v11f1e_sd15_tile.bin",
-      "controlnet_strength_3": 0.7000000000000001,
-      "start_percent_3": 0.2,
+      "controlnet_strength_3": 0.4,
+      "start_percent_3": 0,
       "end_percent_3": 0.4,
       "image_1": [
-        "47",
+        "61",
+        0
+      ],
+      "image_2": [
+        "163",
+        0
+      ],
+      "image_3": [
+        "169",
         0
       ]
     },
@@ -161,20 +169,20 @@
   "134": {
     "inputs": {
       "ckpt_name": "brav5Realisianv50_v10.safetensors",
-      "vae_name": "v1-5-pruned.vae.pt",
-      "clip_skip": -1,
+      "vae_name": "Baked VAE",
+      "clip_skip": -2,
       "lora_name": "None",
       "lora_model_strength": 1,
       "lora_clip_strength": 1,
-      "positive": "SMJWSTEPFOUR, ((sketch)), best quality, low res, ((simple and white background)), black and white, monochrome, ((pencil strokes)), line contour, line art, sketch works,",
-      "negative": "text, watermark, bad hands, ugly eyes, color, watercolor, oil paint, grain, frames, (((realistic))),",
+      "positive": "SMCJ, greyscale，monochrome，sketch, colorless,",
+      "negative": "shadows, gray fill, blurry, watermark, text, dark background, thick, color, shading, gradient, anime, photorealistic, realism, realistic, oil,",
       "token_normalization": "none",
       "weight_interpretation": "comfy",
       "empty_latent_width": 512,
       "empty_latent_height": 768,
       "batch_size": 1,
       "lora_stack": [
-        "222",
+        "237",
         0
       ],
       "cnet_stack": [
@@ -203,8 +211,8 @@
   },
   "163": {
     "inputs": {
-      "preprocessor": "TilePreprocessor",
-      "resolution": 64,
+      "preprocessor": "LeReS-DepthMapPreprocessor",
+      "resolution": 768,
       "image": [
         "220",
         0
@@ -217,7 +225,7 @@
   },
   "169": {
     "inputs": {
-      "pyrUp_iters": 1,
+      "pyrUp_iters": 2,
       "resolution": 64,
       "image": [
         "220",
@@ -234,7 +242,7 @@
       "rm_nearest": 0,
       "rm_background": 0,
       "boost": "disable",
-      "resolution": 512,
+      "resolution": 768,
       "image": [
         "220",
         0
@@ -277,14 +285,14 @@
   },
   "182": {
     "inputs": {
-      "target_w": 576,
-      "target_h": 768,
+      "target_w": 768,
+      "target_h": 576,
       "crop_position": "center",
       "offset": 0,
       "interpolation": "bilinear",
       "sharpening": 0,
       "image": [
-        "220",
+        "15",
         0
       ]
     },
@@ -316,7 +324,7 @@
       "edge_enhance": 0,
       "detail_enhance": "false",
       "image": [
-        "15",
+        "182",
         0
       ]
     },
@@ -325,20 +333,58 @@
       "title": "ImageFilter"
     }
   },
-  "222": {
+  "223": {
+    "inputs": {
+      "output_path": "[time(%Y-%m-%d)]",
+      "filename_prefix": "ComfyUI",
+      "filename_delimiter": "_",
+      "filename_number_padding": 4,
+      "filename_number_start": "false",
+      "extension": "png",
+      "quality": 100,
+      "lossless_webp": "false",
+      "overwrite_mode": "false",
+      "show_history": "false",
+      "show_history_by_prefix": "true",
+      "embed_workflow": "true",
+      "show_previews": "false",
+      "images": [
+        "35",
+        0
+      ]
+    },
+    "class_type": "Image Save",
+    "_meta": {
+      "title": "ImageSave"
+    }
+  },
+  "226": {
+    "inputs": {
+      "model_name": "u2net",
+      "image": [
+        "15",
+        0
+      ]
+    },
+    "class_type": "Image Remove Background (rembg)",
+    "_meta": {
+      "title": "ImageRembg"
+    }
+  },
+  "237": {
     "inputs": {
       "input_mode": "simple",
-      "lora_count": 3,
-      "lora_name_1": "lcm_lora_sdv15.safetensors",
-      "lora_wt_1": 0.9500000000000001,
+      "lora_count": 2,
+      "lora_name_1": "sumiao-000022.safetensors",
+      "lora_wt_1": 0.6,
       "model_str_1": 1,
       "clip_str_1": 1,
-      "lora_name_2": "SMJWSTEPFOUR1.safetensors",
-      "lora_wt_2": 1.1,
+      "lora_name_2": "SMCJ-000020.safetensors",
+      "lora_wt_2": 1,
       "model_str_2": 1,
       "clip_str_2": 1,
-      "lora_name_3": "sumiao-000010.safetensors",
-      "lora_wt_3": 0.9,
+      "lora_name_3": "None",
+      "lora_wt_3": 1,
       "model_str_3": 1,
       "clip_str_3": 1,
       "lora_name_4": "None",
@@ -528,45 +574,7 @@
     },
     "class_type": "LoRA Stacker",
     "_meta": {
-      "title": "LoraStacker"
-    }
-  },
-  "223": {
-    "inputs": {
-      "output_path": "[time(%Y-%m-%d)]",
-      "filename_prefix": "ComfyUI",
-      "filename_delimiter": "_",
-      "filename_number_padding": 4,
-      "filename_number_start": "false",
-      "extension": "png",
-      "quality": 100,
-      "lossless_webp": "false",
-      "overwrite_mode": "false",
-      "show_history": "false",
-      "show_history_by_prefix": "true",
-      "embed_workflow": "true",
-      "show_previews": "false",
-      "images": [
-        "35",
-        0
-      ]
-    },
-    "class_type": "Image Save",
-    "_meta": {
-      "title": "ImageSave"
-    }
-  },
-  "226": {
-    "inputs": {
-      "model_name": "u2net",
-      "image": [
-        "15",
-        0
-      ]
-    },
-    "class_type": "Image Remove Background (rembg)",
-    "_meta": {
-      "title": "ImageRembg"
+      "title": "LoRA Stacker"
     }
   }
 }

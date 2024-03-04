@@ -54,12 +54,12 @@ impl Generator {
         let rembg = rembg_node.image_rembg_mut();
         rembg.model_name = arembg.model_name.clone();
         let rembg_id = rembg_node.id.clone();
-        //新版本增加的ImageRembg结点,认为有一定有ImageFilter结点
-        let filter = wf
-            .get_node_mut(NODE_IMAGE_FILTER)
+        //新版本增加的`ImageRembg`结点,认为有一定有`CropImage`结点
+        let crop = wf
+            .get_node_mut(NODE_CROP_IMAGE)
             .context("rembg needs filter")?
             .image_filter_mut();
-        filter.image = Some(create_input_id(&rembg_id, 0));
+        crop.image = Some(create_input_id(&rembg_id, 0));
         Ok(())
     }
 
