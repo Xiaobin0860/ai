@@ -1,6 +1,6 @@
 {
-  "last_node_id": 241,
-  "last_link_id": 414,
+  "last_node_id": 250,
+  "last_link_id": 422,
   "nodes": [
     {
       "id": 211,
@@ -14,7 +14,7 @@
         "1": 292
       },
       "flags": {},
-      "order": 21,
+      "order": 25,
       "mode": 2,
       "inputs": [
         {
@@ -41,7 +41,7 @@
         "1": 351
       },
       "flags": {},
-      "order": 8,
+      "order": 11,
       "mode": 2,
       "inputs": [
         {
@@ -51,33 +51,6 @@
         }
       ],
       "title": "Filter",
-      "properties": {
-        "Node name for S&R": "PreviewImage"
-      },
-      "shape": 1
-    },
-    {
-      "id": 227,
-      "type": "PreviewImage",
-      "pos": [
-        1219,
-        1417
-      ],
-      "size": {
-        "0": 210,
-        "1": 26
-      },
-      "flags": {},
-      "order": 5,
-      "mode": 2,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 379
-        }
-      ],
-      "title": "RemoveBG",
       "properties": {
         "Node name for S&R": "PreviewImage"
       },
@@ -95,7 +68,7 @@
         "1": 46
       },
       "flags": {},
-      "order": 25,
+      "order": 31,
       "mode": 0,
       "inputs": [
         {
@@ -166,33 +139,6 @@
       "shape": 1
     },
     {
-      "id": 210,
-      "type": "PreviewImage",
-      "pos": [
-        1662,
-        1030
-      ],
-      "size": {
-        "0": 507,
-        "1": 712
-      },
-      "flags": {},
-      "order": 29,
-      "mode": 2,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 321
-        }
-      ],
-      "title": "Out",
-      "properties": {
-        "Node name for S&R": "PreviewImage"
-      },
-      "shape": 1
-    },
-    {
       "id": 225,
       "type": "PreviewImage",
       "pos": [
@@ -204,7 +150,7 @@
         "1": 336
       },
       "flags": {},
-      "order": 6,
+      "order": 9,
       "mode": 2,
       "inputs": [
         {
@@ -220,159 +166,6 @@
       "shape": 1
     },
     {
-      "id": 220,
-      "type": "Image Filter Adjustments",
-      "pos": [
-        -309,
-        565
-      ],
-      "size": {
-        "0": 315,
-        "1": 226
-      },
-      "flags": {},
-      "order": 7,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 400
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            368,
-            384,
-            385,
-            386,
-            387,
-            388,
-            389,
-            390,
-            391,
-            392,
-            401,
-            414
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "title": "ImageFilter",
-      "properties": {
-        "Node name for S&R": "Image Filter Adjustments"
-      },
-      "widgets_values": [
-        0,
-        1,
-        1,
-        1,
-        0,
-        0,
-        0,
-        "false"
-      ],
-      "shape": 1
-    },
-    {
-      "id": 35,
-      "type": "VAEDecode",
-      "pos": [
-        1715,
-        74
-      ],
-      "size": {
-        "0": 210,
-        "1": 46
-      },
-      "flags": {},
-      "order": 28,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "samples",
-          "type": "LATENT",
-          "link": 135,
-          "label": "samples"
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": 191,
-          "label": "vae"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            114,
-            321,
-            367
-          ],
-          "shape": 3,
-          "label": "IMAGE",
-          "slot_index": 0
-        }
-      ],
-      "title": "VaeDecode",
-      "properties": {
-        "Node name for S&R": "VAEDecode"
-      },
-      "color": "#2a363b",
-      "bgcolor": "#3f5159",
-      "shape": 1
-    },
-    {
-      "id": 223,
-      "type": "Image Save",
-      "pos": [
-        1951,
-        74
-      ],
-      "size": {
-        "0": 315,
-        "1": 346
-      },
-      "flags": {},
-      "order": 30,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 367
-        }
-      ],
-      "title": "ImageSave",
-      "properties": {
-        "Node name for S&R": "Image Save"
-      },
-      "widgets_values": [
-        "[time(%Y-%m-%d)]",
-        "ComfyUI",
-        "_",
-        4,
-        "false",
-        "png",
-        100,
-        "false",
-        "false",
-        "false",
-        "true",
-        "true",
-        "false"
-      ],
-      "color": "#332922",
-      "bgcolor": "#593930",
-      "shape": 1
-    },
-    {
       "id": 214,
       "type": "RepeatLatentBatch",
       "pos": [
@@ -384,7 +177,7 @@
         "1": 58
       },
       "flags": {},
-      "order": 26,
+      "order": 32,
       "mode": 4,
       "inputs": [
         {
@@ -425,7 +218,7 @@
         "1": 301
       },
       "flags": {},
-      "order": 19,
+      "order": 23,
       "mode": 2,
       "inputs": [
         {
@@ -437,7 +230,8 @@
       "title": "Canny",
       "properties": {
         "Node name for S&R": "PreviewImage"
-      }
+      },
+      "shape": 1
     },
     {
       "id": 209,
@@ -451,7 +245,7 @@
         "1": 292
       },
       "flags": {},
-      "order": 20,
+      "order": 24,
       "mode": 2,
       "inputs": [
         {
@@ -478,7 +272,7 @@
         "1": 294
       },
       "flags": {},
-      "order": 23,
+      "order": 27,
       "mode": 2,
       "inputs": [
         {
@@ -494,63 +288,597 @@
       "shape": 1
     },
     {
-      "id": 15,
-      "type": "LoadImage",
+      "id": 182,
+      "type": "Crop Image TargetSize (JPS)",
       "pos": [
-        -687,
-        276
+        -304,
+        334
       ],
       "size": {
-        "0": 309.4503173828125,
-        "1": 517.2049560546875
+        "0": 315,
+        "1": 178
       },
       "flags": {},
-      "order": 1,
+      "order": 7,
       "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 399,
+          "slot_index": 0
+        }
+      ],
       "outputs": [
         {
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            378,
-            399
+            369,
+            400
           ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "CropImage",
+      "properties": {
+        "Node name for S&R": "Crop Image TargetSize (JPS)"
+      },
+      "widgets_values": [
+        768,
+        576,
+        "center",
+        0,
+        "bilinear",
+        0
+      ],
+      "shape": 1
+    },
+    {
+      "id": 47,
+      "type": "LineArtPreprocessor",
+      "pos": [
+        91,
+        35
+      ],
+      "size": {
+        "0": 315,
+        "1": 82
+      },
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 414,
+          "label": "image",
+          "slot_index": 0
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            323
+          ],
+          "shape": 3,
+          "label": "IMAGE",
+          "slot_index": 0
+        }
+      ],
+      "title": "LineArtPreprocessor",
+      "properties": {
+        "Node name for S&R": "LineArtPreprocessor"
+      },
+      "widgets_values": [
+        "enable",
+        1024
+      ],
+      "color": "#223",
+      "bgcolor": "#335",
+      "shape": 1
+    },
+    {
+      "id": 61,
+      "type": "CannyEdgePreprocessor",
+      "pos": [
+        97,
+        155
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 384,
+          "label": "image"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            229,
+            405,
+            411
+          ],
+          "shape": 3,
+          "label": "IMAGE",
+          "slot_index": 0
+        }
+      ],
+      "title": "CannyEdgePreprocessor",
+      "properties": {
+        "Node name for S&R": "CannyEdgePreprocessor"
+      },
+      "widgets_values": [
+        100,
+        200,
+        768
+      ],
+      "color": "#223",
+      "bgcolor": "#335",
+      "shape": 1
+    },
+    {
+      "id": 118,
+      "type": "LineartStandardPreprocessor",
+      "pos": [
+        91,
+        299
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 385,
+          "label": "image"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [],
+          "shape": 3,
+          "label": "IMAGE",
+          "slot_index": 0
+        }
+      ],
+      "title": "LineartStandardPreprocessor",
+      "properties": {
+        "Node name for S&R": "LineartStandardPreprocessor"
+      },
+      "widgets_values": [
+        6,
+        9,
+        960
+      ],
+      "color": "#223",
+      "bgcolor": "#335",
+      "shape": 1
+    },
+    {
+      "id": 156,
+      "type": "HEDPreprocessor",
+      "pos": [
+        89,
+        437
+      ],
+      "size": {
+        "0": 315,
+        "1": 82
+      },
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 386
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            233
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "HEDPreprocessor",
+      "properties": {
+        "Node name for S&R": "HEDPreprocessor"
+      },
+      "widgets_values": [
+        "enable",
+        512
+      ],
+      "color": "#223",
+      "bgcolor": "#335",
+      "shape": 1
+    },
+    {
+      "id": 120,
+      "type": "OpenposePreprocessor",
+      "pos": [
+        91,
+        548
+      ],
+      "size": {
+        "0": 315,
+        "1": 150
+      },
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 387,
+          "label": "image"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [],
           "shape": 3,
           "label": "IMAGE",
           "slot_index": 0
         },
         {
-          "name": "MASK",
-          "type": "MASK",
-          "links": [],
+          "name": "POSE_KEYPOINT",
+          "type": "POSE_KEYPOINT",
+          "links": null,
           "shape": 3,
-          "label": "MASK",
-          "slot_index": 1
+          "label": "POSE_KEYPOINT"
         }
       ],
-      "title": "LoadImage",
+      "title": "OpenposePreprocessor",
       "properties": {
-        "Node name for S&R": "LoadImageA"
+        "Node name for S&R": "OpenposePreprocessor"
       },
       "widgets_values": [
-        "land_cj3.jpg",
-        "image"
+        "enable",
+        "enable",
+        "enable",
+        576
       ],
+      "color": "#223",
+      "bgcolor": "#335",
+      "shape": 1
+    },
+    {
+      "id": 163,
+      "type": "AIO_Preprocessor",
+      "pos": [
+        91,
+        727
+      ],
+      "size": {
+        "0": 315,
+        "1": 82
+      },
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 388
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            237,
+            319,
+            412
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "ImagePreprocessor",
+      "properties": {
+        "Node name for S&R": "AIO_Preprocessor"
+      },
+      "widgets_values": [
+        "LeReS-DepthMapPreprocessor",
+        768
+      ],
+      "color": "#223",
+      "bgcolor": "#335",
+      "shape": 1
+    },
+    {
+      "id": 169,
+      "type": "TilePreprocessor",
+      "pos": [
+        91,
+        848
+      ],
+      "size": {
+        "0": 315,
+        "1": 82
+      },
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 389
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            322,
+            413
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "TilePreprocessor",
+      "properties": {
+        "Node name for S&R": "TilePreprocessor"
+      },
+      "widgets_values": [
+        2,
+        64
+      ],
+      "color": "#223",
+      "bgcolor": "#335",
+      "shape": 1
+    },
+    {
+      "id": 170,
+      "type": "LeReS-DepthMapPreprocessor",
+      "pos": [
+        91,
+        972
+      ],
+      "size": {
+        "0": 315,
+        "1": 130
+      },
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 390
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            241
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "LeReSDepthMapPreprocessor",
+      "properties": {
+        "Node name for S&R": "LeReS-DepthMapPreprocessor"
+      },
+      "widgets_values": [
+        0,
+        0,
+        "disable",
+        768
+      ],
+      "color": "#223",
+      "bgcolor": "#335",
+      "shape": 1
+    },
+    {
+      "id": 171,
+      "type": "MiDaS-DepthMapPreprocessor",
+      "pos": [
+        91,
+        1142
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 391
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "MiDaSDepthMapPreprocessor",
+      "properties": {
+        "Node name for S&R": "MiDaS-DepthMapPreprocessor"
+      },
+      "widgets_values": [
+        6.283185307179586,
+        0.1,
+        512
+      ],
+      "color": "#223",
+      "bgcolor": "#335",
+      "shape": 1
+    },
+    {
+      "id": 172,
+      "type": "M-LSDPreprocessor",
+      "pos": [
+        91,
+        1295
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 392
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            245
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "MLSDPreprocessor",
+      "properties": {
+        "Node name for S&R": "M-LSDPreprocessor"
+      },
+      "widgets_values": [
+        0.1,
+        0.1,
+        512
+      ],
+      "color": "#223",
+      "bgcolor": "#335",
+      "shape": 1
+    },
+    {
+      "id": 226,
+      "type": "Image Remove Background (rembg)",
+      "pos": [
+        -310,
+        223
+      ],
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 378
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            379
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "ImageRembg",
+      "properties": {
+        "Node name for S&R": "Image Remove Background (rembg)"
+      },
+      "widgets_values": [
+        "u2net"
+      ],
+      "shape": 1
+    },
+    {
+      "id": 227,
+      "type": "PreviewImage",
+      "pos": [
+        1155,
+        1411
+      ],
+      "size": {
+        "0": 217.7030487060547,
+        "1": 286.0939025878906
+      },
+      "flags": {},
+      "order": 8,
+      "mode": 2,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 379
+        }
+      ],
+      "title": "RemoveBG",
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
       "shape": 1
     },
     {
       "id": 132,
       "type": "CR Multi-ControlNet Stack",
       "pos": [
-        477,
-        252
+        509,
+        250
       ],
       "size": {
         "0": 419,
         "1": 454
       },
       "flags": {},
-      "order": 22,
+      "order": 26,
       "mode": 0,
       "inputs": [
         {
@@ -623,24 +951,69 @@
       "shape": 1
     },
     {
+      "id": 15,
+      "type": "LoadImage",
+      "pos": [
+        -687,
+        276
+      ],
+      "size": {
+        "0": 309.4503173828125,
+        "1": 517.2049560546875
+      },
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            378,
+            399
+          ],
+          "shape": 3,
+          "label": "IMAGE",
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [],
+          "shape": 3,
+          "label": "MASK",
+          "slot_index": 1
+        }
+      ],
+      "title": "LoadImage",
+      "properties": {
+        "Node name for S&R": "LoadImageA"
+      },
+      "widgets_values": [
+        "land_cj3.jpg",
+        "image"
+      ],
+      "shape": 1
+    },
+    {
       "id": 3,
       "type": "KSampler",
       "pos": [
-        1370,
-        74
+        1371,
+        69
       ],
       "size": {
         "0": 315,
         "1": 262
       },
       "flags": {},
-      "order": 27,
+      "order": 33,
       "mode": 0,
       "inputs": [
         {
           "name": "model",
           "type": "MODEL",
-          "link": 183,
+          "link": 422,
           "label": "model"
         },
         {
@@ -690,6 +1063,134 @@
       "shape": 1
     },
     {
+      "id": 35,
+      "type": "VAEDecode",
+      "pos": [
+        1714,
+        69
+      ],
+      "size": {
+        "0": 210,
+        "1": 46
+      },
+      "flags": {},
+      "order": 34,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 135,
+          "label": "samples"
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 191,
+          "label": "vae"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            114,
+            321,
+            367
+          ],
+          "shape": 3,
+          "label": "IMAGE",
+          "slot_index": 0
+        }
+      ],
+      "title": "VaeDecode",
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "color": "#2a363b",
+      "bgcolor": "#3f5159",
+      "shape": 1
+    },
+    {
+      "id": 223,
+      "type": "Image Save",
+      "pos": [
+        1953,
+        70
+      ],
+      "size": {
+        "0": 315,
+        "1": 346
+      },
+      "flags": {},
+      "order": 36,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 367
+        }
+      ],
+      "title": "ImageSave",
+      "properties": {
+        "Node name for S&R": "Image Save"
+      },
+      "widgets_values": [
+        "[time(%Y-%m-%d)]",
+        "ComfyUI",
+        "_",
+        4,
+        "false",
+        "png",
+        100,
+        "false",
+        "false",
+        "false",
+        "true",
+        "true",
+        "false"
+      ],
+      "color": "#332922",
+      "bgcolor": "#593930",
+      "shape": 1
+    },
+    {
+      "id": 245,
+      "type": "IPAdapterModelLoader",
+      "pos": [
+        979,
+        -392
+      ],
+      "size": {
+        "0": 348.6092224121094,
+        "1": 62.5624885559082
+      },
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IPADAPTER",
+          "type": "IPADAPTER",
+          "links": [
+            417
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "IPAdapterModelLoader",
+      "properties": {
+        "Node name for S&R": "IPAdapterModelLoader"
+      },
+      "widgets_values": [
+        "ip-adapter-plus_sd15.safetensors"
+      ],
+      "shape": 1
+    },
+    {
       "id": 237,
       "type": "LoRA Stacker",
       "pos": [
@@ -701,7 +1202,7 @@
         "1": 178
       },
       "flags": {},
-      "order": 2,
+      "order": 3,
       "mode": 0,
       "inputs": [
         {
@@ -721,6 +1222,7 @@
           "slot_index": 0
         }
       ],
+      "title": "LoraStacker",
       "properties": {
         "Node name for S&R": "LoRA Stacker"
       },
@@ -929,18 +1431,45 @@
       "shape": 1
     },
     {
+      "id": 243,
+      "type": "PreviewImage",
+      "pos": [
+        1397,
+        1411
+      ],
+      "size": {
+        "0": 227.61703491210938,
+        "1": 284.0205383300781
+      },
+      "flags": {},
+      "order": 28,
+      "mode": 2,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 416
+        }
+      ],
+      "title": "StandardLineart",
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "shape": 1
+    },
+    {
       "id": 134,
       "type": "Efficient Loader",
       "pos": [
-        911,
-        75
+        933,
+        67
       ],
       "size": {
         "0": 405.54119873046875,
         "1": 493.1109619140625
       },
       "flags": {},
-      "order": 24,
+      "order": 29,
       "mode": 0,
       "inputs": [
         {
@@ -962,7 +1491,8 @@
           "name": "MODEL",
           "type": "MODEL",
           "links": [
-            183
+            418,
+            422
           ],
           "shape": 3,
           "label": "MODEL",
@@ -1046,159 +1576,155 @@
       "shape": 1
     },
     {
-      "id": 182,
-      "type": "Crop Image TargetSize (JPS)",
+      "id": 244,
+      "type": "IPAdapterApply",
       "pos": [
-        -304,
-        334
+        1343,
+        -292
       ],
       "size": {
         "0": 315,
-        "1": 178
+        "1": 258
+      },
+      "flags": {},
+      "order": 30,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "ipadapter",
+          "type": "IPADAPTER",
+          "link": 417
+        },
+        {
+          "name": "clip_vision",
+          "type": "CLIP_VISION",
+          "link": 420,
+          "slot_index": 1
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 419,
+          "slot_index": 2
+        },
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 418,
+          "slot_index": 3
+        },
+        {
+          "name": "attn_mask",
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "IPAdapterApply",
+      "properties": {
+        "Node name for S&R": "IPAdapterApply"
+      },
+      "widgets_values": [
+        1,
+        0,
+        "original",
+        0,
+        1,
+        false
+      ],
+      "shape": 1
+    },
+    {
+      "id": 248,
+      "type": "CLIPVisionLoader",
+      "pos": [
+        1014,
+        -273
+      ],
+      "size": {
+        "0": 315,
+        "1": 58
       },
       "flags": {},
       "order": 4,
       "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 399,
-          "slot_index": 0
-        }
-      ],
       "outputs": [
         {
-          "name": "IMAGE",
-          "type": "IMAGE",
+          "name": "CLIP_VISION",
+          "type": "CLIP_VISION",
           "links": [
-            369,
-            400
+            420
           ],
-          "shape": 3,
-          "slot_index": 0
+          "shape": 3
         }
       ],
-      "title": "CropImage",
+      "title": "CLIPVisionLoader",
       "properties": {
-        "Node name for S&R": "Crop Image TargetSize (JPS)"
+        "Node name for S&R": "CLIPVisionLoader"
       },
       "widgets_values": [
-        768,
-        576,
-        "center",
-        0,
-        "bilinear",
-        0
+        "model.safetensors"
       ],
       "shape": 1
     },
     {
-      "id": 47,
-      "type": "LineArtPreprocessor",
+      "id": 246,
+      "type": "LoadImage",
       "pos": [
-        91,
-        35
+        593,
+        -362
       ],
       "size": {
         "0": 315,
-        "1": 82
+        "1": 314
       },
       "flags": {},
-      "order": 18,
+      "order": 5,
       "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 414,
-          "label": "image",
-          "slot_index": 0
-        }
-      ],
       "outputs": [
         {
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            323
+            419
           ],
-          "shape": 3,
-          "label": "IMAGE",
-          "slot_index": 0
+          "shape": 3
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "shape": 3
         }
       ],
-      "title": "LineArtPreprocessor",
+      "title": "LoadImageIPA",
       "properties": {
-        "Node name for S&R": "LineArtPreprocessor"
+        "Node name for S&R": "LoadImageIPA"
       },
       "widgets_values": [
-        "enable",
-        1024
+        "land_cj3.jpg",
+        "image"
       ],
-      "color": "#223",
-      "bgcolor": "#335",
       "shape": 1
     },
     {
-      "id": 61,
-      "type": "CannyEdgePreprocessor",
+      "id": 220,
+      "type": "Image Filter Adjustments",
       "pos": [
-        97,
-        155
+        -307,
+        568
       ],
       "size": {
         "0": 315,
-        "1": 106
-      },
-      "flags": {},
-      "order": 9,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 384,
-          "label": "image"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            229,
-            405,
-            411
-          ],
-          "shape": 3,
-          "label": "IMAGE",
-          "slot_index": 0
-        }
-      ],
-      "title": "CannyEdgePreprocessor",
-      "properties": {
-        "Node name for S&R": "CannyEdgePreprocessor"
-      },
-      "widgets_values": [
-        100,
-        200,
-        768
-      ],
-      "color": "#223",
-      "bgcolor": "#335",
-      "shape": 1
-    },
-    {
-      "id": 118,
-      "type": "LineartStandardPreprocessor",
-      "pos": [
-        91,
-        299
-      ],
-      "size": {
-        "0": 315,
-        "1": 106
+        "1": 226
       },
       "flags": {},
       "order": 10,
@@ -1207,52 +1733,7 @@
         {
           "name": "image",
           "type": "IMAGE",
-          "link": 385,
-          "label": "image"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [],
-          "shape": 3,
-          "label": "IMAGE",
-          "slot_index": 0
-        }
-      ],
-      "title": "LineartStandardPreprocessor",
-      "properties": {
-        "Node name for S&R": "LineartStandardPreprocessor"
-      },
-      "widgets_values": [
-        6,
-        9,
-        960
-      ],
-      "color": "#223",
-      "bgcolor": "#335",
-      "shape": 1
-    },
-    {
-      "id": 156,
-      "type": "HEDPreprocessor",
-      "pos": [
-        89,
-        437
-      ],
-      "size": {
-        "0": 315,
-        "1": 82
-      },
-      "flags": {},
-      "order": 11,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 386
+          "link": 400
         }
       ],
       "outputs": [
@@ -1260,341 +1741,65 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            233
+            368,
+            384,
+            385,
+            386,
+            387,
+            388,
+            389,
+            390,
+            391,
+            392,
+            401,
+            414,
+            415
           ],
           "shape": 3,
           "slot_index": 0
         }
       ],
-      "title": "HEDPreprocessor",
+      "title": "ImageFilter",
       "properties": {
-        "Node name for S&R": "HEDPreprocessor"
-      },
-      "widgets_values": [
-        "enable",
-        512
-      ],
-      "color": "#223",
-      "bgcolor": "#335",
-      "shape": 1
-    },
-    {
-      "id": 120,
-      "type": "OpenposePreprocessor",
-      "pos": [
-        91,
-        548
-      ],
-      "size": {
-        "0": 315,
-        "1": 150
-      },
-      "flags": {},
-      "order": 12,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 387,
-          "label": "image"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [],
-          "shape": 3,
-          "label": "IMAGE",
-          "slot_index": 0
-        },
-        {
-          "name": "POSE_KEYPOINT",
-          "type": "POSE_KEYPOINT",
-          "links": null,
-          "shape": 3,
-          "label": "POSE_KEYPOINT"
-        }
-      ],
-      "title": "OpenposePreprocessor",
-      "properties": {
-        "Node name for S&R": "OpenposePreprocessor"
-      },
-      "widgets_values": [
-        "enable",
-        "enable",
-        "enable",
-        576
-      ],
-      "color": "#223",
-      "bgcolor": "#335",
-      "shape": 1
-    },
-    {
-      "id": 163,
-      "type": "AIO_Preprocessor",
-      "pos": [
-        91,
-        727
-      ],
-      "size": {
-        "0": 315,
-        "1": 82
-      },
-      "flags": {},
-      "order": 13,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 388
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            237,
-            319,
-            412
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "title": "ImagePreprocessor",
-      "properties": {
-        "Node name for S&R": "AIO_Preprocessor"
-      },
-      "widgets_values": [
-        "LeReS-DepthMapPreprocessor",
-        768
-      ],
-      "color": "#223",
-      "bgcolor": "#335",
-      "shape": 1
-    },
-    {
-      "id": 169,
-      "type": "TilePreprocessor",
-      "pos": [
-        91,
-        848
-      ],
-      "size": {
-        "0": 315,
-        "1": 82
-      },
-      "flags": {},
-      "order": 14,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 389
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            322,
-            413
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "title": "TilePreprocessor",
-      "properties": {
-        "Node name for S&R": "TilePreprocessor"
-      },
-      "widgets_values": [
-        2,
-        64
-      ],
-      "color": "#223",
-      "bgcolor": "#335",
-      "shape": 1
-    },
-    {
-      "id": 170,
-      "type": "LeReS-DepthMapPreprocessor",
-      "pos": [
-        91,
-        972
-      ],
-      "size": {
-        "0": 315,
-        "1": 130
-      },
-      "flags": {},
-      "order": 15,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 390
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            241
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "title": "LeReSDepthMapPreprocessor",
-      "properties": {
-        "Node name for S&R": "LeReS-DepthMapPreprocessor"
+        "Node name for S&R": "Image Filter Adjustments"
       },
       "widgets_values": [
         0,
+        1,
+        1,
+        1,
         0,
-        "disable",
-        768
+        0,
+        0,
+        "false"
       ],
-      "color": "#223",
-      "bgcolor": "#335",
       "shape": 1
     },
     {
-      "id": 171,
-      "type": "MiDaS-DepthMapPreprocessor",
+      "id": 210,
+      "type": "PreviewImage",
       "pos": [
-        91,
-        1142
+        1662,
+        1030
       ],
       "size": {
-        "0": 315,
-        "1": 106
+        "0": 507,
+        "1": 712
       },
       "flags": {},
-      "order": 16,
-      "mode": 0,
+      "order": 35,
+      "mode": 2,
       "inputs": [
         {
-          "name": "image",
+          "name": "images",
           "type": "IMAGE",
-          "link": 391
+          "link": 321
         }
       ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "title": "MiDaSDepthMapPreprocessor",
+      "title": "Out",
       "properties": {
-        "Node name for S&R": "MiDaS-DepthMapPreprocessor"
+        "Node name for S&R": "PreviewImage"
       },
-      "widgets_values": [
-        6.283185307179586,
-        0.1,
-        512
-      ],
-      "color": "#223",
-      "bgcolor": "#335",
-      "shape": 1
-    },
-    {
-      "id": 172,
-      "type": "M-LSDPreprocessor",
-      "pos": [
-        91,
-        1295
-      ],
-      "size": {
-        "0": 315,
-        "1": 106
-      },
-      "flags": {},
-      "order": 17,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 392
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            245
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "title": "MLSDPreprocessor",
-      "properties": {
-        "Node name for S&R": "M-LSDPreprocessor"
-      },
-      "widgets_values": [
-        0.1,
-        0.1,
-        512
-      ],
-      "color": "#223",
-      "bgcolor": "#335",
-      "shape": 1
-    },
-    {
-      "id": 226,
-      "type": "Image Remove Background (rembg)",
-      "pos": [
-        -310,
-        223
-      ],
-      "size": {
-        "0": 315,
-        "1": 58
-      },
-      "flags": {},
-      "order": 3,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 378
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            379
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "title": "ImageRembg",
-      "properties": {
-        "Node name for S&R": "Image Remove Background (rembg)"
-      },
-      "widgets_values": [
-        "u2net"
-      ],
       "shape": 1
     }
   ],
@@ -1622,14 +1827,6 @@
       134,
       1,
       "CONTROL_NET_STACK"
-    ],
-    [
-      183,
-      134,
-      0,
-      3,
-      0,
-      "MODEL"
     ],
     [
       187,
@@ -1934,6 +2131,62 @@
       47,
       0,
       "IMAGE"
+    ],
+    [
+      415,
+      220,
+      0,
+      242,
+      0,
+      "IMAGE"
+    ],
+    [
+      416,
+      242,
+      0,
+      243,
+      0,
+      "IMAGE"
+    ],
+    [
+      417,
+      245,
+      0,
+      244,
+      0,
+      "IPADAPTER"
+    ],
+    [
+      418,
+      134,
+      0,
+      244,
+      3,
+      "MODEL"
+    ],
+    [
+      419,
+      246,
+      0,
+      244,
+      2,
+      "IMAGE"
+    ],
+    [
+      420,
+      248,
+      0,
+      244,
+      1,
+      "CLIP_VISION"
+    ],
+    [
+      422,
+      134,
+      0,
+      3,
+      0,
+      "MODEL"
     ]
   ],
   "groups": [
@@ -1954,8 +2207,8 @@
       "bounding": [
         -334,
         -17,
-        808,
-        1468
+        820,
+        1751
       ],
       "color": "#3f789e",
       "font_size": 24,

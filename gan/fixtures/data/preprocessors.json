@@ -9,5 +9,6 @@
   "leres_depth": "LeReS-DepthMapPreprocessor",
   "zoe_depth": "Zoe-DepthMapPreprocessor",
   "canny": "CannyEdgePreprocessor",
+  "standard": "LineartStandardPreprocessor",
   "bae": "BAE-NormalMapPreprocessor"
 }

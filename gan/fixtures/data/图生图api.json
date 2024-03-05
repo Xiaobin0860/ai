@@ -574,7 +574,65 @@
     },
     "class_type": "LoRA Stacker",
     "_meta": {
-      "title": "LoRA Stacker"
+      "title": "LoraStacker"
+    }
+  },
+  "244": {
+    "inputs": {
+      "weight": 1,
+      "noise": 0,
+      "weight_type": "original",
+      "start_at": 0,
+      "end_at": 1,
+      "unfold_batch": false,
+      "ipadapter": [
+        "245",
+        0
+      ],
+      "clip_vision": [
+        "248",
+        0
+      ],
+      "image": [
+        "246",
+        0
+      ],
+      "model": [
+        "134",
+        0
+      ]
+    },
+    "class_type": "IPAdapterApply",
+    "_meta": {
+      "title": "IPAdapterApply"
+    }
+  },
+  "245": {
+    "inputs": {
+      "ipadapter_file": "ip-adapter-plus_sd15.safetensors"
+    },
+    "class_type": "IPAdapterModelLoader",
+    "_meta": {
+      "title": "IPAdapterModelLoader"
+    }
+  },
+  "246": {
+    "inputs": {
+      "image": "land_cj3.jpg",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "LoadImageIPA"
+    }
+  },
+  "248": {
+    "inputs": {
+      "clip_name": "model.safetensors"
+    },
+    "class_type": "CLIPVisionLoader",
+    "_meta": {
+      "title": "CLIPVisionLoader"
     }
   }
 }

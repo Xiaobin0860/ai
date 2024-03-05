@@ -1,10 +1,11 @@
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    CannyEdgePreprocessor, CropImage, CtrlnetStack, EfficientLoader, EmptyImage, EmptyLatent,
-    ImageFilter, ImagePreprocessor, ImageRembg, ImageSave, ImageScaleSide, Inputs, KSampler,
-    LineArtPreprocessor, LoadImage, LoraStack, LoraStacker, RepeatLatent, SaveImage, Tagger,
-    TextConcat, TextString, TilePreprocessor, VaeDecode,
+    CLIPVisionLoader, CannyEdgePreprocessor, CropImage, CtrlnetStack, EfficientLoader, EmptyImage,
+    EmptyLatent, IPAdapterApply, IPAdapterModelLoader, ImageFilter, ImagePreprocessor, ImageRembg,
+    ImageSave, ImageScaleSide, Inputs, KSampler, LineArtPreprocessor, LoadImage, LoraStack,
+    LoraStacker, RepeatLatent, SaveImage, Tagger, TextConcat, TextString, TilePreprocessor,
+    VaeDecode,
 };
 
 /// A node in the comfy ui workflow
@@ -68,6 +69,9 @@ impl Node {
     impl_input_methods!(LineArtPreprocessor);
     impl_input_methods!(TilePreprocessor);
     impl_input_methods!(CannyEdgePreprocessor);
+    impl_input_methods!(IPAdapterApply);
+    impl_input_methods!(IPAdapterModelLoader);
+    impl_input_methods!(CLIPVisionLoader);
     impl_input_methods!(TextString);
     impl_input_methods!(TextConcat);
     impl_input_methods!(Tagger);

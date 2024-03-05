@@ -32,5 +32,8 @@
   "TextString": "Text String",
   "TextConcat": "Text Concatenate (JPS)",
   "Tagger": "WD14Tagger|pysssss",
+  "IPAdapterApply": "IPAdapterApply",
+  "IPAdapterModelLoader": "IPAdapterModelLoader",
+  "CLIPVisionLoader": "CLIPVisionLoader",
   "RepeatLatent": "RepeatLatentBatch"
 }

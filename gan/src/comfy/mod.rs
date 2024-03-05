@@ -63,6 +63,9 @@ pub use latent::*;
 mod text;
 pub use text::*;
 
+mod ip_adapter;
+pub use ip_adapter::*;
+
 use std::collections::HashMap;
 use std::sync::OnceLock;
 
