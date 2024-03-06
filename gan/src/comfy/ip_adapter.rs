@@ -15,7 +15,8 @@ pub struct IPAdapterApply {
     pub unfold_batch: bool,
     pub ipadapter: Value,
     pub clip_vision: Value,
-    pub image: Value,
+    // [LoadImageIPA_id, 0]
+    pub image: Vec<Value>,
     //
     pub model: Value,
 }

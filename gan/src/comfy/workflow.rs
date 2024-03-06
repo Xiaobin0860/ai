@@ -53,6 +53,18 @@ impl Workflow {
             .ok_or(format!("get_node_mut: {title} not found").into())
     }
 
+    pub fn by_id_mut(&mut self, id: &str) -> AppResult<&mut Node> {
+        self.id_node_map
+            .get_mut(id)
+            .ok_or(format!("by_id_mut: {id} not found").into())
+    }
+
+    pub fn by_id(&self, id: &str) -> AppResult<&Node> {
+        self.id_node_map
+            .get(id)
+            .ok_or(format!("by_id: {id} not found").into())
+    }
+
     pub fn rem_node(&mut self, title: &str) {
         if let Ok(id) = self.get_node_id(title).cloned() {
             self.id_node_map.remove(&id);

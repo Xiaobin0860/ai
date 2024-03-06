@@ -2,18 +2,18 @@ use std::collections::HashMap;
 
 use anyhow::{anyhow, Context};
 use fixtures::control_nets;
-use rand::random;
+use rand::{random, Rng};
 use serde_json::Value;
 use tracing::{debug, trace, warn};
 
 use crate::{
     comfy_class_map, comfy_preprocessor, create_input_id, rand_element, ACtrlnet, ACtrlnetStack,
-    AEmptyImage, AImageFilter, AImageRembg, ALoraStack, ALoraStacker, AppResult, AutoCfg, CnCfg,
-    Ctrlnet, IdxControlNet, IdxLoRA, LoraCfg, LoraStack, LoraStacker, Workflow,
+    AEmptyImage, AIPAdapter, AImageFilter, AImageRembg, ALoraStack, ALoraStacker, AppResult,
+    AutoCfg, CnCfg, Ctrlnet, IdxControlNet, IdxLoRA, LoraCfg, LoraStack, LoraStacker, Workflow,
     NODE_CANNY_PREPROCESSOR, NODE_CROP_IMAGE, NODE_EMPTY_IMAGE, NODE_EMPTY_LATENT,
     NODE_IMAGE_FILTER, NODE_IMAGE_PREPROCESSOR, NODE_IMAGE_SCALESIDE, NODE_IMAGE_TAGGER,
-    NODE_KSAMPLER, NODE_LINEART_PREPROCESSOR, NODE_LOAD_IMAGE, NODE_REPEAT_LATENT,
-    NODE_TEXT_CONCAT, NODE_TEXT_STRING, NODE_TILE_PREPROCESSOR,
+    NODE_KSAMPLER, NODE_LINEARTSTANDARD_PREPROCESSOR, NODE_LINEART_PREPROCESSOR, NODE_LOAD_IMAGE,
+    NODE_REPEAT_LATENT, NODE_TEXT_CONCAT, NODE_TEXT_STRING, NODE_TILE_PREPROCESSOR,
 };
 
 const STEP_F32: f32 = 0.05;
@@ -43,6 +43,44 @@ impl Generator {
         if let Some(arembg) = &ac.image_rembg {
             self.apply_rembg(wf, arembg)?;
         }
+        if let Some(aipa) = &ac.ip_adapter {
+            self.apply_ip_adapter(wf, aipa)?;
+        }
+        Ok(())
+    }
+
+    fn apply_ip_adapter(&self, wf: &mut Workflow, aipa: &AIPAdapter) -> AppResult<()> {
+        if !aipa.switch {
+            return Ok(());
+        }
+        let ipa_node = wf.get_node_mut(&aipa.title).context("ip_adapter")?;
+        let ipa = ipa_node.i_p_adapter_apply_mut();
+        let weight = rand_f32(aipa.weight_min, aipa.weight_max);
+        let noise = rand_f32(aipa.noise_min, aipa.noise_max);
+        let start = rand_f32(aipa.start_min, aipa.start_max);
+        let end = rand_f32(aipa.end_min, aipa.end_max);
+        let image = rand_element(&aipa.image);
+        // TODO: 模型等其它参数基本不会变,先不实现了
+        debug!("rand_ip_adapter: {weight}, {noise}, {start}, {end}, {image}");
+        let img_id = ipa
+            .image
+            .first()
+            .context("ip_adapter img")?
+            .as_str()
+            .context("ip_adapter img_id")?
+            .to_owned();
+        ipa.weight = weight;
+        ipa.noise = noise;
+        ipa.start_at = start;
+        ipa.end_at = end;
+        let ipa_id = ipa_node.id.clone();
+        // KSampler.model = ipa
+        wf.get_node_mut(NODE_KSAMPLER)
+            .context("ip_adapter")?
+            .k_sampler_mut()
+            .model = Some(create_input_id(&ipa_id, 0));
+        // ipa image
+        wf.by_id_mut(&img_id)?.load_image_mut().image = image.clone();
         Ok(())
     }
 
@@ -271,6 +309,11 @@ impl Generator {
                 };
                 processor.resolution = cfg.resolution;
             }
+            NODE_LINEARTSTANDARD_PREPROCESSOR => {
+                // resolution
+                let processor = processor_node.lineart_standard_preprocessor_mut();
+                processor.resolution = cfg.resolution;
+            }
             NODE_TILE_PREPROCESSOR => {
                 // resolution
                 let processor = processor_node.tile_preprocessor_mut();
@@ -359,57 +402,9 @@ impl Generator {
             .cns
             .get(ctrl_type)
             .ok_or(anyhow!("no cn type {ctrl_type}"))?;
-        let weight = if acfg.strength_max - acfg.strength_min > STEP_F32 {
-            let mut vs = Vec::new();
-            let mut max = acfg.strength_max;
-            vs.push(max);
-            while max > acfg.strength_min {
-                max -= STEP_F32;
-                if max < acfg.strength_min {
-                    vs.push(acfg.strength_min);
-                    break;
-                }
-                vs.push(max);
-            }
-            trace!("weight: {vs:?}");
-            *rand_element(&vs)
-        } else {
-            acfg.strength_max
-        };
-        let start = if acfg.start_max - acfg.start_min > STEP_F32 {
-            let mut vs = Vec::new();
-            let mut max = acfg.start_max;
-            vs.push(max);
-            while max > acfg.start_min {
-                max -= STEP_F32;
-                if max < acfg.start_min {
-                    vs.push(acfg.start_min);
-                    break;
-                }
-                vs.push(max);
-            }
-            trace!("start: {vs:?}");
-            *rand_element(&vs)
-        } else {
-            acfg.start_max
-        };
-        let end = if acfg.end_max - acfg.end_min > STEP_F32 {
-            let mut vs = Vec::new();
-            let mut max = acfg.end_max;
-            vs.push(max);
-            while max > acfg.end_min {
-                max -= STEP_F32;
-                if max < acfg.end_min {
-                    vs.push(acfg.end_min);
-                    break;
-                }
-                vs.push(max);
-            }
-            trace!("end: {vs:?}");
-            *rand_element(&vs)
-        } else {
-            acfg.end_max
-        };
+        let weight = rand_f32(acfg.strength_min, acfg.strength_max);
+        let start = rand_f32(acfg.start_min, acfg.start_max);
+        let end = rand_f32(acfg.end_min, acfg.end_max);
         let preprocessors = if acfg.preprocessor.is_empty() {
             //所有可用的preprocessor随机, 注意这是comfy的preprocessor名
             &cn.preprocessor
@@ -422,6 +417,7 @@ impl Generator {
         let preprocessor = comfy_preprocessor(&my_name).to_owned();
         let resolution = *rand_element(&acfg.resolution);
         let resolution = if resolution > 0 { resolution } else { size.0 };
+        debug!("rand_cn_cfg: {ctrl_type}, {weight}, {start}, {end}, {resolution}, {my_name}-{preprocessor}");
         Ok(CnCfg {
             model: rand_element(&cn.model).clone(),
             preprocessor,
@@ -437,44 +433,17 @@ impl Generator {
         let sampler = wf.get_node_mut(NODE_KSAMPLER)?.k_sampler_mut();
         sampler.seed = random::<u32>() as i64;
         let asampler = &ac.sampler;
-        //rand [steps_min, steps_max]
-        if asampler.steps_max > asampler.steps_min {
-            let steps =
-                random::<u8>() % (asampler.steps_max - asampler.steps_min + 1) + asampler.steps_min;
-            trace!("steps: {steps}");
-            sampler.steps = steps;
-        } else {
-            sampler.steps = asampler.steps_max;
-        }
-        //rand [cfg_min, cfg_max]
-        if asampler.cfg_max - asampler.cfg_min > STEP_F32 {
-            let cfg = random::<f32>() * (asampler.cfg_max - asampler.cfg_min) + asampler.cfg_min;
-            trace!("cfg: {cfg}");
-            sampler.cfg = cfg;
-        } else {
-            sampler.cfg = asampler.cfg_max;
-        }
-        //rand [denoise_min, denoise_max]
-        if asampler.denoise_max - asampler.denoise_min > STEP_F32 {
-            let mut vs = Vec::new();
-            let mut max = asampler.denoise_max;
-            vs.push(max);
-            while max > asampler.denoise_min {
-                max -= STEP_F32;
-                if max < asampler.denoise_min {
-                    vs.push(asampler.denoise_min);
-                    break;
-                }
-                vs.push(max);
-            }
-            trace!("denoise: {vs:?}");
-            sampler.denoise = *rand_element(&vs);
-        } else {
-            sampler.denoise = asampler.denoise_max;
-        }
-        sampler.sampler_name = rand_element(&asampler.sampler_name).clone();
-        sampler.scheduler = rand_element(&asampler.scheduler).clone();
-
+        let steps = rand_num(asampler.steps_min, asampler.steps_max);
+        let cfg = rand_f32(asampler.cfg_min, asampler.cfg_max);
+        let denoise = rand_f32(asampler.denoise_min, asampler.denoise_max);
+        let sampler_name = rand_element(&asampler.sampler_name);
+        let scheduler = rand_element(&asampler.scheduler);
+        debug!("rand_sampler: {steps}, {cfg}, {denoise}, {sampler_name}-{scheduler}");
+        sampler.steps = steps;
+        sampler.cfg = cfg;
+        sampler.denoise = denoise;
+        sampler.sampler_name = sampler_name.clone();
+        sampler.scheduler = scheduler.clone();
         Ok(())
     }
 
@@ -583,26 +552,42 @@ impl Default for Generator {
 }
 
 fn rand_lora_cfg(names: &[String], wmodel_min: f32, wmodel_max: f32) -> LoraCfg {
-    let model_weight = if wmodel_max - wmodel_min > STEP_F32 {
-        let mut vs = Vec::new();
-        let mut max = wmodel_max;
-        vs.push(max);
-        while max > wmodel_min {
-            max -= STEP_F32;
-            if max < wmodel_min {
-                vs.push(wmodel_min);
-                break;
-            }
-            vs.push(max);
-        }
-        trace!("model_weight: {vs:?}");
-        *rand_element(&vs)
-    } else {
-        wmodel_max
-    };
+    let model_weight = rand_f32(wmodel_min, wmodel_max);
     LoraCfg {
         lora_name: rand_element(names).clone(),
         model_weight,
         clip_weight: model_weight,
+    }
+}
+
+fn rand_f32(min: f32, max: f32) -> f32 {
+    if max - min > STEP_F32 {
+        let mut vs = Vec::new();
+        let mut max = max;
+        vs.push(max);
+        while max > min {
+            max -= STEP_F32;
+            if max < min {
+                vs.push(min);
+                break;
+            }
+            vs.push(max);
+        }
+        trace!("rand_f32: {vs:?}");
+        *rand_element(&vs)
+    } else {
+        max
+    }
+}
+
+fn rand_num<T>(min: T, max: T) -> T
+where
+    T: rand::distributions::uniform::SampleUniform + PartialOrd,
+{
+    let mut rng = rand::thread_rng();
+    if max > min {
+        rng.gen_range(min..=max)
+    } else {
+        max
     }
 }

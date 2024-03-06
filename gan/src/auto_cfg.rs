@@ -106,6 +106,27 @@ pub struct AutoCfg {
 
     /// 图片打标
     pub tagger: Option<ATagger>,
+
+    /// ip adapter
+    pub ip_adapter: Option<AIPAdapter>,
+}
+
+#[derive(Debug, Default, Clone, Deserialize)]
+pub struct AIPAdapter {
+    pub title: String,
+    pub switch: bool,
+    pub ipadapter_file: String,
+    pub clip_name: String,
+    pub image: Vec<String>,
+    pub weight_min: f32,
+    pub weight_max: f32,
+    pub noise_min: f32,
+    pub noise_max: f32,
+    pub weight_type: Vec<String>,
+    pub start_min: f32,
+    pub start_max: f32,
+    pub end_min: f32,
+    pub end_max: f32,
 }
 
 #[derive(Debug, Default, Clone, Deserialize)]

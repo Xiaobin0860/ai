@@ -4,6 +4,7 @@ pub const NODE_CTRLNET_STACK: &str = "CtrlnetStack";
 pub const NODE_LORA_STACK: &str = "LoraStack";
 pub const NODE_LORA_STACKER: &str = "LoraStacker";
 pub const NODE_LOAD_IMAGE: &str = "LoadImage";
+pub const NODE_LOAD_IMAGE_IPA: &str = "LoadImageIPA";
 pub const NODE_SAVE_IMAGE: &str = "ImageSave";
 pub const NODE_IMAGE_PREPROCESSOR: &str = "ImagePreprocessor";
 pub const NODE_IMAGE_FILTER: &str = "ImageFilter";
@@ -11,6 +12,7 @@ pub const NODE_TILE_PREPROCESSOR: &str = "TilePreprocessor";
 pub const NODE_EFFICIENT_LOADER: &str = "EfficientLoader";
 pub const NODE_KSAMPLER: &str = "KSampler";
 pub const NODE_LINEART_PREPROCESSOR: &str = "LineArtPreprocessor";
+pub const NODE_LINEARTSTANDARD_PREPROCESSOR: &str = "LineartStandardPreprocessor";
 pub const NODE_CANNY_PREPROCESSOR: &str = "CannyEdgePreprocessor";
 pub const NODE_CROP_IMAGE: &str = "CropImage";
 pub const NODE_REPEAT_LATENT: &str = "RepeatLatent";
@@ -214,5 +216,15 @@ mod comfy_tests {
         let wf = wf.unwrap();
         assert!(wf.get_node(NODE_EMPTY_IMAGE).is_ok());
         assert!(wf.get_node(NODE_IMAGE_FILTER).is_ok());
+        let img_node = wf.get_node(NODE_LOAD_IMAGE);
+        assert!(img_node.is_ok());
+        let img_node = img_node.unwrap();
+        let img = img_node.load_image();
+        assert!(!img.image.is_empty());
+        let imgipa_node = wf.get_node(NODE_LOAD_IMAGE_IPA);
+        assert!(imgipa_node.is_ok());
+        let imgipa_node = imgipa_node.unwrap();
+        let imgipa = imgipa_node.load_image();
+        assert!(!imgipa.image.is_empty());
     }
 }

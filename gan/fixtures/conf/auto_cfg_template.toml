@@ -17,7 +17,7 @@ tile_pyrup_iters = 1
 switch_1 = true
 #随机CN类型 Canny|OpenPose|Depth|NormalMap|Lineart|AnimeLineart|SoftEdge|Segmentation|Tile|CannyXL|OpenPoseXL|LineartXL
 ctrl_type_1 = ["Lineart"]
-#指定随机处理器 realistic|coarse|anime|anime_denoise|pidinet|midas_depth|leres_depth|zoe_depth
+#指定随机处理器 realistic|coarse|anime|anime_denoise|pidinet|midas_depth|leres_depth|zoe_depth|standard
 #canny|hed|bae
 processor_1 = ["coarse"]
 start_min_1 = 0
@@ -133,7 +133,7 @@ images = [
 title = "ImageFilter"
 switch = false
 #brightness = 0
-#contrast = 1
+contrast = 1
 saturation = 0
 #sharpness = 1
 #blur = 0
@@ -164,3 +164,21 @@ title = "Tagger"
 switch = false
 # wd-v1-4-convnextv2-tagger-v2|wd-v1-4-moat-tagger-v2|wd-v1-4-convnext-tagger-v2|wd-v1-4-convnext-tagger|wd-v1-4-vit-tagger-v2
 model = "wd-v1-4-convnextv2-tagger-v2"
+
+# IPAdapter
+[ip_adapter]
+title = "IPAdapterApply"
+switch = false
+ipadapter_file = "ip-adapter-plus_sd15.safetensors"
+clip_name = "model.safetensors"
+image = "1.png"
+weight_min = 0.1
+weight_max = 1
+noise_min = 0
+noise_max = 0
+#
+weight_type = ["original", "linear", "channel penalty"]
+start_min = 0
+start_max = 0.1
+end_min = 0.9
+end_max = 1

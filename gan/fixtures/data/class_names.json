@@ -1,6 +1,7 @@
 {
   "KSampler": "KSampler",
   "LoadImage": "LoadImage",
+  "LoadImageIPA": "LoadImage",
   "VaeDecode": "VAEDecode",
   "LineArtPreprocessor": "LineArtPreprocessor",
   "CannyEdgePreprocessor": "CannyEdgePreprocessor",
