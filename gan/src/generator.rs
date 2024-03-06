@@ -10,10 +10,10 @@ use crate::{
     comfy_class_map, comfy_preprocessor, create_input_id, rand_element, ACtrlnet, ACtrlnetStack,
     AEmptyImage, AIPAdapter, AImageFilter, AImageRembg, ALoraStack, ALoraStacker, AppResult,
     AutoCfg, CnCfg, Ctrlnet, IdxControlNet, IdxLoRA, LoraCfg, LoraStack, LoraStacker, Workflow,
-    NODE_CANNY_PREPROCESSOR, NODE_CROP_IMAGE, NODE_EMPTY_IMAGE, NODE_EMPTY_LATENT,
-    NODE_IMAGE_FILTER, NODE_IMAGE_PREPROCESSOR, NODE_IMAGE_SCALESIDE, NODE_IMAGE_TAGGER,
-    NODE_KSAMPLER, NODE_LINEARTSTANDARD_PREPROCESSOR, NODE_LINEART_PREPROCESSOR, NODE_LOAD_IMAGE,
-    NODE_REPEAT_LATENT, NODE_TEXT_CONCAT, NODE_TEXT_STRING, NODE_TILE_PREPROCESSOR,
+    NODE_CANNY_PREPROCESSOR, NODE_CROP_IMAGE, NODE_EMPTY_LATENT, NODE_IMAGE_FILTER,
+    NODE_IMAGE_PREPROCESSOR, NODE_IMAGE_SCALESIDE, NODE_KSAMPLER,
+    NODE_LINEARTSTANDARD_PREPROCESSOR, NODE_LINEART_PREPROCESSOR, NODE_REPEAT_LATENT,
+    NODE_TEXT_CONCAT, NODE_TEXT_STRING, NODE_TILE_PREPROCESSOR,
 };
 
 const STEP_F32: f32 = 0.05;
@@ -45,6 +45,9 @@ impl Generator {
         }
         if let Some(aipa) = &ac.ip_adapter {
             self.apply_ip_adapter(wf, aipa)?;
+        }
+        if let Some(aifa) = &ac.image_filter_after {
+            self.apply_filter(wf, aifa)?;
         }
         Ok(())
     }
@@ -105,29 +108,38 @@ impl Generator {
         if !aif.switch {
             return Ok(());
         }
-        let filter = wf.get_node_mut(&aif.title)?.image_filter_mut();
+        let filter_node = wf.get_node_mut(&aif.title).context("filter")?;
+        trace!("apply_filter {} ...", filter_node.id);
+        let filter = filter_node.image_filter_mut();
         if let Some(brightness) = aif.brightness {
             filter.brightness = brightness;
         }
         if let Some(contrast) = aif.contrast {
+            debug!("apply_filter: contrast={contrast}");
             filter.contrast = contrast;
         }
         if let Some(saturation) = aif.saturation {
+            debug!("apply_filter: saturation={saturation}");
             filter.saturation = saturation;
         }
         if let Some(sharpness) = aif.sharpness {
+            debug!("apply_filter: sharpness={sharpness}");
             filter.sharpness = sharpness;
         }
         if let Some(blur) = aif.blur {
+            debug!("apply_filter: blur={blur}");
             filter.blur = blur;
         }
         if let Some(gaussian_blur) = aif.gaussian_blur {
+            debug!("apply_filter: gaussian_blur={gaussian_blur}");
             filter.gaussian_blur = gaussian_blur;
         }
         if let Some(edge_enhance) = aif.edge_enhance {
+            debug!("apply_filter: edge_enhance={edge_enhance}");
             filter.edge_enhance = edge_enhance;
         }
         if let Some(detail_enhance) = &aif.detail_enhance {
+            debug!("apply_filter: detail_enhance={detail_enhance}");
             filter.detail_enhance = detail_enhance.clone();
         }
         Ok(())
@@ -181,7 +193,7 @@ impl Generator {
                 trace!("Tagger-{tagger_id}.image={if_id}, TextConcat{ts_id}.text2={tagger_id}");
             } else {
                 //无自动打标, 移除Tagger结点
-                wf.rem_node(NODE_IMAGE_TAGGER);
+                wf.rem_node(&atagger.title);
             }
             //EfficientLoader.positive = Text
             trace!("EfficientLoader.positive={ts_id}");
@@ -220,7 +232,7 @@ impl Generator {
         if !aemc.switch {
             return;
         }
-        if let Ok(empty) = wf.get_node_mut(NODE_EMPTY_IMAGE) {
+        if let Ok(empty) = wf.get_node_mut(&aemc.title) {
             let empty = empty.empty_image_mut();
             empty.width = w;
             empty.height = h;
@@ -228,7 +240,7 @@ impl Generator {
             empty.color = aemc.color;
             trace!("img2img: {empty:?}");
         } else {
-            warn!("{NODE_EMPTY_IMAGE} not found");
+            warn!("{} not found", aemc.title);
         }
     }
 
@@ -241,7 +253,7 @@ impl Generator {
             if img_name.starts_with("land_") {
                 land = true;
             }
-            wf.get_node_mut(NODE_LOAD_IMAGE)?.load_image_mut().image = img_name.clone();
+            wf.get_node_mut(&cfg.title)?.load_image_mut().image = img_name.clone();
             img_name
         } else {
             &ac.save_image.filename_prefix
@@ -430,15 +442,16 @@ impl Generator {
     }
 
     fn rand_sampler(&self, wf: &mut Workflow, ac: &AutoCfg) -> AppResult<()> {
-        let sampler = wf.get_node_mut(NODE_KSAMPLER)?.k_sampler_mut();
-        sampler.seed = random::<u32>() as i64;
         let asampler = &ac.sampler;
+        let sampler = wf.get_node_mut(&asampler.title)?.k_sampler_mut();
+        let seed = random::<u32>() as i64;
         let steps = rand_num(asampler.steps_min, asampler.steps_max);
         let cfg = rand_f32(asampler.cfg_min, asampler.cfg_max);
         let denoise = rand_f32(asampler.denoise_min, asampler.denoise_max);
         let sampler_name = rand_element(&asampler.sampler_name);
         let scheduler = rand_element(&asampler.scheduler);
-        debug!("rand_sampler: {steps}, {cfg}, {denoise}, {sampler_name}-{scheduler}");
+        debug!("rand_sampler: seed={seed}, steps={steps}, cfg={cfg}, denoise={denoise}, {sampler_name}-{scheduler}");
+        sampler.seed = seed;
         sampler.steps = steps;
         sampler.cfg = cfg;
         sampler.denoise = denoise;

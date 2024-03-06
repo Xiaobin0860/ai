@@ -8,6 +8,7 @@ pub const NODE_LOAD_IMAGE_IPA: &str = "LoadImageIPA";
 pub const NODE_SAVE_IMAGE: &str = "ImageSave";
 pub const NODE_IMAGE_PREPROCESSOR: &str = "ImagePreprocessor";
 pub const NODE_IMAGE_FILTER: &str = "ImageFilter";
+pub const NODE_IMAGE_FILTER_AFTER: &str = "ImageFilterAfter";
 pub const NODE_TILE_PREPROCESSOR: &str = "TilePreprocessor";
 pub const NODE_EFFICIENT_LOADER: &str = "EfficientLoader";
 pub const NODE_KSAMPLER: &str = "KSampler";
@@ -216,6 +217,7 @@ mod comfy_tests {
         let wf = wf.unwrap();
         assert!(wf.get_node(NODE_EMPTY_IMAGE).is_ok());
         assert!(wf.get_node(NODE_IMAGE_FILTER).is_ok());
+        assert!(wf.get_node(NODE_IMAGE_FILTER_AFTER).is_ok());
         let img_node = wf.get_node(NODE_LOAD_IMAGE);
         assert!(img_node.is_ok());
         let img_node = img_node.unwrap();

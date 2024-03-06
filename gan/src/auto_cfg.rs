@@ -109,6 +109,9 @@ pub struct AutoCfg {
 
     /// ip adapter
     pub ip_adapter: Option<AIPAdapter>,
+
+    /// 图片后处理
+    pub image_filter_after: Option<AImageFilter>,
 }
 
 #[derive(Debug, Default, Clone, Deserialize)]

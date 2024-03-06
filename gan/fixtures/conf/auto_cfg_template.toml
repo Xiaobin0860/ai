@@ -128,7 +128,7 @@ images = [
 ]
 
 
-# ImageFilter
+# ImageFilter 图像预处理
 [image_filter]
 title = "ImageFilter"
 switch = false
@@ -140,6 +140,12 @@ saturation = 0
 #gaussian_blur = 1
 #edge_enhance = 0
 #detail_enhance = "false"
+
+# ImageFilterAfter 图像后处理
+[image_filter_after]
+title = "ImageFilterAfter"
+switch = false
+sharpness = 2.3
 
 
 # EmptyImage

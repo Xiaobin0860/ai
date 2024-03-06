@@ -349,7 +349,7 @@
       "embed_workflow": "true",
       "show_previews": "false",
       "images": [
-        "35",
+        "251",
         0
       ]
     },
@@ -633,6 +633,26 @@
     "class_type": "CLIPVisionLoader",
     "_meta": {
       "title": "CLIPVisionLoader"
+    }
+  },
+  "251": {
+    "inputs": {
+      "brightness": 0,
+      "contrast": 1,
+      "saturation": 1,
+      "sharpness": 1,
+      "blur": 0,
+      "gaussian_blur": 0,
+      "edge_enhance": 0,
+      "detail_enhance": "false",
+      "image": [
+        "35",
+        0
+      ]
+    },
+    "class_type": "Image Filter Adjustments",
+    "_meta": {
+      "title": "ImageFilterAfter"
     }
   }
 }
