@@ -7,3 +7,5 @@
 /app_cfg.toml
 /auto_cfg1.toml
 /auto_cfg2.toml
+/test_*.toml
+/app_cfg*

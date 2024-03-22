@@ -1,4 +1,5 @@
 # 每个auto_cfg是一组需要跑的参数配置
+# 参数配置见auto_cfg_template.toml
 auto_cfgs = ["auto_cfg1.toml", "auto_cfg2.toml"]
 
 # comfy ui api地址
