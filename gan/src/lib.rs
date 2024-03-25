@@ -13,6 +13,9 @@ pub use auto_cfg::*;
 mod generator;
 pub use generator::*;
 
+mod app;
+pub use app::*;
+
 pub fn rand_element<T>(v: &[T]) -> &T {
     debug_assert!(!v.is_empty());
     if v.len() == 1 {

@@ -1,4 +1,7 @@
-use std::fs;
+use std::{
+    fs,
+    sync::atomic::{AtomicUsize, Ordering},
+};
 
 use serde::{Deserialize, Serialize};
 
@@ -12,11 +15,11 @@ pub struct AppState {
 
     /// 当前跑到第几个配置 [0, auto_cfgs.len)
     #[serde(default)]
-    pub cfg_idx: usize,
+    pub cfg_idx: AtomicUsize,
 
     /// 当前配置跑到第几个循环 [0, total)
     #[serde(default)]
-    pub total_idx: usize,
+    pub total_idx: AtomicUsize,
 }
 impl AppState {
     fn from_json(toml_str: &str) -> AppResult<Self> {
@@ -30,9 +33,10 @@ impl AppState {
         Ok(s)
     }
 
-    pub fn clean(&mut self) {
-        self.cfg_idx = 0;
-        self.total_idx = 0;
+    pub fn clean(&self) {
+        self.cfg_idx.store(0, Ordering::Relaxed);
+        self.total_idx.store(0, Ordering::Relaxed);
+        let _ = self.save();
     }
 
     pub fn save(&self) -> AppResult<()> {
@@ -41,10 +45,28 @@ impl AppState {
         Ok(())
     }
 
-    pub fn update(&mut self, cfg_idx: usize, total_idx: usize) -> AppResult<()> {
-        self.cfg_idx = cfg_idx;
-        self.total_idx = total_idx;
-        self.save()
+    pub fn incr_total_idx(&self) -> usize {
+        self.total_idx.fetch_add(1, Ordering::Relaxed)
+    }
+
+    pub fn get_total_idx(&self) -> usize {
+        self.total_idx.load(Ordering::Relaxed)
+    }
+
+    pub fn set_total_idx(&self, idx: usize) {
+        self.total_idx.store(idx, Ordering::Relaxed);
+    }
+
+    pub fn incr_cfg_idx(&self) -> usize {
+        self.cfg_idx.fetch_add(1, Ordering::Relaxed)
+    }
+
+    pub fn get_cfg_idx(&self) -> usize {
+        self.cfg_idx.load(Ordering::Relaxed)
+    }
+
+    pub fn set_cfg_idx(&self, idx: usize) {
+        self.cfg_idx.store(idx, Ordering::Relaxed);
     }
 }
 
@@ -419,7 +441,7 @@ mod ac_tests {
     #[test]
     fn state_should_work() {
         let state = AppState::from_file("nonononononono").unwrap();
-        assert_eq!(0, state.cfg_idx);
-        assert_eq!(0, state.total_idx);
+        assert_eq!(0, state.cfg_idx.load(Ordering::Relaxed));
+        assert_eq!(0, state.total_idx.load(Ordering::Relaxed));
     }
 }
